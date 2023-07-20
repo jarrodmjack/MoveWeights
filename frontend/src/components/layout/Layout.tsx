@@ -1,8 +1,7 @@
 import { useAuthContext } from "@/hooks/useAuthContext"
 import Link from "next/link"
-import React, { PropsWithChildren, useState } from "react"
+import React, { PropsWithChildren } from "react"
 import BottomNav from "../nav/BottomNav"
-import { ActiveTab } from "@/types/ActiveTab"
 
 type LayoutOwnProps = {} & PropsWithChildren
 
@@ -52,7 +51,7 @@ const Layout: React.FC<LayoutOwnProps> = ({ children }) => {
 				</div>
 			</nav>
 			{children}
-			<BottomNav activeTab={activeTab} />
+			<BottomNav />
 		</main>
 	)
 }
