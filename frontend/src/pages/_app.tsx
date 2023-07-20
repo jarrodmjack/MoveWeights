@@ -12,7 +12,7 @@ const App: AppType = ({ Component, pageProps }: AppProps) => {
 	return (
 		<>
 			<Head>
-				<title>TravelGuide</title>
+				<title>MoveWeights</title>
 				<meta name="description" content="🐢" />
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
