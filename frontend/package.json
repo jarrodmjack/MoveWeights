@@ -1,0 +1,35 @@
+{
+  "proxy": "http://localhost:4001",
+  "name": "moveweights",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 4000",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@types/node": "20.3.2",
+    "@types/react": "18.2.14",
+    "@types/react-dom": "18.2.6",
+    "autoprefixer": "10.4.14",
+    "axios": "^1.4.0",
+    "chart.js": "^4.3.0",
+    "next": "13.4.7",
+    "postcss": "8.4.24",
+    "react": "18.2.0",
+    "react-chartjs-2": "^5.2.0",
+    "react-dom": "18.2.0",
+    "react-helmet": "^6.1.0",
+    "react-hot-toast": "^2.4.1",
+    "react-icons": "^4.10.1",
+    "react-loading-skeleton": "^3.3.1",
+    "tailwindcss": "3.3.2",
+    "typescript": "5.1.5"
+  },
+  "devDependencies": {
+    "@types/react-helmet": "^6.1.6",
+    "daisyui": "^3.3.1"
+  }
+}
