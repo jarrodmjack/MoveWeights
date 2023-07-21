@@ -1,38 +1,33 @@
 import NewWorkoutButton from "@/components/button/NewWorkoutButton"
 import Layout from "@/components/layout/Layout"
+import ExerciseList from "@/components/exerciseView/ExerciseList"
+import { useAuthContext } from "@/hooks/useAuthContext"
 import { Workout } from "@/types/Workout"
+import { isSameDay } from "@/utils/checkIfSameDay"
 import React, { useState } from "react"
+import { testWorkouts } from "@/utils/testData"
 
 const index = () => {
-	const workout: Workout = {
-		id: "1",
-		date: new Date(),
-		exercises: [
-			{
-				id: "blabla1",
-        workoutId: "1",
-				name: "Barbell Row",
-				muscleGroup: "Back",
-				sets: [
-					{
-						id: "1",
-						weight: 100,
-						reps: 10,
-					},
-				],
-			},
-		],
-	}
+	const { user } = useAuthContext()
 
-	const [workouts, setWorkouts] = useState([workout])
-
-  console.log(workouts)
+	console.log(testWorkouts)
+	const [workouts, setWorkouts] = useState<Workout[]>(testWorkouts)
+	const todaysWorkout = workouts.filter((item, i) =>
+		isSameDay(item.date, new Date())
+	)
 
 	return (
 		<Layout>
-			<div className="border h-screen flex flex-col justify-end items-center">
+			<div className="flex flex-col mt-10">
 				<div>
-					<NewWorkoutButton text="New workout" />
+					{todaysWorkout.length > 0 ? (
+						<ExerciseList exercises={todaysWorkout[0].exercises} />
+					) : (
+						<div className="flex flex-col items-center gap-20">
+							<p className="font-semibold text-xl">No workout recorded yet today.</p>
+							<NewWorkoutButton text="New workout" />
+						</div>
+					)}
 				</div>
 			</div>
 		</Layout>

@@ -16,6 +16,7 @@ module.exports = {
 		colors: {
 			coal: "#424342",
 			aqua: "#6BC7D4",
+			aquaDark: "#4D9CA7",
 			white: "#fff",
 			black: "#000",
 			danger: "#DB3033",

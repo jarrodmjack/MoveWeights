@@ -1,13 +1,27 @@
 import { ActiveTab } from "@/types/ActiveTab"
+import { useRouter } from "next/router"
 import React, { useState } from "react"
 
 const BottomNav = () => {
 	const [activeTab, setActiveTab] = useState(ActiveTab.HOME)
-    console.log('Active tab: ', activeTab)
+
+	const router = useRouter()
+
+	const redirectHome = () => {
+		router.push('/')
+	}
+
+	const redirectStats = () => {
+		router.push('/stats')
+	}
+
 	return (
 		<div className="btm-nav">
 			<button
-				onClick={() => setActiveTab(ActiveTab.HOME)}
+				onClick={() => {
+					setActiveTab(ActiveTab.HOME)
+					redirectHome()
+				}}
 				className={`text-aqua ${
 					activeTab === ActiveTab.HOME && "active"
 				}`}
