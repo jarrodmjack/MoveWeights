@@ -5,6 +5,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser')
 const userRoutes = require('./routes/userRoutes')
 const homeRoutes = require('./routes/homeRoutes')
+const exerciseRoutes = require('./routes/exerciseRoutes')
 require('dotenv').config()
 
 mongoose.connect(process.env.MONGO_URI)
@@ -30,4 +31,5 @@ app.use(cors());
 app.use(bodyParser.json())
 // Routes
 app.use('/api/home', homeRoutes)
+app.use('/api/exercise', exerciseRoutes)
 app.use('/api/user', userRoutes)

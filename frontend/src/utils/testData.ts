@@ -75,17 +75,27 @@ export const testWorkouts = [
             {
 				id: "blabla2",
 				workoutId: "1",
-				name: "Hammer Curl",
-				muscleGroup: "Biceps",
+				name: "Lat Pulldown",
+				muscleGroup: "Back",
 				sets: [
 					{
 						id: "1",
-						weight: 50,
+						weight: 70,
 						reps: 10,
 					},
 					{
 						id: "2",
-						weight: 60,
+						weight: 80,
+						reps: 10,
+					},
+					{
+						id: "3",
+						weight: 75,
+						reps: 8,
+					},
+					{
+						id: "4",
+						weight: 70,
 						reps: 8,
 					},
 				],

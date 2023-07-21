@@ -22,7 +22,7 @@ const BottomNav = () => {
 					setActiveTab(ActiveTab.HOME)
 					redirectHome()
 				}}
-				className={`text-aqua ${
+				className={`text-primary ${
 					activeTab === ActiveTab.HOME && "active"
 				}`}
 			>
@@ -43,7 +43,7 @@ const BottomNav = () => {
 			</button>
 			<button
 				onClick={() => setActiveTab(ActiveTab.STATS)}
-				className={`text-aqua ${
+				className={`text-primary ${
 					activeTab === ActiveTab.STATS && "active"
 				}`}
 			>

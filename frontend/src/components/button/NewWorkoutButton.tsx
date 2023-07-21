@@ -1,4 +1,4 @@
-import { useRouter } from "next/router"
+import Link from "next/link"
 import React from "react"
 import { FaPlus } from "react-icons/fa"
 
@@ -9,19 +9,12 @@ type NewWorkoutButtonOwnProps = {
 const NewWorkoutButton: React.FC<NewWorkoutButtonOwnProps> = ({
 	text = "",
 }) => {
-	const router = useRouter()
-
-	const handleRedirectToCreateNewWorkout = () => {
-		// router.push('/create-workout')
-		console.log("create new workout")
-	}
 
 	return (
 		<div className="flex flex-col items-center">
-			<FaPlus
-				className="text-aqua hover:text-aquaDark cursor-pointer scale-150"
-				onClick={() => handleRedirectToCreateNewWorkout()}
-			/>
+			<Link href="/workout/create">
+				<FaPlus className="text-primary hover:text-primary-focus cursor-pointer scale-150" />
+			</Link>
 			<p>{text}</p>
 		</div>
 	)

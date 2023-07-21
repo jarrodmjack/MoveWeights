@@ -53,7 +53,7 @@ const signup = () => {
 				<div className="form-control mt-6">
 					<button
 						onClick={() => handleSignup()}
-						className="btn bg-aqua"
+						className="btn bg-primary"
 					>
 						Sign up
 					</button>
