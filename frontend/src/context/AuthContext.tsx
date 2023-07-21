@@ -17,14 +17,19 @@ export const authReducer = (state, action) => {
 export const AuthContextProvider = ({ children }) => {
 	const [state, dispatch] = useReducer(
 		authReducer,
-		JSON.parse(localStorage.getItem("user"))
-	)
+		() => {
+		  try {
+			return JSON.parse(localStorage.getItem("user")) || { user: null };
+		  } catch (error) {
+			return { user: null };
+		  }
+		}
+	  );
 	const router = useRouter()
 	// check for token in local storage to see if there is already a user logged in
 
 	useEffect(() => {
 		const user = JSON.parse(localStorage.getItem("user"))
-
 		if (user) {
 			dispatch({ type: "LOGIN", payload: user })
 		} else {

@@ -1,12 +1,14 @@
 import { useAuthContext } from "@/hooks/useAuthContext"
 import Link from "next/link"
-import React, { PropsWithChildren } from "react"
+import React, { PropsWithChildren, useEffect } from "react"
 import BottomNav from "../nav/BottomNav"
+import { useRouter } from "next/router"
 
 type LayoutOwnProps = {} & PropsWithChildren
 
 const Layout: React.FC<LayoutOwnProps> = ({ children }) => {
 	const { user } = useAuthContext()
+	const router = useRouter()
 
 	return (
 		<main className="flex flex-col borderh-screen">
@@ -18,7 +20,7 @@ const Layout: React.FC<LayoutOwnProps> = ({ children }) => {
 				</div>
 				<div className="flex-none">
 					<ul className="menu menu-horizontal px-1">
-						<li className="text-3xl">+</li>
+						{router.pathname === '/workout/create' && <Link href="/exercise/create"><li className="text-3xl">+</li></Link>}
 						<li>
 							<details>
 								<summary>Menu</summary>

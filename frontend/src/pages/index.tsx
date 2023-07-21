@@ -11,7 +11,7 @@ const index = () => {
 	const { user } = useAuthContext()
 
 	console.log(testWorkouts)
-	const [workouts, setWorkouts] = useState<Workout[]>(testWorkouts)
+	const [workouts, setWorkouts] = useState<Workout[]>([])
 	const todaysWorkout = workouts.filter((item, i) =>
 		isSameDay(item.date, new Date())
 	)
