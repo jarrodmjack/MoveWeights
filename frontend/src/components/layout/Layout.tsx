@@ -19,7 +19,7 @@ const Layout: React.FC<LayoutOwnProps> = ({ children }) => {
 					</a>
 				</div>
 				<div className="flex-none">
-					<ul className="menu menu-horizontal px-1">
+					<ul className="menu menu-horizontal">
 						{router.pathname === '/workout/create' && <Link href="/exercise/create"><li className="text-3xl">+</li></Link>}
 						<li>
 							<details>
