@@ -55,7 +55,8 @@ const AddExerciseToWorkoutForm: React.FC<
 	}, [user])
 
 	const filterExercisesByMuscleGroup = (muscleGrp: string) => {
-		const filteredExercises = globalExercises.filter(
+		const exercises = [...globalExercises, ...userSpecificExercises]
+		const filteredExercises = exercises.filter(
 			(exercise) => exercise.muscleGroup === muscleGrp
 		)
 		setAllExercises(filteredExercises)
@@ -64,8 +65,6 @@ const AddExerciseToWorkoutForm: React.FC<
 	if (isLoading) {
 		return <>Loading...</>
 	}
-
-	console.log('Exercises going into select: ', allExercises)
 
 	const options = allExercises.map((exercise, i) => {
 		return { label: exercise.name, value: exercise.name }
@@ -96,13 +95,14 @@ const AddExerciseToWorkoutForm: React.FC<
 					<option value="cardio">Cardio</option>
 				</select>
 			</div>
-			{muscleGroup && (
-				<div className="flex flex-col w-full gap-4">
-					<p className="font-semibold">Exercise</p>
-					<PrimaryBorderDivider />
-					<Select options={options} />
-				</div>
-			)}
+			<div className="flex flex-col w-full gap-4">
+				<p className="font-semibold">Exercise</p>
+				<PrimaryBorderDivider />
+				<Select
+					isDisabled={muscleGroup ? false : true}
+					options={options}
+				/>
+			</div>
 			<div className="flex flex-col w-full gap-4">
 				<p className="font-semibold">Reps</p>
 				<PrimaryBorderDivider />

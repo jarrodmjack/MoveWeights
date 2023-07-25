@@ -17,7 +17,7 @@ const createExercise = async (req, res) => {
 	try {
 		const userId = req.user._id
 		const { muscleGroup, exerciseName } = req.body
-		console.log(muscleGroup, exerciseName)
+
 		const exercise = await Exercise.create({
 			muscleGroup: muscleGroup,
 			name: exerciseName,
@@ -35,9 +35,9 @@ const createExercise = async (req, res) => {
 
 const getExercises = async (req, res) => {
 	try {
-		// const userId = req.user._id
-		// let exercises = await Exercise.find({ userId: userId })
-		let exercises = await Exercise.find()
+		const userId = req.user._id
+		let exercises = await Exercise.find({ userId: userId })
+
 		res.status(200).json(exercises)
 		return
 	} catch (err) {
