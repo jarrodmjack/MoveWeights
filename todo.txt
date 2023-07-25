@@ -1,3 +1,1 @@
-I need to find a way to save the unsplash image urls per country and then I can have access to them on initial page load. I want the images to be displayed right in a flex/grid type layout right under the advisory.
-
-On initial load of a country in the AI route, I should check if the country exists, if not create it. I would then have to modify the logic inside of the sendPrompt function when checking if country exists and instead check if the AI data exists (checking if one of the arrays is populated)
+Work on fetching exercises. I can do one of two ways, I can either fetch all exercises + all user specific exercises from the database to populate list or I can just fetch user specific exercises and find a way to Hard-code the other exercises in some sort of list in a different file.

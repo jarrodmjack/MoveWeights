@@ -4,13 +4,11 @@ const Schema = mongoose.Schema
 
 const exerciseSchema = new Schema(
 	{
-		workoutId: {
-			type: String,
-			required: true,
-		},
 		name: {
 			type: String,
 			required: true,
+			unique: true,
+			maxLength: 50
 		},
 		muscleGroup: {
 			type: String,
@@ -19,6 +17,10 @@ const exerciseSchema = new Schema(
 		sets: {
 			type: [],
 		},
+		userId: {
+			type: String,
+			required: false
+		}
 	},
 	{ timestamps: true }
 )

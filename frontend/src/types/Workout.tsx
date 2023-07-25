@@ -6,7 +6,7 @@ export interface Workout {
 
 export interface Exercise {
     id: string
-    workoutId: string
+    userId: string
     name: string
     muscleGroup: string
     sets: Set[]

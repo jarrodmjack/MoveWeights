@@ -2,7 +2,7 @@ import React from 'react'
 
 const WorkoutById = () => {
   return (
-    <div>WorkoutById</div>
+    <div>VIEW WORKOUT BY ID</div>
   )
 }
 
