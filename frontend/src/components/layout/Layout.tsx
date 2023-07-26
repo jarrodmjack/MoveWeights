@@ -17,14 +17,14 @@ const Layout: React.FC<LayoutOwnProps> = ({ children }) => {
 		<main className="flex flex-col borderh-screen">
 			<nav className="navbar bg-neutral text-base-100">
 				<div className="flex-1">
-					<a className="btn btn-ghost normal-case text-xl">
+					<Link href="/" className="btn btn-ghost normal-case text-xl">
 						<Image
 							width={150}
 							height={60}
 							src="/images/mw-white-logo.png"
 							alt="moveweights white logo"
 						/>
-					</a>
+					</Link>
 				</div>
 				<div className="flex-none">
 					<ul className="menu menu-horizontal">

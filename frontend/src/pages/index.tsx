@@ -2,19 +2,12 @@ import NewWorkoutButton from "@/components/button/NewWorkoutButton"
 import Layout from "@/components/layout/Layout"
 import ExerciseList from "@/components/exerciseView/ExerciseList"
 import { useAuthContext } from "@/hooks/useAuthContext"
-import { Workout } from "@/types/Workout"
-import { isSameDay } from "@/utils/checkIfSameDay"
-import React, { useContext, useState } from "react"
-import { testWorkouts } from "@/utils/testData"
+import React, { useContext } from "react"
 import { WorkoutContext } from "@/context/WorkoutContext"
-import LoadingPageWithLogo from "@/components/loading/LoadingPageWithLogo"
 
 const index = () => {
 	const { user } = useAuthContext()
-	const workout = useContext(WorkoutContext)
-	console.log(testWorkouts)
-
-	// return <LoadingPageWithLogo />
+	const { workout, fetchTodaysWorkout } = useContext(WorkoutContext)!
 
 	return (
 		<Layout>

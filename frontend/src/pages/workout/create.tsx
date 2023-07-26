@@ -1,11 +1,17 @@
 import AddExerciseToWorkoutForm from "@/components/form/AddExerciseToWorkoutForm"
 import Layout from "@/components/layout/Layout"
+import { WorkoutContext } from "@/context/WorkoutContext"
 import { useAuthContext } from "@/hooks/useAuthContext"
-import React from "react"
+import { useRouter } from "next/router"
+import React, { useContext } from "react"
 import { toast } from "react-hot-toast"
 
 const create = () => {
 	const { user } = useAuthContext()
+	const router = useRouter()
+
+	// const workout = useContext(WorkoutContext)
+	const { fetchTodaysWorkout } = useContext(WorkoutContext)!
 
 	const createWorkout = async (data: {
 		muscleGroup: string
@@ -19,19 +25,25 @@ const create = () => {
 		}
 
 		try {
-			const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/exercise/create-workout`, {
-				method: "POST",
-				headers: {
-					"Content-type": "application/json",
-					Authorization: `Bearer ${user.token}`,
-				},
-				body: JSON.stringify(data),
-			})
-			const resData = await response.json()
+			const response = await fetch(
+				`${process.env.NEXT_PUBLIC_API_URL}/api/exercise/create-workout`,
+				{
+					method: "POST",
+					headers: {
+						"Content-type": "application/json",
+						Authorization: `Bearer ${user.token}`,
+					},
+					body: JSON.stringify(data),
+				}
+			)
+			fetchTodaysWorkout()
+			router.push("/")
 		} catch (e) {
-			toast.error("error")
+			toast.error(
+				"There was an error creating the workout, please try again"
+			)
+			router.push("/")
 		}
-
 	}
 
 	return (
