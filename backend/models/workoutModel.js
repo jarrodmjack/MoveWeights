@@ -7,6 +7,10 @@ const workoutSchema = new Schema(
 		exercises: {
 			type: [],
 		},
+		userId: {
+			type: String,
+			required: true
+		}
 	},
 	{ timestamps: true }
 )

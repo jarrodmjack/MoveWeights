@@ -1,25 +1,38 @@
 import AddExerciseToWorkoutForm from "@/components/form/AddExerciseToWorkoutForm"
-import AddNewExerciseForm from "@/components/form/AddNewExerciseForm"
 import Layout from "@/components/layout/Layout"
+import { useAuthContext } from "@/hooks/useAuthContext"
 import React from "react"
+import { toast } from "react-hot-toast"
 
 const create = () => {
+	const { user } = useAuthContext()
+
 	const createWorkout = async (data: {
 		muscleGroup: string
 		exerciseName: string
 		numOfReps: number
 		weight: number
 	}) => {
-		console.log("hit create workout function: ", data)
+		if (!user) {
+			toast.error("There was an error with user")
+			return
+		}
 
-		// const response = await fetch(
-		// 	`${process.env.NEXT_PUBLIC_API_URL}/api/user/login`,
-		// 	{
-		// 		method: "POST",
-		// 		headers: { "Content-type": "application/json" },
-		// 		body: JSON.stringify({test: "This is a test"}),
-		// 	}
-		// )
+		try {
+			const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/exercise/create-workout`, {
+				method: "POST",
+				headers: {
+					"Content-type": "application/json",
+					Authorization: `Bearer ${user.token}`,
+				},
+				body: JSON.stringify(data),
+			})
+			const resData = await response.json()
+			console.log('data: ', resData)
+		} catch (e) {
+			toast.error("error")
+		}
+
 		// console.log('response: ', response)
 		// const resData = await response.json()
 		// console.log('data: ', resData)
