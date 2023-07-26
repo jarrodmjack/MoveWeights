@@ -14,8 +14,6 @@ const create = () => {
 	}) => {
 		try {
 			const exerciseName = data.exerciseName.trim()
-			console.log(data.muscleGroup)
-			console.log(exerciseName)
 			const response = await fetch(
 				`${process.env.NEXT_PUBLIC_API_URL}/api/exercise/create-exercise`,
 				{

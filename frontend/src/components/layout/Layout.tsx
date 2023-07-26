@@ -3,6 +3,8 @@ import Link from "next/link"
 import React, { PropsWithChildren, useEffect } from "react"
 import BottomNav from "../nav/BottomNav"
 import { useRouter } from "next/router"
+import LandingView from "../LandingView"
+import LogoutButton from "../button/LogoutButton"
 
 type LayoutOwnProps = {} & PropsWithChildren
 
@@ -20,14 +22,18 @@ const Layout: React.FC<LayoutOwnProps> = ({ children }) => {
 				</div>
 				<div className="flex-none">
 					<ul className="menu menu-horizontal">
-						{router.pathname === '/workout/create' && <Link href="/exercise/create"><li className="text-3xl">+</li></Link>}
+						{router.pathname === "/workout/create" && (
+							<Link href="/exercise/create">
+								<li className="text-3xl">+</li>
+							</Link>
+						)}
 						<li>
 							<details>
 								<summary>Menu</summary>
 								<ul className="p-2 bg-neutral">
 									{user ? (
 										<li>
-											<a>Log out</a>
+											<LogoutButton />
 										</li>
 									) : (
 										<>
@@ -43,17 +49,23 @@ const Layout: React.FC<LayoutOwnProps> = ({ children }) => {
 											</li>
 										</>
 									)}
-									<li>
+									{/* <li>
 										<a>Settings</a>
-									</li>
+									</li> */}
 								</ul>
 							</details>
 						</li>
 					</ul>
 				</div>
 			</nav>
-			{children}
-			<BottomNav />
+			{!user ? (
+				<LandingView />
+			) : (
+				<>
+					{children}
+					<BottomNav />
+				</>
+			)}
 		</main>
 	)
 }

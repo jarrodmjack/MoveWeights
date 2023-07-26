@@ -28,14 +28,10 @@ const create = () => {
 				body: JSON.stringify(data),
 			})
 			const resData = await response.json()
-			console.log('data: ', resData)
 		} catch (e) {
 			toast.error("error")
 		}
 
-		// console.log('response: ', response)
-		// const resData = await response.json()
-		// console.log('data: ', resData)
 	}
 
 	return (

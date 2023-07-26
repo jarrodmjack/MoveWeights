@@ -10,7 +10,8 @@ import { WorkoutContext } from "@/context/WorkoutContext"
 
 const index = () => {
 	const { user } = useAuthContext()
-	const workout = null
+	const workout = useContext(WorkoutContext)
+	console.log(testWorkouts)
 
 	return (
 		<Layout>
@@ -19,7 +20,7 @@ const index = () => {
 					{workout ? (
 						<>
 							<h2 className="w-5/6 mx-auto mb-4 text-2xl">Today's workout</h2>
-							{/* <ExerciseList exercises={todaysWorkout[0].exercises} /> */}
+							<ExerciseList exercises={workout.exercises} />
 						</>
 					) : (
 						<div className="flex flex-col items-center gap-20">

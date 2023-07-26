@@ -17,7 +17,6 @@ export const authReducer = (state, action) => {
 export const AuthContextProvider = ({ children }) => {
 	const [state, dispatch] = useReducer(authReducer, () => {
 		try {
-			console.log("window location: ", window.location)
 			return JSON.parse(localStorage.getItem("user")) || { user: null }
 		} catch (error) {
 			return { user: null }
@@ -34,7 +33,6 @@ export const AuthContextProvider = ({ children }) => {
 			if (router.pathname !== "/") {
 				router.push("/login")
 			}
-			console.log("ELSEs")
 		}
 	}, [])
 
