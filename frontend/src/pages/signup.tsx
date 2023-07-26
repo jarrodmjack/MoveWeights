@@ -6,7 +6,7 @@ import { FaArrowLeft } from "react-icons/fa"
 const signup = () => {
 	const [email, setEmail] = useState("")
 	const [password, setPassword] = useState("")
-	const { signup, error } = useSignup()
+	const { signup, error, isLoading } = useSignup()
 
 	const handleSignup = async () => {
 		await signup(email, password)
@@ -59,8 +59,13 @@ const signup = () => {
 						<button
 							onClick={() => handleSignup()}
 							className="btn bg-primary text-white"
+							disabled={isLoading}
 						>
-							Sign up
+							{isLoading ? (
+								<span className="loading loading-dots loading-xl"></span>
+							) : (
+								<span>Sign up</span>
+							)}
 						</button>
 					</div>
 					<p>

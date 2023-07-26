@@ -4,7 +4,7 @@ import { useRouter } from "next/router"
 
 export const useSignup = () => {
 	const [error, setError] = useState(null)
-	const [isLoading, setIsLoading] = useState(null) //loading state
+	const [isLoading, setIsLoading] = useState(false)
 	const { dispatch } = useAuthContext()
 	const router = useRouter()
 

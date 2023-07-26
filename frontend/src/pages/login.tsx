@@ -75,7 +75,11 @@ const login = () => {
 							disabled={isLoading}
 							className="btn bg-primary text-white"
 						>
-							Log in
+							{isLoading ? (
+								<span className="loading loading-dots loading-xl"></span>
+							) : (
+								<span>Log in</span>
+							)}
 						</button>
 					</div>
 					<p>
