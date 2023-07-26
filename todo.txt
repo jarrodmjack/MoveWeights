@@ -1,9 +1,5 @@
-Work on the createWorkout function in workout/create route. I have the data coming in from the form, just need to send data to the controller and perform logic on the backend.
 
-The logic will be:
+Things that need to be added/fixed:
 
-find workout by todays date.
-If no workout createdAt date that matches todays date, create a new workout and return
-else return workout
-
-On the front end, I will need to set this workout in context somehow
+Do not allow negative numbers in reps/weight inputs
+forgot password functionality

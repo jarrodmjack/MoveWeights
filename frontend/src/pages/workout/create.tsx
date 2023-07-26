@@ -22,6 +22,11 @@ const create = () => {
 		if (!user) {
 			toast.error("There was an error with user")
 			return
+		} else if (data.exerciseName.length === 0) {
+			toast.error(
+				`Please select an exercise under the ${data.muscleGroup} category.`
+			)
+			return
 		}
 
 		try {
@@ -50,7 +55,7 @@ const create = () => {
 		<Layout>
 			<div className="flex flex-col gap-8 p-4">
 				<h3 className="text-xl font-semibold">
-					Add an exercise to the new workout
+					Add the first exercise to today's workout
 				</h3>
 				<AddExerciseToWorkoutForm handleSubmit={createWorkout} />
 			</div>

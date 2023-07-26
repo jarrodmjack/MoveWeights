@@ -3,7 +3,7 @@ import Layout from "@/components/layout/Layout"
 import { useAuthContext } from "@/hooks/useAuthContext"
 import { useRouter } from "next/router"
 import React, { useEffect, useState } from "react"
-import {toast} from 'react-hot-toast'
+import { toast } from "react-hot-toast"
 
 const create = () => {
 	const { user } = useAuthContext()
@@ -18,25 +18,29 @@ const create = () => {
 				`${process.env.NEXT_PUBLIC_API_URL}/api/exercise/create-exercise`,
 				{
 					method: "POST",
-					headers: { 
+					headers: {
 						"Content-type": "application/json",
-						'Authorization': `Bearer ${user.token}`
-					 },
-					body: JSON.stringify({muscleGroup: data.muscleGroup, exerciseName}),
+						Authorization: `Bearer ${user.token}`,
+					},
+					body: JSON.stringify({
+						muscleGroup: data.muscleGroup,
+						exerciseName,
+					}),
 				}
 			)
-			toast.success('Successfully added')
-				router.push('/workout/addExercise')
-		} catch(e) {
-			toast.error('There was an issue, please try again')
+			toast.success("Successfully added")
+			router.back()
+		} catch (e) {
+			toast.error("There was an issue, please try again")
 		}
-		
 	}
 
 	return (
 		<Layout>
 			<div className="flex flex-col gap-8 p-4">
-				<h3 className="text-xl font-semibold">Add a new exercise</h3>
+				<h3 className="text-xl font-semibold">
+					Create a custom exercise that you can use in the future
+				</h3>
 				<AddNewExerciseForm handleSubmit={createExercise} />
 			</div>
 		</Layout>
