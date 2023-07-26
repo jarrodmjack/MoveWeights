@@ -5,6 +5,7 @@ import BottomNav from "../nav/BottomNav"
 import { useRouter } from "next/router"
 import LandingView from "../LandingView"
 import LogoutButton from "../button/LogoutButton"
+import Image from "next/image"
 
 type LayoutOwnProps = {} & PropsWithChildren
 
@@ -17,7 +18,12 @@ const Layout: React.FC<LayoutOwnProps> = ({ children }) => {
 			<nav className="navbar bg-neutral text-base-100">
 				<div className="flex-1">
 					<a className="btn btn-ghost normal-case text-xl">
-						MoveWeights
+						<Image
+							width={150}
+							height={60}
+							src="/images/mw-white-logo.png"
+							alt="moveweights white logo"
+						/>
 					</a>
 				</div>
 				<div className="flex-none">
