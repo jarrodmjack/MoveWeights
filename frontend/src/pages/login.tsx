@@ -16,7 +16,6 @@ const login = () => {
 	const router = useRouter()
 
 	const handleLogin = async () => {
-		console.log("login")
 		await login(email, password)
 	}
 

@@ -7,6 +7,7 @@ import dynamic from "next/dynamic"
 import React from "react"
 import "../app/globals.css"
 import { Toaster } from "react-hot-toast"
+import WorkoutLayoutAndContext from "@/components/layout/WorkoutLayoutAndContext"
 
 const App: AppType = ({ Component, pageProps }: AppProps) => {
 	return (
@@ -18,7 +19,9 @@ const App: AppType = ({ Component, pageProps }: AppProps) => {
 			</Head>
 			<Toaster position="top-right" reverseOrder={false} />
 			<AuthContextProvider>
-				<Component {...pageProps} />
+				<WorkoutLayoutAndContext>
+					<Component {...pageProps} />
+				</WorkoutLayoutAndContext>
 			</AuthContextProvider>
 		</>
 	)

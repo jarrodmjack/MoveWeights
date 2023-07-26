@@ -9,7 +9,6 @@ export const useLogin = () => {
 	const router = useRouter()
 
 	const login = async (email, password) => {
-		console.log('hitting useLogin hook')
 		setIsLoading(true)
 		setError(null)
 

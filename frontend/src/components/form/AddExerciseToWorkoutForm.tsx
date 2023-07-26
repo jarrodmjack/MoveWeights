@@ -5,10 +5,14 @@ import { toast } from "react-hot-toast"
 import { useRouter } from "next/router"
 import { globalExercises } from "@/utils/globalExercises"
 import Select from "react-select"
-import { Exercise } from "@/types/Workout"
 
 type AddNewExerciseToWorkoutFormOwnProps = {
-	handleSubmit: (data: { muscleGroup: string; exerciseName: string }) => void
+	handleSubmit: (data: {
+		muscleGroup: string
+		exerciseName: string
+		numOfReps: number
+		weight: number
+	}) => void
 }
 
 const AddExerciseToWorkoutForm: React.FC<
@@ -24,6 +28,13 @@ const AddExerciseToWorkoutForm: React.FC<
 	const [userSpecificExercises, setUserSpecificExercises] = useState([])
 	const [allExercises, setAllExercises] = useState(globalExercises)
 	const router = useRouter()
+
+	const handleSetExerciseName = (option: {
+		label: string
+		value: string
+	}) => {
+		setExerciseName(option.value)
+	}
 
 	useEffect(() => {
 		const fetchMatchingExercises = async () => {
@@ -76,7 +87,7 @@ const AddExerciseToWorkoutForm: React.FC<
 				<p className="font-semibold">Muscle group</p>
 				<PrimaryBorderDivider />
 				<select
-					className="select select-bordered w-full max-w-xs"
+					className="select select-bordered w-full max-w-xs self-center"
 					onChange={(e) => {
 						setMuscleGroup(e.target.value)
 						filterExercisesByMuscleGroup(e.target.value)
@@ -99,25 +110,10 @@ const AddExerciseToWorkoutForm: React.FC<
 				<p className="font-semibold">Exercise</p>
 				<PrimaryBorderDivider />
 				<Select
+					className="self-center w-full"
 					isDisabled={muscleGroup ? false : true}
 					options={options}
-				/>
-			</div>
-			<div className="flex flex-col w-full gap-4">
-				<p className="font-semibold">Reps</p>
-				<PrimaryBorderDivider />
-				<input
-					pattern="[0-9]*"
-					onChange={(e) =>
-						setNumOfReps(
-							parseInt(e.target.value) && parseInt(e.target.value)
-						)
-					}
-					value={numOfReps}
-					type="number"
-					maxLength={4}
-					required
-					className="input input-bordered w-full max-w-xs self-center"
+					onChange={handleSetExerciseName} //can ignore error coming from react-select
 				/>
 			</div>
 			<div className="flex flex-col w-full gap-4">
@@ -137,10 +133,32 @@ const AddExerciseToWorkoutForm: React.FC<
 					className="input input-bordered w-full max-w-xs self-center"
 				/>
 			</div>
+			<div className="flex flex-col w-full gap-4">
+				<p className="font-semibold">Reps</p>
+				<PrimaryBorderDivider />
+				<input
+					pattern="[0-9]*"
+					onChange={(e) =>
+						setNumOfReps(
+							parseInt(e.target.value) && parseInt(e.target.value)
+						)
+					}
+					value={numOfReps}
+					type="number"
+					maxLength={4}
+					required
+					className="input input-bordered w-full max-w-xs self-center"
+				/>
+			</div>
 			<button
 				onClick={(e) => {
 					e.preventDefault()
-					handleSubmit({ muscleGroup, exerciseName })
+					handleSubmit({
+						muscleGroup,
+						exerciseName,
+						numOfReps,
+						weight,
+					})
 				}}
 				className="w-full py-4 bg-primary-focus rounded-lg text-white cursor-pointer"
 			>

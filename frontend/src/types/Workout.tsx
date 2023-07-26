@@ -1,7 +1,7 @@
 export interface Workout {
     id: string
     exercises: Exercise[]
-    date: Date
+    date: Date | undefined
 }
 
 export interface Exercise {

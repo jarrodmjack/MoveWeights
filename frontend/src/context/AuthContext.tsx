@@ -15,16 +15,14 @@ export const authReducer = (state, action) => {
 }
 
 export const AuthContextProvider = ({ children }) => {
-	const [state, dispatch] = useReducer(
-		authReducer,
-		() => {
-		  try {
-			return JSON.parse(localStorage.getItem("user")) || { user: null };
-		  } catch (error) {
-			return { user: null };
-		  }
+	const [state, dispatch] = useReducer(authReducer, () => {
+		try {
+			console.log("window location: ", window.location)
+			return JSON.parse(localStorage.getItem("user")) || { user: null }
+		} catch (error) {
+			return { user: null }
 		}
-	  );
+	})
 	const router = useRouter()
 	// check for token in local storage to see if there is already a user logged in
 
@@ -36,6 +34,7 @@ export const AuthContextProvider = ({ children }) => {
 			if (router.pathname !== "/") {
 				router.push("/login")
 			}
+			console.log("ELSEs")
 		}
 	}, [])
 

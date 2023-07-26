@@ -1,20 +1,40 @@
-import AddNewExerciseForm from '@/components/form/AddNewExerciseForm'
-import Layout from '@/components/layout/Layout'
-import React from 'react'
+import AddExerciseToWorkoutForm from "@/components/form/AddExerciseToWorkoutForm"
+import AddNewExerciseForm from "@/components/form/AddNewExerciseForm"
+import Layout from "@/components/layout/Layout"
+import React from "react"
 
 const create = () => {
+	const createWorkout = async (data: {
+		muscleGroup: string
+		exerciseName: string
+		numOfReps: number
+		weight: number
+	}) => {
+		console.log("hit create workout function: ", data)
 
-  const createWorkout = async (data: {muscleGroup: string, exerciseName: string}) => {
-    console.log('HIT')
-    // /create-workout
-  }
+		// const response = await fetch(
+		// 	`${process.env.NEXT_PUBLIC_API_URL}/api/user/login`,
+		// 	{
+		// 		method: "POST",
+		// 		headers: { "Content-type": "application/json" },
+		// 		body: JSON.stringify({test: "This is a test"}),
+		// 	}
+		// )
+		// console.log('response: ', response)
+		// const resData = await response.json()
+		// console.log('data: ', resData)
+	}
 
-  return (
-    <Layout>
-        This is where to create a new workout
-        <AddNewExerciseForm handleSubmit={createWorkout} />
-    </Layout>
-  )
+	return (
+		<Layout>
+			<div className="flex flex-col gap-8 p-4">
+				<h3 className="text-xl font-semibold">
+					Add an exercise to the new workout
+				</h3>
+				<AddExerciseToWorkoutForm handleSubmit={createWorkout} />
+			</div>
+		</Layout>
+	)
 }
 
 export default create

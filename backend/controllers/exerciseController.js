@@ -5,10 +5,17 @@ const Exercise = require("../models/exerciseModel")
 
 const createWorkout = async (req, res) => {
 	console.log(req)
-
-	// const workout = Workout.create({
-
-	// })
+	try {
+		const workout = await Workout.create({
+			exercises: [],
+		})
+		console.log("new workout: ", workout)
+		res.status(200).json(workout)
+		return
+	} catch (e) {
+		res.status(400).json(e)
+		return
+	}
 }
 
 const addExerciseToWorkout = async (req, res) => {}
@@ -33,6 +40,20 @@ const createExercise = async (req, res) => {
 	}
 }
 
+const getTodaysWorkoutByUserId = async (req, res) => {
+	try {
+		const userId = req.user._id
+		console.log(userId)
+		const workout = Workout.findOne
+		res.status(200).json({ msg: "Successfully got todays workout" })
+		return
+	} catch (e) {
+		console.log(e)
+		res.status(400).json({ msg: "Failed to fetch todays workout" })
+		return
+	}
+}
+
 const getExercises = async (req, res) => {
 	try {
 		const userId = req.user._id
@@ -46,4 +67,9 @@ const getExercises = async (req, res) => {
 	}
 }
 
-module.exports = { createWorkout, createExercise, getExercises }
+module.exports = {
+	createWorkout,
+	createExercise,
+	getExercises,
+	getTodaysWorkoutByUserId,
+}
