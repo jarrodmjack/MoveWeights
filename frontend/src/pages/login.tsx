@@ -73,7 +73,7 @@ const login = () => {
 								handleLogin()
 							}}
 							disabled={isLoading}
-							className="btn bg-primary text-white"
+							className="btn bg-primary-focus text-white"
 						>
 							{isLoading ? (
 								<span className="loading loading-dots loading-xl"></span>

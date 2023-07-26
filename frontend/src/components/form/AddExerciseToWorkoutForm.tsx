@@ -91,6 +91,7 @@ const AddExerciseToWorkoutForm: React.FC<
 					className="select select-bordered w-full max-w-xs self-center"
 					onChange={(e) => {
 						setMuscleGroup(e.target.value)
+						setExerciseName("")
 						filterExercisesByMuscleGroup(e.target.value)
 					}}
 				>

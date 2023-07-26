@@ -58,7 +58,7 @@ const signup = () => {
 					<div className="form-control mt-6">
 						<button
 							onClick={() => handleSignup()}
-							className="btn bg-primary text-white"
+							className="btn bg-primary-focus text-white"
 							disabled={isLoading}
 						>
 							{isLoading ? (
