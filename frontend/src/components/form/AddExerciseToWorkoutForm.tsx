@@ -5,6 +5,7 @@ import { toast } from "react-hot-toast"
 import { useRouter } from "next/router"
 import { globalExercises } from "@/utils/globalExercises"
 import Select from "react-select"
+import LoadingPageWithLogo from "../loading/LoadingPageWithLogo"
 
 type AddNewExerciseToWorkoutFormOwnProps = {
 	handleSubmit: (data: {
@@ -74,7 +75,7 @@ const AddExerciseToWorkoutForm: React.FC<
 	}
 
 	if (isLoading) {
-		return <>Loading...</>
+		return <LoadingPageWithLogo />
 	}
 
 	const options = allExercises.map((exercise, i) => {

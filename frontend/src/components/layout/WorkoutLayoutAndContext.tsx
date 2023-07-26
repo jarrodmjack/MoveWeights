@@ -2,11 +2,13 @@ import React, { PropsWithChildren, useEffect, useState } from "react"
 import { WorkoutContext } from "@/context/WorkoutContext"
 import { Workout } from "@/types/Workout"
 import { useAuthContext } from "@/hooks/useAuthContext"
+import LoadingPageWithLogo from "../loading/LoadingPageWithLogo"
 
 const WorkoutLayoutAndContext: React.FC<PropsWithChildren> = ({ children }) => {
 	const { user } = useAuthContext()
 
 	const [workout, setWorkout] = useState<Workout | undefined>(undefined)
+	const [isLoading, setIsLoading] = useState(false)
 
 	const fetchTodaysWorkout = async () => {
 		if (!user) {
@@ -14,6 +16,7 @@ const WorkoutLayoutAndContext: React.FC<PropsWithChildren> = ({ children }) => {
 		}
 
 		try {
+			setIsLoading(true)
 			const response = await fetch(
 				`${process.env.NEXT_PUBLIC_API_URL}/api/exercise/todaysWorkout`,
 				{
@@ -25,20 +28,25 @@ const WorkoutLayoutAndContext: React.FC<PropsWithChildren> = ({ children }) => {
 				}
 			)
 			const data = await response.json()
-			console.log("data: ", data)
 			if (!data) {
 				setWorkout(undefined)
 			} else {
 				setWorkout(data)
 			}
+			setIsLoading(false)
 		} catch (e) {
 			setWorkout(undefined)
+			setIsLoading(false)
 		}
 	}
 
 	useEffect(() => {
 		fetchTodaysWorkout()
 	}, [user])
+
+	if (isLoading) {
+		return <LoadingPageWithLogo />
+	}
 
 	return (
 		<WorkoutContext.Provider value={{ workout, fetchTodaysWorkout }}>
