@@ -1,15 +1,15 @@
+// ALL WORKOUT/EXERCISE RELATED FUNCTIONS HAPPEN IN THIS FILE - I DID NOT WANT TO CREATE 3 SEPARATE CONTROLLER FILES
 const Workout = require("../models/workoutModel")
 const Exercise = require("../models/exerciseModel")
-const { isSameDay } = require("../utils/checkIfSameDay")
-// ALL WORKOUT/EXERCISE RELATED FUNCTIONS HAPPEN IN THIS FILE - I DID NOT WANT TO CREATE 3 SEPARATE CONTROLLER FILES
+const UserExercise = require("../models/userExerciseModel")
 
 const createWorkout = async (req, res) => {
 	try {
-		const exercise = {
+		const exercise = await Exercise.create({
 			muscleGroup: req.body.muscleGroup,
 			name: req.body.exerciseName,
 			sets: [{ weight: req.body.weight, reps: req.body.numOfReps }],
-		}
+		})
 
 		const workout = await Workout.create({
 			exercises: [exercise],
@@ -26,18 +26,17 @@ const createWorkout = async (req, res) => {
 
 const addExerciseToWorkout = async (req, res) => {}
 
-const createExercise = async (req, res) => {
+const createNewUserExercise = async (req, res) => {
 	try {
 		const userId = req.user._id
 		const { muscleGroup, exerciseName } = req.body
 
-		const exercise = await Exercise.create({
+		const exercise = await UserExercise.create({
 			muscleGroup: muscleGroup,
 			name: exerciseName,
-			sets: [],
 			userId: userId,
 		})
-		res.status(200).json({ msg: "successfully created exercise" })
+		res.status(200).json(exercise)
 		return
 	} catch (e) {
 		console.log(e)
@@ -70,11 +69,11 @@ const getTodaysWorkoutByUserId = async (req, res) => {
 	}
 }
 
-const getExercises = async (req, res) => {
+const getExercisesByUserId = async (req, res) => {
 	try {
 		const userId = req.user._id
-		let exercises = await Exercise.find({ userId: userId })
-
+		let exercises = await UserExercise.find({ userId: userId })
+		console.log("exercises: ", exercises)
 		res.status(200).json(exercises)
 		return
 	} catch (err) {
@@ -85,7 +84,7 @@ const getExercises = async (req, res) => {
 
 module.exports = {
 	createWorkout,
-	createExercise,
-	getExercises,
+	createNewUserExercise,
+	getExercisesByUserId,
 	getTodaysWorkoutByUserId,
 }
