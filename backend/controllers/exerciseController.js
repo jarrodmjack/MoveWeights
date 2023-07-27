@@ -1,14 +1,20 @@
 // ALL WORKOUT/EXERCISE RELATED FUNCTIONS HAPPEN IN THIS FILE - I DID NOT WANT TO CREATE 3 SEPARATE CONTROLLER FILES
 const Workout = require("../models/workoutModel")
 const Exercise = require("../models/exerciseModel")
+const Set = require("../models/setModel")
 const UserExercise = require("../models/userExerciseModel")
 
 const createWorkout = async (req, res) => {
 	try {
+		const set = await Set.create({
+			weight: req.body.weight,
+			reps: req.body.numOfReps,
+		})
+
 		const exercise = await Exercise.create({
 			muscleGroup: req.body.muscleGroup,
 			name: req.body.exerciseName,
-			sets: [{ weight: req.body.weight, reps: req.body.numOfReps }],
+			sets: [set],
 		})
 
 		const workout = await Workout.create({

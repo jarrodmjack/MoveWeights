@@ -2,7 +2,7 @@ import Layout from "@/components/layout/Layout"
 import LoadingPageWithLogo from "@/components/loading/LoadingPageWithLogo"
 import { WorkoutContext } from "@/context/WorkoutContext"
 import { useAuthContext } from "@/hooks/useAuthContext"
-import { Exercise } from "@/types/Workout"
+import { Exercise, Set } from "@/types/Workout"
 import { useRouter } from "next/router"
 import React, { useContext, useEffect, useState } from "react"
 
@@ -43,9 +43,23 @@ const index = () => {
 
 	console.log(exercise)
 
-	return <Layout>{exercise ? <div>
-        
-    </div> : <div>Loading...</div>}</Layout>
+	return (
+		<Layout>
+			{exercise ? (
+				<div>
+					{exercise.sets.length > 0 &&
+						exercise.sets.map((set: Set, i) => (
+							<div>
+								<p>{set.weight}</p>
+								<p>{set.reps}</p>
+							</div>
+						))}
+				</div>
+			) : (
+				<div>Loading...</div>
+			)}
+		</Layout>
+	)
 }
 
 export default index

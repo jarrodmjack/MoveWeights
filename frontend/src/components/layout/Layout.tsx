@@ -45,7 +45,7 @@ const Layout: React.FC<LayoutOwnProps> = ({ children }) => {
 										<>
 											<li>
 												<Link href="/login">
-													Sign in
+													Log in
 												</Link>
 											</li>
 											<li>
