@@ -1,11 +1,11 @@
 export interface Workout {
-    id: string
+    _id: string
     exercises: Exercise[]
     date: Date | undefined
 }
 
 export interface Exercise {
-    id: string
+    _id: string
     userId: string
     name: string
     muscleGroup: string
@@ -13,7 +13,6 @@ export interface Exercise {
 }
 
 export interface Set {
-    id: string
     reps: number
     weight: number
 }

@@ -1,4 +1,5 @@
 import { Exercise } from "@/types/Workout"
+import Link from "next/link"
 import React from "react"
 
 type ExerciseCardOwnProps = {
@@ -7,23 +8,26 @@ type ExerciseCardOwnProps = {
 
 const ExerciseCard: React.FC<ExerciseCardOwnProps> = ({ exercise }) => {
 	return (
-		<div className="shadow border-1 border-primary-content p-4 font-bold flex flex-col gap-2">
-			<h3>{exercise.name}</h3>
-			<div className="border border-primary w-full" />
-			<div>
-				{exercise.sets.map((set, idx) => (
-					<div key={set.id} className="flex justify-between w-2/3">
-						<p>
-							{set.weight}{" "}
-							<span className="font-normal">lbs</span>
-						</p>
-						<p>
-							{set.reps} <span className="font-normal">reps</span>
-						</p>
-					</div>
-				))}
+		<Link href={`/exercise/${exercise._id}`}>
+			<div className="shadow border-1 border-primary-content p-4 font-bold flex flex-col gap-2">
+				<h3>{exercise.name}</h3>
+				<div className="border border-primary w-full" />
+				<div>
+					{exercise.sets.map((set, idx) => (
+						<div key={idx} className="flex justify-between w-2/3">
+							<p>
+								{set.weight}{" "}
+								<span className="font-normal">lbs</span>
+							</p>
+							<p>
+								{set.reps}{" "}
+								<span className="font-normal">reps</span>
+							</p>
+						</div>
+					))}
+				</div>
 			</div>
-		</div>
+		</Link>
 	)
 }
 

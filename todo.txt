@@ -1,4 +1,6 @@
 
+Fix issue with fetching todays workout - started happening after adding getexercisebyid
+
 Things that need to be added/fixed:
 
 Do not allow negative numbers in reps/weight inputs

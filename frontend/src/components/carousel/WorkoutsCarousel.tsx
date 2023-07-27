@@ -11,13 +11,14 @@ const WorkoutsCarousel: React.FC<WorkoutsCarouselOwnProps> = ({ workouts }) => {
 		<div className="carousel w-full">
 			{workouts.map((workout, i) => (
 				<div
+					key={workout.id}
 					className="w-full carousel-item relative flex flex-col"
 					id={`slide${i + 1}`}
 				>
 					<div className="w-5/6 mx-auto flex flex-col gap-8 mt-20">
 						{workout.exercises.map((exercise, i) => (
 							<ExerciseCard
-								key={exercise.id}
+								key={i}
 								exercise={exercise}
 							/>
 						))}

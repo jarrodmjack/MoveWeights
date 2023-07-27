@@ -45,6 +45,7 @@ const createNewUserExercise = async (req, res) => {
 }
 
 const getTodaysWorkoutByUserId = async (req, res) => {
+	console.log('HIT TODAYS WORKOUT ROUTE')
 	try {
 		const userId = req.user._id
 		const currentDate = new Date()
@@ -69,11 +70,15 @@ const getTodaysWorkoutByUserId = async (req, res) => {
 	}
 }
 
+const getExerciseById = async (req, res) => {
+	console.log("HIT ROUTE")
+	res.status(200).json({ msg: "success" })
+}
+
 const getExercisesByUserId = async (req, res) => {
 	try {
 		const userId = req.user._id
 		let exercises = await UserExercise.find({ userId: userId })
-		console.log("exercises: ", exercises)
 		res.status(200).json(exercises)
 		return
 	} catch (err) {
@@ -87,4 +92,5 @@ module.exports = {
 	createNewUserExercise,
 	getExercisesByUserId,
 	getTodaysWorkoutByUserId,
+	getExerciseById,
 }
