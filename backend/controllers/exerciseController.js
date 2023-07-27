@@ -45,7 +45,6 @@ const createNewUserExercise = async (req, res) => {
 }
 
 const getTodaysWorkoutByUserId = async (req, res) => {
-	console.log('HIT TODAYS WORKOUT ROUTE')
 	try {
 		const userId = req.user._id
 		const currentDate = new Date()
@@ -71,8 +70,20 @@ const getTodaysWorkoutByUserId = async (req, res) => {
 }
 
 const getExerciseById = async (req, res) => {
-	console.log("HIT ROUTE")
-	res.status(200).json({ msg: "success" })
+	try {
+		const exerciseId = req.params.id
+		const exercise = await Exercise.findById(exerciseId)
+
+		if (!exercise) {
+			res.status(401).json(undefined)
+			return
+		}
+		res.status(200).json(exercise)
+		return
+	} catch (e) {
+		res.status(400)
+		return
+	}
 }
 
 const getExercisesByUserId = async (req, res) => {
