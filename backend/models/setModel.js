@@ -12,6 +12,10 @@ const setSchema = new Schema(
 			type: Number,
 			required: true,
 		},
+		exerciseId: {
+			type: String,
+			required: true,
+		},
 	},
 	{ timestamps: true }
 )

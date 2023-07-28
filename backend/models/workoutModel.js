@@ -9,8 +9,8 @@ const workoutSchema = new Schema(
 		},
 		userId: {
 			type: String,
-			required: true
-		}
+			required: true,
+		},
 	},
 	{ timestamps: true }
 )

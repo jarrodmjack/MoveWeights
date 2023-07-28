@@ -6,21 +6,29 @@ const UserExercise = require("../models/userExerciseModel")
 
 const createWorkout = async (req, res) => {
 	try {
-		const set = await Set.create({
-			weight: req.body.weight,
-			reps: req.body.numOfReps,
+		const workout = await Workout.create({
+			exercises: [],
+			userId: req.user._id,
 		})
 
 		const exercise = await Exercise.create({
 			muscleGroup: req.body.muscleGroup,
 			name: req.body.exerciseName,
-			sets: [set],
+			sets: [],
+			workoutId: workout._id,
+		})
+		workout.exercises.push(exercise)
+
+		const set = await Set.create({
+			weight: req.body.weight,
+			reps: req.body.numOfReps,
+			exerciseId: exercise._id,
 		})
 
-		const workout = await Workout.create({
-			exercises: [exercise],
-			userId: req.user._id,
-		})
+		exercise.sets.push(set)
+		await workout.save()
+		await exercise.save()
+		await set.save()
 
 		res.status(200).json(workout)
 		return
@@ -31,6 +39,30 @@ const createWorkout = async (req, res) => {
 }
 
 const addExerciseToWorkout = async (req, res) => {}
+
+const addSetToExercise = async (req, res) => {
+	// console.log('HIT')
+	console.log(req.body)
+	try {
+		const exerciseId = req.body.exerciseId
+
+		const newSet = await Set.create({
+			weight: req.body.weight,
+			reps: req.body.numOfReps,
+			exerciseId: exerciseId,
+		})
+
+		const exercise = await Exercise.findById(exerciseId)
+		exercise.sets.push(newSet)
+		await newSet.save()
+		await exercise.save()
+
+		res.status(200).json({ msg: "success" })
+		return
+	} catch (e) {
+		res.status(400).json({ msg: "there was an issue" })
+	}
+}
 
 const createNewUserExercise = async (req, res) => {
 	try {
@@ -110,4 +142,5 @@ module.exports = {
 	getExercisesByUserId,
 	getTodaysWorkoutByUserId,
 	getExerciseById,
+	addSetToExercise,
 }

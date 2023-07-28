@@ -17,6 +17,10 @@ const exerciseSchema = new Schema(
 		sets: {
 			type: [],
 		},
+		workoutId: {
+			type: String,
+			required: true
+		}
 	},
 	{ timestamps: true }
 )
