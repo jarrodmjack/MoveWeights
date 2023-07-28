@@ -33,7 +33,6 @@ const index = () => {
 				)
 				const data = await response.json()
 				setExercise(data)
-				// setExerciseSets()
 				setIsLoading(false)
 			} catch (e) {
 				console.log("e: ", e)

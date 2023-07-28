@@ -1,5 +1,4 @@
-
-Fix issue with fetching todays workout - started happening after adding getexercisebyid
+When added set to exercise, do optimistic render with newly added set. If failure to add, refresh page.
 
 Things that need to be added/fixed:
 

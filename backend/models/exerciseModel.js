@@ -15,12 +15,14 @@ const exerciseSchema = new Schema(
 			required: true,
 		},
 		sets: {
-			type: [],
+			type: [mongoose.Schema.Types.ObjectId],
+			ref: "Set",
+			required: true,
 		},
 		workoutId: {
 			type: String,
-			required: true
-		}
+			required: true,
+		},
 	},
 	{ timestamps: true }
 )

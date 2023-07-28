@@ -10,22 +10,21 @@ const createWorkout = async (req, res) => {
 			exercises: [],
 			userId: req.user._id,
 		})
-
 		const exercise = await Exercise.create({
 			muscleGroup: req.body.muscleGroup,
 			name: req.body.exerciseName,
 			sets: [],
 			workoutId: workout._id,
 		})
-		workout.exercises.push(exercise)
-
 		const set = await Set.create({
 			weight: req.body.weight,
 			reps: req.body.numOfReps,
 			exerciseId: exercise._id,
 		})
 
-		exercise.sets.push(set)
+		exercise.sets.push(set._id)
+		workout.exercises.push(exercise._id)
+
 		await workout.save()
 		await exercise.save()
 		await set.save()
@@ -52,12 +51,18 @@ const addSetToExercise = async (req, res) => {
 			exerciseId: exerciseId,
 		})
 
-		const exercise = await Exercise.findById(exerciseId)
-		exercise.sets.push(newSet)
+		const exercise = await Exercise.findByIdAndUpdate(
+			exerciseId,
+			{
+				$push: { sets: newSet },
+			},
+			{ new: true }
+		).populate("sets")
+
 		await newSet.save()
 		await exercise.save()
 
-		res.status(200).json({ msg: "success" })
+		res.status(200).json()
 		return
 	} catch (e) {
 		res.status(400).json({ msg: "there was an issue" })
@@ -96,6 +101,11 @@ const getTodaysWorkoutByUserId = async (req, res) => {
 				$gte: currentDate,
 				$lt: endOfDay,
 			},
+		}).populate({
+			path: "exercises",
+			populate: {
+				path: "sets",
+			},
 		})
 
 		res.status(200).json(workout)
@@ -110,7 +120,7 @@ const getTodaysWorkoutByUserId = async (req, res) => {
 const getExerciseById = async (req, res) => {
 	try {
 		const exerciseId = req.params.id
-		const exercise = await Exercise.findById(exerciseId)
+		const exercise = await Exercise.findById(exerciseId).populate("sets")
 
 		if (!exercise) {
 			res.status(401).json(undefined)
