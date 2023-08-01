@@ -3,6 +3,7 @@ const Workout = require("../models/workoutModel")
 const Exercise = require("../models/exerciseModel")
 const Set = require("../models/setModel")
 const UserExercise = require("../models/userExerciseModel")
+const GeoLocation = require("../models/geoLocationModel")
 
 const createWorkout = async (req, res) => {
 	try {
@@ -117,6 +118,30 @@ const getTodaysWorkoutByUserId = async (req, res) => {
 	}
 }
 
+const saveGeoLocation = async (req, res) => {
+	console.log(req.body)
+
+	if (!req.body.geoData.ip_address) {
+		return
+	}
+
+	const geoData = req.body.geoData
+
+	const newGeo = await GeoLocation.create({
+		city: geoData.city,
+		ipAddress: geoData.ip_address,
+		country: geoData.country,
+		region: geoData.region,
+		regionIsoCode: geoData.region_iso_code,
+		isVPN: geoData.security.isVPN,
+		timezone: geoData.timezone,
+		connection: geoData.connection,
+	})
+
+	console.log(newGeo)
+	res.status(200).json({ msg: "Success" })
+}
+
 const getExerciseById = async (req, res) => {
 	try {
 		const exerciseId = req.params.id
@@ -153,4 +178,5 @@ module.exports = {
 	getTodaysWorkoutByUserId,
 	getExerciseById,
 	addSetToExercise,
+	saveGeoLocation,
 }
