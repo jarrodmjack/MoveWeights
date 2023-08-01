@@ -11,7 +11,7 @@ const {
 const requireAuth = require("../middleware/requireAuth")
 
 const router = express.Router()
-router.use(requireAuth) //use for auth
+// router.use(requireAuth) //use for auth
 
 router.post("/create-workout", createWorkout)
 router.post("/exercise/add-set", addSetToExercise)
