@@ -9,39 +9,6 @@ const index = () => {
 	const { user } = useAuthContext()
 	const { workout, fetchTodaysWorkout } = useContext(WorkoutContext)!
 
-	useEffect(() => {
-		const saveGeoLocationData = async () => {
-			if (!user) {
-				return
-			}
-
-			try {
-				const url = `https://ipgeolocation.abstractapi.com/v1/?api_key=bbd3d0696e0e4a1c8ceb4b72a639d2df`
-
-				const geoResponse = await fetch(url)
-				console.log("geo: ", geoResponse)
-				const geoData = await geoResponse.json()
-				console.log("geo data: ", geoData)
-
-				const response = await fetch(
-					`${process.env.NEXT_PUBLIC_API_URL}/api/exercise/geo`,
-					{
-						method: "POST",
-						headers: {
-							"Content-type": "application/json",
-							Authorization: `Bearer ${user.token}`,
-						},
-						body: JSON.stringify({geoData: geoData}),
-					}
-				)
-				console.log("response: ", response)
-			} catch (e) {
-				console.log(e)
-			}
-		}
-		saveGeoLocationData()
-	}, [user])
-
 	return (
 		<Layout>
 			<div className="flex flex-col mt-10">

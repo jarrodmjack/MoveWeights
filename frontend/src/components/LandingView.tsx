@@ -1,38 +1,8 @@
 import Image from "next/image"
 import React from "react"
-import LoginButton from "./button/LoginButton"
-import SignupButton from "./button/SignupButton"
 import Link from "next/link"
 
 const LandingView = () => {
-
-
-	const saveGeoLocationData = async () => {
-
-
-		try {
-			const url = `https://ipgeolocation.abstractapi.com/v1/?api_key=bbd3d0696e0e4a1c8ceb4b72a639d2df`
-
-			const geoResponse = await fetch(url)
-			const geoData = await geoResponse.json()
-
-			const response = await fetch(
-				`${process.env.NEXT_PUBLIC_API_URL}/api/exercise/geo`,
-				{
-					method: "POST",
-					headers: {
-						"Content-type": "application/json",
-					},
-					body: JSON.stringify({geoData: geoData}),
-				}
-			)
-			console.log("response: ", response)
-		} catch (e) {
-			console.log(e)
-		}
-	}
-	saveGeoLocationData()
-
 
 	return (
 		<div className="flex flex-col gap-4">

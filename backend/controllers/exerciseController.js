@@ -118,29 +118,30 @@ const getTodaysWorkoutByUserId = async (req, res) => {
 	}
 }
 
-const saveGeoLocation = async (req, res) => {
-	console.log(req.body)
+// WILL BE USED LATER ON
+// const saveGeoLocation = async (req, res) => {
+// 	console.log(req.body)
 
-	if (!req.body.geoData.ip_address) {
-		return
-	}
+// 	if (!req.body.geoData.ip_address) {
+// 		return
+// 	}
 
-	const geoData = req.body.geoData
+// 	const geoData = req.body.geoData
 
-	const newGeo = await GeoLocation.create({
-		city: geoData.city,
-		ipAddress: geoData.ip_address,
-		country: geoData.country,
-		region: geoData.region,
-		regionIsoCode: geoData.region_iso_code,
-		isVPN: geoData.security.isVPN,
-		timezone: geoData.timezone,
-		connection: geoData.connection,
-	})
+// 	const newGeo = await GeoLocation.create({
+// 		city: geoData.city,
+// 		ipAddress: geoData.ip_address,
+// 		country: geoData.country,
+// 		region: geoData.region,
+// 		regionIsoCode: geoData.region_iso_code,
+// 		isVPN: geoData.security.isVPN,
+// 		timezone: geoData.timezone,
+// 		connection: geoData.connection,
+// 	})
 
-	console.log(newGeo)
-	res.status(200).json({ msg: "Success" })
-}
+// 	console.log(newGeo)
+// 	res.status(200).json({ msg: "Success" })
+// }
 
 const getExerciseById = async (req, res) => {
 	try {
@@ -178,5 +179,4 @@ module.exports = {
 	getTodaysWorkoutByUserId,
 	getExerciseById,
 	addSetToExercise,
-	saveGeoLocation,
 }
