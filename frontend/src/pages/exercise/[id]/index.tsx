@@ -15,6 +15,7 @@ const index = () => {
 	const { workout } = useContext(WorkoutContext)!
 	const { user } = useAuthContext()
 	const [exerciseSets, setExerciseSets] = useState<Set[]>([])
+	const [selectedSetId, setSelectedSetId] = useState<string>("")
 	const router = useRouter()
 
 	useEffect(() => {
@@ -118,6 +119,14 @@ const index = () => {
 		}
 	}
 
+	const handleSelectSet = (setId: string) => {
+		if (selectedSetId === setId) {
+			setSelectedSetId("")
+		} else {
+			setSelectedSetId(setId)
+		}
+	}
+
 	if (isLoading) {
 		return <LoadingPageWithLogo />
 	}
@@ -128,10 +137,15 @@ const index = () => {
 				<h3 className="text-xl font-semibold">
 					Add a set to {exercise?.name}
 				</h3>
-				<AddSetToExerciseForm handleSubmit={handleAddSetToExercise} />
+				<AddSetToExerciseForm
+					handleDeleteSet={handleDeleteSetFromExercise}
+					selectedSetId={selectedSetId}
+					handleSubmit={handleAddSetToExercise}
+				/>
 				{exerciseSets.length > 0 ? (
 					<SetList
-						handleDeleteSet={handleDeleteSetFromExercise}
+						selectedSetId={selectedSetId}
+						handleSelectSet={handleSelectSet}
 						sets={exerciseSets}
 					/>
 				) : (

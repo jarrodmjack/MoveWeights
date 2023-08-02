@@ -3,10 +3,14 @@ import PrimaryBorderDivider from "../divider/PrimaryBorderDivider"
 
 type AddSetToExerciseFormOwnProps = {
 	handleSubmit: (setData: { numOfReps: number; weight: number }) => void
+	handleDeleteSet: (setId: string) => void
+	selectedSetId: string
 }
 
 const AddSetToExerciseForm: React.FC<AddSetToExerciseFormOwnProps> = ({
 	handleSubmit,
+	selectedSetId,
+	handleDeleteSet,
 }) => {
 	const [weight, setWeight] = useState(0)
 	const [numOfReps, setNumOfReps] = useState(0)
@@ -47,15 +51,44 @@ const AddSetToExerciseForm: React.FC<AddSetToExerciseFormOwnProps> = ({
 					className="input input-bordered w-1/2 self-center"
 				/>
 			</div>
-			<button
-				className="btn bg-primary-focus text-white"
-				onClick={(e) => {
-					e.preventDefault()
-					handleSubmit({ numOfReps: numOfReps, weight: weight })
-				}}
-			>
-				+ Add
-			</button>
+			{selectedSetId ? (
+				<div className="flex">
+					<button
+						className="btn bg-primary-focus text-white flex-1"
+						onClick={(e) => {
+							e.preventDefault()
+							handleSubmit({
+								numOfReps: numOfReps,
+								weight: weight,
+							})
+						}}
+					>
+						Update
+					</button>
+					<button
+						className="btn bg-danger text-white flex-1"
+						onClick={(e) => {
+							e.preventDefault()
+							handleDeleteSet(selectedSetId)
+						}}
+					>
+						Delete
+					</button>
+				</div>
+			) : (
+				<button
+					className="btn bg-primary-focus text-white flex-1"
+					onClick={(e) => {
+						e.preventDefault()
+						handleSubmit({
+							numOfReps: numOfReps,
+							weight: weight,
+						})
+					}}
+				>
+					+ Add
+				</button>
+			)}
 		</form>
 	)
 }
