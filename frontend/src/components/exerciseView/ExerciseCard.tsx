@@ -7,6 +7,14 @@ type ExerciseCardOwnProps = {
 }
 
 const ExerciseCard: React.FC<ExerciseCardOwnProps> = ({ exercise }) => {
+	if (exercise.sets.length === 0) {
+		return (
+			<div className="shadow border-1 border-primary-content p-4 font-bold flex flex-col gap-2">
+				test
+			</div>
+		)
+	}
+
 	return (
 		<Link href={`/exercise/${exercise._id}`}>
 			<div className="shadow border-1 border-primary-content p-4 font-bold flex flex-col gap-2">

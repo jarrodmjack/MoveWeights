@@ -8,8 +8,6 @@ type ExerciseListOwnProps = {
 }
 
 const ExerciseList: React.FC<ExerciseListOwnProps> = ({ exercises }) => {
-	// const { workout, fetchTodaysWorkout } = useContext(WorkoutContext)!
-
 	if (exercises.length === 0) {
 		return <>No exercises have been added to todays workout</>
 	}
