@@ -58,7 +58,10 @@ const signup = () => {
 						</div>
 						<div className="form-control mt-6">
 							<button
-								onClick={() => handleSignup()}
+								onClick={(e) => {
+									e.preventDefault()
+									handleSignup()
+								}}
 								className="btn bg-primary-focus text-white"
 								disabled={isLoading}
 							>

@@ -70,7 +70,8 @@ const login = () => {
 						</div>
 						<div className="form-control mt-6">
 							<button
-								onClick={() => {
+								onClick={(e) => {
+									e.preventDefault()
 									handleLogin()
 								}}
 								disabled={isLoading}
