@@ -3,7 +3,7 @@ import React from "react"
 
 type SetListOwnProps = {
 	sets: Set[]
-	selectedSetId: string
+	selectedSetId: string | undefined
 	handleSelectSet: (setId: string) => void
 }
 
@@ -23,7 +23,9 @@ const SetList: React.FC<SetListOwnProps> = ({
 					key={set._id}
 				>
 					<div className="flex-1">
-						<p className="font-semibold text-neutral-500">{i + 1}.</p>
+						<p className="font-semibold text-neutral-500">
+							{i + 1}.
+						</p>
 					</div>
 					<div className="flex gap-2 items-center flex-1">
 						<p className="text-2xl font-bold">{set.weight}</p>

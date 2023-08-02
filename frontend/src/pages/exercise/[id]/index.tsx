@@ -15,7 +15,8 @@ const index = () => {
 	const { workout } = useContext(WorkoutContext)!
 	const { user } = useAuthContext()
 	const [exerciseSets, setExerciseSets] = useState<Set[]>([])
-	const [selectedSetId, setSelectedSetId] = useState<string>("")
+	const [selectedSetId, setSelectedSetId] = useState("")
+	const [selectedSet, setSelectedSet] = useState<Set | null | undefined>(null)
 	const router = useRouter()
 
 	useEffect(() => {
@@ -75,7 +76,7 @@ const index = () => {
 		const data: Set = await response.json()
 		setExerciseSets([...exerciseSets, data])
 
-		// For updating context
+		// For updating workout context
 		let foundExercise = workout?.exercises.find(
 			(exercise) => exercise._id === router.query.id
 		)
@@ -101,9 +102,11 @@ const index = () => {
 				setExerciseSets([
 					...exerciseSets.filter((set) => set._id !== setId),
 				])
+				setSelectedSet(null)
+				setSelectedSetId("")
 			}
 
-			// For updating context
+			// For updating workout context
 			let foundExercise = workout?.exercises.find(
 				(exercise) => exercise._id === router.query.id
 			)
@@ -122,8 +125,10 @@ const index = () => {
 	const handleSelectSet = (setId: string) => {
 		if (selectedSetId === setId) {
 			setSelectedSetId("")
+			setSelectedSet(null)
 		} else {
 			setSelectedSetId(setId)
+			setSelectedSet(exerciseSets.find((set) => set._id === setId))
 		}
 	}
 
@@ -139,12 +144,12 @@ const index = () => {
 				</h3>
 				<AddSetToExerciseForm
 					handleDeleteSet={handleDeleteSetFromExercise}
-					selectedSetId={selectedSetId}
+					selectedSet={selectedSet}
 					handleSubmit={handleAddSetToExercise}
 				/>
 				{exerciseSets.length > 0 ? (
 					<SetList
-						selectedSetId={selectedSetId}
+						selectedSetId={selectedSet?._id}
 						handleSelectSet={handleSelectSet}
 						sets={exerciseSets}
 					/>

@@ -1,19 +1,27 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import PrimaryBorderDivider from "../divider/PrimaryBorderDivider"
+import { Set } from "@/types/Workout"
 
 type AddSetToExerciseFormOwnProps = {
 	handleSubmit: (setData: { numOfReps: number; weight: number }) => void
 	handleDeleteSet: (setId: string) => void
-	selectedSetId: string
+	selectedSet: Set | null | undefined
 }
 
 const AddSetToExerciseForm: React.FC<AddSetToExerciseFormOwnProps> = ({
 	handleSubmit,
-	selectedSetId,
+	selectedSet,
 	handleDeleteSet,
 }) => {
 	const [weight, setWeight] = useState(0)
 	const [numOfReps, setNumOfReps] = useState(0)
+
+	useEffect(() => {
+		if (selectedSet) {
+			setWeight(selectedSet.weight)
+			setNumOfReps(selectedSet.reps)
+		}
+	}, [selectedSet])
 
 	return (
 		<form className="flex flex-col gap-4">
@@ -51,7 +59,7 @@ const AddSetToExerciseForm: React.FC<AddSetToExerciseFormOwnProps> = ({
 					className="input input-bordered w-1/2 self-center"
 				/>
 			</div>
-			{selectedSetId ? (
+			{selectedSet ? (
 				<div className="flex">
 					<button
 						className="btn bg-primary-focus text-white flex-1"
@@ -69,7 +77,7 @@ const AddSetToExerciseForm: React.FC<AddSetToExerciseFormOwnProps> = ({
 						className="btn bg-danger text-white flex-1"
 						onClick={(e) => {
 							e.preventDefault()
-							handleDeleteSet(selectedSetId)
+							handleDeleteSet(selectedSet._id)
 						}}
 					>
 						Delete
