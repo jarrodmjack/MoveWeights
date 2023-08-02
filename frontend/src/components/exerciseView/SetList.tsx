@@ -1,6 +1,6 @@
 import { Set } from "@/types/Workout"
 import React from "react"
-import { FaRegTimesCircle } from "react-icons/fa"
+import { FaRegTimesCircle, FaMinusSquare } from "react-icons/fa"
 
 type SetListOwnProps = {
 	sets: Set[]
@@ -21,12 +21,12 @@ const SetList: React.FC<SetListOwnProps> = ({ sets, handleDeleteSet }) => {
 						<p className="text-neutral">reps</p>
 					</div>
 					<div>
-						<FaRegTimesCircle
+						<FaMinusSquare
 							onClick={(e) => {
 								handleDeleteSet(e.currentTarget.id)
 							}}
 							id={`${set._id}`}
-							className="flex-1 text-danger hover:scale-125 cursor-pointer"
+							className="flex-1 text-danger scale-125 hover:scale-150 cursor-pointer"
 						/>
 					</div>
 				</div>

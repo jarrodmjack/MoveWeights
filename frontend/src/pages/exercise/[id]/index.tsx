@@ -12,6 +12,7 @@ import { toast } from "react-hot-toast"
 const index = () => {
 	const [isLoading, setIsLoading] = useState(false)
 	const [exercise, setExercise] = useState<Exercise>()
+	const { workout } = useContext(WorkoutContext)!
 	const { user } = useAuthContext()
 	const [exerciseSets, setExerciseSets] = useState<Set[]>([])
 	const router = useRouter()
@@ -72,6 +73,14 @@ const index = () => {
 		)
 		const data: Set = await response.json()
 		setExerciseSets([...exerciseSets, data])
+
+		// For updating context
+		let foundExercise = workout?.exercises.find(
+			(exercise) => exercise._id === router.query.id
+		)
+		if (foundExercise) {
+			foundExercise.sets.push(data)
+		}
 	}
 
 	const handleDeleteSetFromExercise = async (setId: string) => {
@@ -92,11 +101,25 @@ const index = () => {
 					...exerciseSets.filter((set) => set._id !== setId),
 				])
 			}
+
+			// For updating context
+			let foundExercise = workout?.exercises.find(
+				(exercise) => exercise._id === router.query.id
+			)
+			if (foundExercise) {
+				foundExercise.sets = foundExercise.sets.filter(
+					(set) => set._id !== setId
+				)
+			}
 		} catch (e) {
 			toast.error(
 				"There was an issue deleting the set, please try again."
 			)
 		}
+	}
+
+	if (isLoading) {
+		return <LoadingPageWithLogo />
 	}
 
 	return (
@@ -112,7 +135,9 @@ const index = () => {
 						sets={exerciseSets}
 					/>
 				) : (
-					<div>Loading...</div>
+					<div className="flex justify-center">
+						<h4>No sets have been added to this exercise</h4>
+					</div>
 				)}
 			</div>
 		</Layout>
