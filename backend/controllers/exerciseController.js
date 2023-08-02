@@ -41,7 +41,6 @@ const createWorkout = async (req, res) => {
 const addExerciseToWorkout = async (req, res) => {}
 
 const addSetToExercise = async (req, res) => {
-	// console.log('HIT')
 	console.log(req.body)
 	try {
 		const exerciseId = req.body.exerciseId
@@ -63,10 +62,31 @@ const addSetToExercise = async (req, res) => {
 		await newSet.save()
 		await exercise.save()
 
-		res.status(200).json()
+		res.status(200).json(newSet)
 		return
 	} catch (e) {
 		res.status(400).json({ msg: "there was an issue" })
+	}
+}
+
+const deleteSetFromExercise = async (req, res) => {
+	try {
+		const exerciseId = req.body.exerciseId
+		const setId = req.params.id
+		const exercise = await Exercise.findById(exerciseId)
+		exercise.sets = exercise.sets.filter(
+			(set) => set._id.toString() !== setId
+		)
+
+		await exercise.save()
+		await exercise.populate("sets")
+
+		await Set.findByIdAndDelete(setId)
+
+		res.status(200).json({ msg: "Successfully deleted" })
+	} catch (e) {
+		console.log(e)
+		res.status(400).json({ msg: "Error deleting" })
 	}
 }
 
@@ -179,4 +199,5 @@ module.exports = {
 	getTodaysWorkoutByUserId,
 	getExerciseById,
 	addSetToExercise,
+	deleteSetFromExercise,
 }

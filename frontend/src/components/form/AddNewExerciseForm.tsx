@@ -26,7 +26,7 @@ const AddNewExerciseForm: React.FC<AddNewExerciseFormOwnProps> = ({
 				<option value="legs">Legs</option>
 				<option value="shoulders">Shoulders</option>
 				<option value="triceps">Triceps</option>
-				<option value="cardio">Cardio</option>
+				{/* <option value="cardio">Cardio</option> <--- DISABLED FOR NOW */} 
 			</select>
 			<input
 				onChange={(e) => setExerciseName(e.target.value)}
@@ -43,7 +43,7 @@ const AddNewExerciseForm: React.FC<AddNewExerciseFormOwnProps> = ({
 				}}
 				className="w-full py-4 bg-primary-focus rounded-lg text-white cursor-pointer"
 			>
-				Submit
+				+ Add
 			</button>
 		</form>
 	)

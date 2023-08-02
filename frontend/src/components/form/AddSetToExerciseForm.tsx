@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import PrimaryBorderDivider from "../divider/PrimaryBorderDivider"
 
 type AddSetToExerciseFormOwnProps = {
-	handleSubmit: (setData: {numOfReps: number, weight: number}) => void
+	handleSubmit: (setData: { numOfReps: number; weight: number }) => void
 }
 
 const AddSetToExerciseForm: React.FC<AddSetToExerciseFormOwnProps> = ({
@@ -47,10 +47,15 @@ const AddSetToExerciseForm: React.FC<AddSetToExerciseFormOwnProps> = ({
 					className="input input-bordered w-1/2 self-center"
 				/>
 			</div>
-			<button onClick={(e) => {
-                e.preventDefault()
-                handleSubmit({numOfReps: numOfReps, weight: weight})
-            }}>test</button>
+			<button
+				className="btn bg-primary-focus text-white"
+				onClick={(e) => {
+					e.preventDefault()
+					handleSubmit({ numOfReps: numOfReps, weight: weight })
+				}}
+			>
+				+ Add
+			</button>
 		</form>
 	)
 }

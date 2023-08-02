@@ -105,7 +105,7 @@ const AddExerciseToWorkoutForm: React.FC<
 					<option value="legs">Legs</option>
 					<option value="shoulders">Shoulders</option>
 					<option value="triceps">Triceps</option>
-					<option value="cardio">Cardio</option>
+					{/* <option value="cardio">Cardio</option>  <-- DISABLED FOR NOW */}
 				</select>
 			</div>
 			<div className="flex flex-col w-full gap-4">
@@ -164,7 +164,7 @@ const AddExerciseToWorkoutForm: React.FC<
 				}}
 				className="w-full py-4 bg-primary-focus rounded-lg text-white cursor-pointer"
 			>
-				Submit
+				+ Add
 			</button>
 		</form>
 	)

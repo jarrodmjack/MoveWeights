@@ -1,3 +1,4 @@
+import SetList from "@/components/exerciseView/SetList"
 import AddSetToExerciseForm from "@/components/form/AddSetToExerciseForm"
 import Layout from "@/components/layout/Layout"
 import LoadingPageWithLogo from "@/components/loading/LoadingPageWithLogo"
@@ -6,12 +7,13 @@ import { useAuthContext } from "@/hooks/useAuthContext"
 import { Exercise, Set } from "@/types/Workout"
 import { useRouter } from "next/router"
 import React, { useContext, useEffect, useState } from "react"
+import { toast } from "react-hot-toast"
 
 const index = () => {
 	const [isLoading, setIsLoading] = useState(false)
 	const [exercise, setExercise] = useState<Exercise>()
 	const { user } = useAuthContext()
-	const [exerciseSets, setExerciseSets] = useState([])
+	const [exerciseSets, setExerciseSets] = useState<Set[]>([])
 	const router = useRouter()
 
 	useEffect(() => {
@@ -31,11 +33,17 @@ const index = () => {
 						},
 					}
 				)
-				const data = await response.json()
-				setExercise(data)
+
+				if (response.ok) {
+					const data = await response.json()
+					setExercise(data)
+					setExerciseSets(data.sets)
+				}
 				setIsLoading(false)
 			} catch (e) {
-				console.log("e: ", e)
+				toast.error(
+					"There was an issue adding your set. Please try again"
+				)
 				setIsLoading(false)
 			}
 		}
@@ -47,7 +55,6 @@ const index = () => {
 		weight: number
 		numOfReps: number
 	}) => {
-		// console.log("data: ", setData.reps)
 		const response = await fetch(
 			`${process.env.NEXT_PUBLIC_API_URL}/api/exercise/exercise/add-set`,
 			{
@@ -63,11 +70,34 @@ const index = () => {
 				}),
 			}
 		)
-		const data = await response.json()
-		console.log("data: ", data)
+		const data: Set = await response.json()
+		setExerciseSets([...exerciseSets, data])
 	}
 
-	// /exercise/add-set
+	const handleDeleteSetFromExercise = async (setId: string) => {
+		try {
+			const response = await fetch(
+				`${process.env.NEXT_PUBLIC_API_URL}/api/exercise/set/${setId}`,
+				{
+					method: "DELETE",
+					headers: {
+						"Content-type": "application/json",
+						Authorization: `Bearer ${user.token}`,
+					},
+					body: JSON.stringify({ exerciseId: exercise?._id }),
+				}
+			)
+			if (response.ok) {
+				setExerciseSets([
+					...exerciseSets.filter((set) => set._id !== setId),
+				])
+			}
+		} catch (e) {
+			toast.error(
+				"There was an issue deleting the set, please try again."
+			)
+		}
+	}
 
 	return (
 		<Layout>
@@ -76,29 +106,11 @@ const index = () => {
 					Add a set to {exercise?.name}
 				</h3>
 				<AddSetToExerciseForm handleSubmit={handleAddSetToExercise} />
-				{exercise ? (
-					<div>
-						{exercise.sets.length > 0 &&
-							exercise.sets.map((set: Set, i) => (
-								<div
-									className="flex border-b border-neutral-content justify-evenly"
-									key={i}
-								>
-									<div className="flex gap-2 items-center">
-										<p className="text-2xl font-bold">
-											{set.weight}
-										</p>
-										<p className="text-neutral">lbs</p>
-									</div>
-									<div className="flex gap-2 items-center">
-										<p className="text-2xl font-bold">
-											{set.reps}
-										</p>
-										<p className="text-neutral">reps</p>
-									</div>
-								</div>
-							))}
-					</div>
+				{exerciseSets.length > 0 ? (
+					<SetList
+						handleDeleteSet={handleDeleteSetFromExercise}
+						sets={exerciseSets}
+					/>
 				) : (
 					<div>Loading...</div>
 				)}
