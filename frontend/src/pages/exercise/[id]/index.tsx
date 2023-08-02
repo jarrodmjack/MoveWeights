@@ -11,6 +11,7 @@ import { toast } from "react-hot-toast"
 
 const index = () => {
 	const [isLoading, setIsLoading] = useState(false)
+	const [addSetLoading, setAddSetLoading] = useState(false)
 	const [exercise, setExercise] = useState<Exercise>()
 	const { workout } = useContext(WorkoutContext)!
 	const { user } = useAuthContext()
@@ -58,30 +59,35 @@ const index = () => {
 		weight: number
 		numOfReps: number
 	}) => {
-		const response = await fetch(
-			`${process.env.NEXT_PUBLIC_API_URL}/api/exercise/exercise/add-set`,
-			{
-				method: "POST",
-				headers: {
-					"Content-type": "application/json",
-					Authorization: `Bearer ${user.token}`,
-				},
-				body: JSON.stringify({
-					exerciseId: router.query.id,
-					weight: setData.weight,
-					numOfReps: setData.numOfReps,
-				}),
+		try {
+			setAddSetLoading(true)
+			const response = await fetch(
+				`${process.env.NEXT_PUBLIC_API_URL}/api/exercise/exercise/add-set`,
+				{
+					method: "POST",
+					headers: {
+						"Content-type": "application/json",
+						Authorization: `Bearer ${user.token}`,
+					},
+					body: JSON.stringify({
+						exerciseId: router.query.id,
+						weight: setData.weight,
+						numOfReps: setData.numOfReps,
+					}),
+				}
+			)
+			const data: Set = await response.json()
+			setExerciseSets([...exerciseSets, data])
+			setAddSetLoading(false)
+			// For updating workout context
+			let foundExercise = workout?.exercises.find(
+				(exercise) => exercise._id === router.query.id
+			)
+			if (foundExercise) {
+				foundExercise.sets.push(data)
 			}
-		)
-		const data: Set = await response.json()
-		setExerciseSets([...exerciseSets, data])
-
-		// For updating workout context
-		let foundExercise = workout?.exercises.find(
-			(exercise) => exercise._id === router.query.id
-		)
-		if (foundExercise) {
-			foundExercise.sets.push(data)
+		} catch (e) {
+			toast.error("There was an issue adding the set. Please try again")
 		}
 	}
 
@@ -143,6 +149,7 @@ const index = () => {
 					Add a set to {exercise?.name}
 				</h3>
 				<AddSetToExerciseForm
+					isLoading={addSetLoading}
 					handleDeleteSet={handleDeleteSetFromExercise}
 					selectedSet={selectedSet}
 					handleSubmit={handleAddSetToExercise}

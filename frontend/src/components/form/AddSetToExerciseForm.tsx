@@ -1,17 +1,20 @@
 import React, { useState, useEffect } from "react"
 import PrimaryBorderDivider from "../divider/PrimaryBorderDivider"
 import { Set } from "@/types/Workout"
+import LoadingDots from "../loading/LoadingDots"
 
 type AddSetToExerciseFormOwnProps = {
 	handleSubmit: (setData: { numOfReps: number; weight: number }) => void
 	handleDeleteSet: (setId: string) => void
 	selectedSet: Set | null | undefined
+	isLoading: boolean
 }
 
 const AddSetToExerciseForm: React.FC<AddSetToExerciseFormOwnProps> = ({
 	handleSubmit,
 	selectedSet,
 	handleDeleteSet,
+	isLoading,
 }) => {
 	const [weight, setWeight] = useState(0)
 	const [numOfReps, setNumOfReps] = useState(0)
@@ -61,16 +64,10 @@ const AddSetToExerciseForm: React.FC<AddSetToExerciseFormOwnProps> = ({
 			</div>
 			{selectedSet ? (
 				<div className="flex">
-					<button
-						className="btn bg-primary-focus text-white flex-1"
-						onClick={(e) => {
-							e.preventDefault()
-							handleSubmit({
-								numOfReps: numOfReps,
-								weight: weight,
-							})
-						}}
-					>
+					<button onClick={(e) => {
+						e.preventDefault()
+					}} className="btn bg-primary-focus text-white flex-1">
+
 						Update
 					</button>
 					<button
@@ -86,6 +83,7 @@ const AddSetToExerciseForm: React.FC<AddSetToExerciseFormOwnProps> = ({
 			) : (
 				<button
 					className="btn bg-primary-focus text-white flex-1"
+					disabled={isLoading}
 					onClick={(e) => {
 						e.preventDefault()
 						handleSubmit({
@@ -94,7 +92,7 @@ const AddSetToExerciseForm: React.FC<AddSetToExerciseFormOwnProps> = ({
 						})
 					}}
 				>
-					+ Add
+					{isLoading ? <LoadingDots /> : <span>+ Add</span>}
 				</button>
 			)}
 		</form>
