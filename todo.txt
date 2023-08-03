@@ -1,6 +1,1 @@
-When added set to exercise, do optimistic render with newly added set. If failure to add, refresh page.
-
-Things that need to be added/fixed:
-
-Do not allow negative numbers in reps/weight inputs
-forgot password functionality
+When switching browsers or token expiration, throwing bruh error. figure that out and redirect to login

@@ -1,6 +1,6 @@
 import { useAuthContext } from "@/hooks/useAuthContext"
 import Link from "next/link"
-import React, { PropsWithChildren, useEffect } from "react"
+import React, { PropsWithChildren } from "react"
 import BottomNav from "../nav/BottomNav"
 import { useRouter } from "next/router"
 import LandingView from "../LandingView"
@@ -17,7 +17,10 @@ const Layout: React.FC<LayoutOwnProps> = ({ children }) => {
 		<main className="flex flex-col borderh-screen">
 			<nav className="navbar bg-neutral text-base-100">
 				<div className="flex-1">
-					<Link href="/" className="btn btn-ghost normal-case text-xl">
+					<Link
+						href="/"
+						className="btn btn-ghost normal-case text-xl"
+					>
 						<Image
 							width={150}
 							height={60}
@@ -55,9 +58,6 @@ const Layout: React.FC<LayoutOwnProps> = ({ children }) => {
 											</li>
 										</>
 									)}
-									{/* <li>
-										<a>Settings</a>
-									</li> */}
 								</ul>
 							</details>
 						</li>
