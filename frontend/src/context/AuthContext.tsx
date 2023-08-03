@@ -32,7 +32,9 @@ export const AuthContextProvider = ({ children }) => {
 		} else {
 			if (router.pathname !== "/") {
 				router.push("/login")
+				return
 			}
+			router.push('/')
 		}
 	}, [])
 
