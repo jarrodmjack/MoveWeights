@@ -11,7 +11,7 @@ import { toast } from "react-hot-toast"
 
 const index = () => {
 	const [isLoading, setIsLoading] = useState(false)
-	const [addSetLoading, setAddSetLoading] = useState(false)
+	const [actionLoading, setActionLoading] = useState(false)
 	const [exercise, setExercise] = useState<Exercise>()
 	const { workout } = useContext(WorkoutContext)!
 	const { user } = useAuthContext()
@@ -60,7 +60,7 @@ const index = () => {
 		numOfReps: number
 	}) => {
 		try {
-			setAddSetLoading(true)
+			setActionLoading(true)
 			const response = await fetch(
 				`${process.env.NEXT_PUBLIC_API_URL}/api/exercise/exercise/add-set`,
 				{
@@ -78,7 +78,7 @@ const index = () => {
 			)
 			const data: Set = await response.json()
 			setExerciseSets([...exerciseSets, data])
-			setAddSetLoading(false)
+			setActionLoading(false)
 			// For updating workout context
 			let foundExercise = workout?.exercises.find(
 				(exercise) => exercise._id === router.query.id
@@ -88,6 +88,45 @@ const index = () => {
 			}
 		} catch (e) {
 			toast.error("There was an issue adding the set. Please try again")
+			setActionLoading(false)
+		}
+	}
+
+	const handleUpdateSet = async (weight: number, reps: number) => {
+		try {
+			setActionLoading(true)
+			const response = await fetch(
+				`${process.env.NEXT_PUBLIC_API_URL}/api/exercise/set/${selectedSetId}`,
+				{
+					method: "PUT",
+					headers: {
+						"Content-type": "application/json",
+						Authorization: `Bearer ${user.token}`,
+					},
+					body: JSON.stringify({
+						weight: weight,
+						reps: reps,
+					}),
+				}
+			)
+			const newSet: Set = await response.json()
+			let oldSet = exerciseSets.find((set) => set._id === newSet._id)
+			oldSet!.reps = newSet.reps
+			oldSet!.weight = newSet.weight
+			let foundExercise = workout?.exercises.find(
+				(exercise) => exercise._id === router.query.id
+			)
+			if (foundExercise) {
+				let oldSetInContext = foundExercise.sets.find(
+					(set) => set._id === newSet._id
+				)
+				oldSetInContext!.reps = newSet.reps
+				oldSetInContext!.weight = newSet.weight
+			}
+			setActionLoading(false)
+		} catch (e) {
+			toast.error("There was an issue updating the set. Please try again")
+			setActionLoading(false)
 		}
 	}
 
@@ -149,10 +188,11 @@ const index = () => {
 					Add a set to {exercise?.name}
 				</h3>
 				<AddSetToExerciseForm
-					isLoading={addSetLoading}
-					handleDeleteSet={handleDeleteSetFromExercise}
+					isLoading={actionLoading}
 					selectedSet={selectedSet}
 					handleSubmit={handleAddSetToExercise}
+					handleUpdateSet={handleUpdateSet}
+					handleDeleteSet={handleDeleteSetFromExercise}
 				/>
 				{exerciseSets.length > 0 ? (
 					<SetList

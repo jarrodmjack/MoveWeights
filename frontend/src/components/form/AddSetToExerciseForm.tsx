@@ -4,17 +4,19 @@ import { Set } from "@/types/Workout"
 import LoadingDots from "../loading/LoadingDots"
 
 type AddSetToExerciseFormOwnProps = {
-	handleSubmit: (setData: { numOfReps: number; weight: number }) => void
-	handleDeleteSet: (setId: string) => void
 	selectedSet: Set | null | undefined
 	isLoading: boolean
+	handleSubmit: (setData: { numOfReps: number; weight: number }) => void
+	handleDeleteSet: (setId: string) => void
+	handleUpdateSet: (weight: number, reps: number) => void
 }
 
 const AddSetToExerciseForm: React.FC<AddSetToExerciseFormOwnProps> = ({
-	handleSubmit,
 	selectedSet,
-	handleDeleteSet,
 	isLoading,
+	handleSubmit,
+	handleUpdateSet,
+	handleDeleteSet,
 }) => {
 	const [weight, setWeight] = useState(0)
 	const [numOfReps, setNumOfReps] = useState(0)
@@ -64,20 +66,25 @@ const AddSetToExerciseForm: React.FC<AddSetToExerciseFormOwnProps> = ({
 			</div>
 			{selectedSet ? (
 				<div className="flex">
-					<button onClick={(e) => {
-						e.preventDefault()
-					}} className="btn bg-primary-focus text-white flex-1">
-
-						Update
+					<button
+						disabled={isLoading}
+						onClick={(e) => {
+							e.preventDefault()
+							handleUpdateSet(weight, numOfReps)
+						}}
+						className="btn bg-primary-focus text-white flex-1"
+					>
+						{isLoading ? <LoadingDots /> : <span>Update</span>}
 					</button>
 					<button
+						disabled={isLoading}
 						className="btn bg-danger text-white flex-1"
 						onClick={(e) => {
 							e.preventDefault()
 							handleDeleteSet(selectedSet._id)
 						}}
 					>
-						Delete
+						{isLoading ? <LoadingDots /> : <span>Delete</span>}
 					</button>
 				</div>
 			) : (

@@ -7,6 +7,7 @@ const {
 	getExerciseById,
 	addSetToExercise,
 	deleteSetFromExercise,
+	updateSet,
 } = require("../controllers/exerciseController")
 const requireAuth = require("../middleware/requireAuth")
 
@@ -19,6 +20,7 @@ router.post("/create-exercise", createNewUserExercise)
 router.get("/exercises", getExercisesByUserId)
 router.get("/exercise/:id", getExerciseById)
 router.get("/todaysWorkout", getTodaysWorkoutByUserId)
+router.put("/set/:id", updateSet)
 router.delete("/set/:id", deleteSetFromExercise)
 
 module.exports = router

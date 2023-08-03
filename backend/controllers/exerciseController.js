@@ -3,7 +3,6 @@ const Workout = require("../models/workoutModel")
 const Exercise = require("../models/exerciseModel")
 const Set = require("../models/setModel")
 const UserExercise = require("../models/userExerciseModel")
-const GeoLocation = require("../models/geoLocationModel")
 
 const createWorkout = async (req, res) => {
 	try {
@@ -41,7 +40,6 @@ const createWorkout = async (req, res) => {
 const addExerciseToWorkout = async (req, res) => {}
 
 const addSetToExercise = async (req, res) => {
-	console.log(req.body)
 	try {
 		const exerciseId = req.body.exerciseId
 
@@ -65,7 +63,27 @@ const addSetToExercise = async (req, res) => {
 		res.status(200).json(newSet)
 		return
 	} catch (e) {
-		res.status(400).json({ msg: "there was an issue" })
+		res.status(400).json({ msg: "There was an issue adding the set" })
+	}
+}
+
+const updateSet = async (req, res) => {
+	try {
+		const setId = req.params.id
+
+		const set = await Set.findByIdAndUpdate(
+			setId,
+			{
+				weight: req.body.weight,
+				reps: req.body.reps,
+			},
+			{ new: true }
+		)
+
+		res.status(200).json(set)
+	} catch (e) {
+		res.status(400).json({ msg: "There was an issue updating the set" })
+		console.log("e: ", e)
 	}
 }
 
@@ -138,31 +156,6 @@ const getTodaysWorkoutByUserId = async (req, res) => {
 	}
 }
 
-// WILL BE USED LATER ON
-// const saveGeoLocation = async (req, res) => {
-// 	console.log(req.body)
-
-// 	if (!req.body.geoData.ip_address) {
-// 		return
-// 	}
-
-// 	const geoData = req.body.geoData
-
-// 	const newGeo = await GeoLocation.create({
-// 		city: geoData.city,
-// 		ipAddress: geoData.ip_address,
-// 		country: geoData.country,
-// 		region: geoData.region,
-// 		regionIsoCode: geoData.region_iso_code,
-// 		isVPN: geoData.security.isVPN,
-// 		timezone: geoData.timezone,
-// 		connection: geoData.connection,
-// 	})
-
-// 	console.log(newGeo)
-// 	res.status(200).json({ msg: "Success" })
-// }
-
 const getExerciseById = async (req, res) => {
 	try {
 		const exerciseId = req.params.id
@@ -200,4 +193,5 @@ module.exports = {
 	getExerciseById,
 	addSetToExercise,
 	deleteSetFromExercise,
+	updateSet,
 }
