@@ -165,7 +165,13 @@ const getTodaysWorkoutByUserId = async (req, res) => {
 	try {
 		const userId = req.user._id
 		const currentDate = new Date()
-		currentDate.setHours(0, 0, 0, 0)
+		let currentTimeZoneOffset = currentDate.getTimezoneOffset()
+		currentDate.setHours(
+			Math.floor(currentTimeZoneOffset / 60),
+			currentTimeZoneOffset % 60,
+			0,
+			0
+		)
 		const endOfDay = new Date(currentDate)
 		endOfDay.setHours(23, 59, 59, 999)
 		console.log("beginning of day: ", currentDate)
