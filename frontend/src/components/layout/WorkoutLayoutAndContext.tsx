@@ -27,12 +27,13 @@ const WorkoutLayoutAndContext: React.FC<PropsWithChildren> = ({ children }) => {
 					},
 				}
 			)
-			const data = await response.json()
-			if (!data) {
+			if (!response.ok) {
 				setWorkout(undefined)
 			} else {
+				const data = await response.json()
 				setWorkout(data)
 			}
+
 			setIsLoading(false)
 		} catch (e) {
 			setWorkout(undefined)

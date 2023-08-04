@@ -168,7 +168,8 @@ const getTodaysWorkoutByUserId = async (req, res) => {
 		currentDate.setHours(0, 0, 0, 0)
 		const endOfDay = new Date(currentDate)
 		endOfDay.setHours(23, 59, 59, 999)
-
+		console.log("beginning of day: ", currentDate)
+		console.log("end of day: ", endOfDay)
 		const workout = await Workout.findOne({
 			userId: userId,
 			createdAt: {
@@ -181,7 +182,7 @@ const getTodaysWorkoutByUserId = async (req, res) => {
 				path: "sets",
 			},
 		})
-
+		console.log("created at: ", workout.createdAt)
 		res.status(200).json(workout)
 		return
 	} catch (e) {

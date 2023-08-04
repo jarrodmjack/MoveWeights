@@ -8,7 +8,7 @@ type ExerciseListOwnProps = {
 }
 
 const ExerciseList: React.FC<ExerciseListOwnProps> = ({ exercises }) => {
-	if (exercises.length === 0) {
+	if (!exercises || exercises.length === 0) {
 		return <>No exercises have been added to todays workout</>
 	}
 

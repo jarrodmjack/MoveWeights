@@ -1,1 +1,9 @@
 When switching browsers or token expiration, throwing bruh error. figure that out and redirect to login
+Remove case sensitivity for email login (just save all emails as lower case probably)
+Add exercise deletion functionality
+Re-do loading state on exercise addition (maybe remove button after add)
+Test all loading states on prod - look for any weird ones.
+
+
+
+convert local time to UTC time and check if made on same day
