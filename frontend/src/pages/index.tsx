@@ -8,7 +8,7 @@ import { WorkoutContext } from "@/context/WorkoutContext"
 const index = () => {
 	const { user } = useAuthContext()
 	const { workout, fetchTodaysWorkout } = useContext(WorkoutContext)!
-	console.log("workout: ", workout)
+
 	return (
 		<Layout>
 			<div className="flex flex-col mt-10">

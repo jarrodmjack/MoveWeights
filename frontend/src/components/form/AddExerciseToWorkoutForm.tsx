@@ -6,6 +6,7 @@ import { useRouter } from "next/router"
 import { globalExercises } from "@/utils/globalExercises"
 import Select from "react-select"
 import LoadingPageWithLogo from "../loading/LoadingPageWithLogo"
+import LoadingDots from "../loading/LoadingDots"
 
 type AddNewExerciseToWorkoutFormOwnProps = {
 	handleSubmit: (data: {
@@ -14,11 +15,12 @@ type AddNewExerciseToWorkoutFormOwnProps = {
 		numOfReps: number
 		weight: number
 	}) => void
+	actionLoading: boolean
 }
 
 const AddExerciseToWorkoutForm: React.FC<
 	AddNewExerciseToWorkoutFormOwnProps
-> = ({ handleSubmit }) => {
+> = ({ handleSubmit, actionLoading }) => {
 	const { user } = useAuthContext()
 
 	const [isLoading, setIsLoading] = useState(false)
@@ -153,8 +155,15 @@ const AddExerciseToWorkoutForm: React.FC<
 				/>
 			</div>
 			<button
+				disabled={actionLoading}
 				onClick={(e) => {
 					e.preventDefault()
+					if (!muscleGroup || !exerciseName) {
+						toast.error(
+							"Please select a muscle group and exercise name"
+						)
+						return
+					}
 					handleSubmit({
 						muscleGroup,
 						exerciseName,
@@ -164,7 +173,7 @@ const AddExerciseToWorkoutForm: React.FC<
 				}}
 				className="w-full py-4 bg-primary-focus rounded-lg text-white cursor-pointer"
 			>
-				+ Add
+				{actionLoading ? <LoadingDots /> : <span>+ Add</span>}
 			</button>
 		</form>
 	)
