@@ -3,34 +3,27 @@ import Layout from "@/components/layout/Layout"
 import { WorkoutContext } from "@/context/WorkoutContext"
 import { useAuthContext } from "@/hooks/useAuthContext"
 import { useRouter } from "next/router"
-import React, { useContext } from "react"
+import React, { useEffect, useState, useContext } from "react"
 import { toast } from "react-hot-toast"
 
-const create = () => {
-	const { user } = useAuthContext()
+const AddExercise = () => {
 	const router = useRouter()
-	// const workout = useContext(WorkoutContext)
-	const { workout, fetchTodaysWorkout } = useContext(WorkoutContext)!
+	const { user } = useAuthContext()
+	const { workout } = useContext(WorkoutContext)!
+	const [isLoading, setIsLoading] = useState(false)
 
-	const createWorkout = async (data: {
+	useEffect(() => {}, [router])
+
+	const handleAddExerciseToWorkout = async (data: {
 		muscleGroup: string
 		exerciseName: string
 		numOfReps: number
 		weight: number
 	}) => {
-		if (!user) {
-			toast.error("There was an error with user")
-			return
-		} else if (data.exerciseName.length === 0) {
-			toast.error(
-				`Please select an exercise under the ${data.muscleGroup} category.`
-			)
-			return
-		}
-
 		try {
+			setIsLoading(true)
 			const response = await fetch(
-				`${process.env.NEXT_PUBLIC_API_URL}/api/exercise/create-workout`,
+				`${process.env.NEXT_PUBLIC_API_URL}/api/exercise/workout/${router.query.id}/add-exercise`,
 				{
 					method: "POST",
 					headers: {
@@ -42,26 +35,26 @@ const create = () => {
 			)
 			const newExercise = await response.json()
 			workout?.exercises.push(newExercise)
-			fetchTodaysWorkout()
 			router.push(`/exercise/${newExercise._id}`)
+			setIsLoading(false)
 		} catch (e) {
+			setIsLoading(false)
 			toast.error(
-				"There was an error creating the workout, please try again"
+				"There was an issue adding your exercise. Please try again"
 			)
-			router.push("/")
 		}
 	}
 
 	return (
 		<Layout>
 			<div className="flex flex-col gap-8 p-4">
-				<h3 className="text-xl font-semibold">
-					Add the first exercise to today's workout
-				</h3>
-				<AddExerciseToWorkoutForm handleSubmit={createWorkout} />
+				<AddExerciseToWorkoutForm
+          actionLoading={isLoading}
+					handleSubmit={handleAddExerciseToWorkout}
+				/>
 			</div>
 		</Layout>
 	)
 }
 
-export default create
+export default AddExercise

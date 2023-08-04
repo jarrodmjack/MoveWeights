@@ -25,11 +25,12 @@ const createWorkout = async (req, res) => {
 		exercise.sets.push(set._id)
 		workout.exercises.push(exercise._id)
 
+		await exercise.populate("sets")
 		await workout.save()
 		await exercise.save()
 		await set.save()
 
-		res.status(200).json(workout)
+		res.status(200).json(exercise)
 		return
 	} catch (e) {
 		res.status(400).json(e)
@@ -37,7 +38,41 @@ const createWorkout = async (req, res) => {
 	}
 }
 
-const addExerciseToWorkout = async (req, res) => {}
+const addExerciseToWorkout = async (req, res) => {
+	try {
+		const workoutId = req.params.id
+
+		const workout = await Workout.findById(workoutId)
+
+		const exercise = await Exercise.create({
+			muscleGroup: req.body.muscleGroup,
+			name: req.body.exerciseName,
+			sets: [],
+			workoutId: workoutId,
+		})
+
+		const set = await Set.create({
+			weight: req.body.weight,
+			reps: req.body.numOfReps,
+			exerciseId: exercise._id,
+		})
+
+		exercise.sets.push(set._id)
+		workout.exercises.push(exercise._id)
+
+		await exercise.populate("sets")
+		await workout.save()
+		await exercise.save()
+		await set.save()
+
+		res.status(200).json(exercise)
+		return
+	} catch (e) {
+		console.log(e)
+		res.status(400).json({ msg: "There was an issue adding the exercise" })
+		return
+	}
+}
 
 const addSetToExercise = async (req, res) => {
 	try {
@@ -194,4 +229,5 @@ module.exports = {
 	addSetToExercise,
 	deleteSetFromExercise,
 	updateSet,
+	addExerciseToWorkout,
 }
