@@ -25,7 +25,7 @@ const requireAuth = async (req, res, next) => {
 		req.user = await User.findOne({ _id }).select("_id") //returns just id from user document
 		next()
 	} catch (err) {
-		console.log(err)
+		console.error(err)
 		res.redirect('/')
 		res.status(401).json({ error: "Token is not valid" })
 	}

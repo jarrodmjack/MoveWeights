@@ -5,13 +5,11 @@ const Set = require("../models/setModel")
 const UserExercise = require("../models/userExerciseModel")
 
 const createWorkout = async (req, res) => {
-	console.log("body: ", req.body)
 	const todayUTC = new Date()
 	const localTimeOffset = req.body.tzOffset
 	let dtOffset = new Date(
 		todayUTC.setMinutes(todayUTC.getMinutes() - localTimeOffset)
 	)
-	console.log("dt offset: ", dtOffset)
 	try {
 		const workout = await Workout.create({
 			exercises: [],
@@ -76,7 +74,7 @@ const addExerciseToWorkout = async (req, res) => {
 		res.status(200).json(exercise)
 		return
 	} catch (e) {
-		console.log(e)
+		console.error(e)
 		res.status(400).json({ msg: "There was an issue adding the exercise" })
 		return
 	}
@@ -126,7 +124,7 @@ const updateSet = async (req, res) => {
 		res.status(200).json(set)
 	} catch (e) {
 		res.status(400).json({ msg: "There was an issue updating the set" })
-		console.log("e: ", e)
+		console.error(e)
 	}
 }
 
@@ -146,7 +144,7 @@ const deleteSetFromExercise = async (req, res) => {
 
 		res.status(200).json({ msg: "Successfully deleted" })
 	} catch (e) {
-		console.log(e)
+		console.error(e)
 		res.status(400).json({ msg: "Error deleting" })
 	}
 }
@@ -164,7 +162,7 @@ const createNewUserExercise = async (req, res) => {
 		res.status(200).json(exercise)
 		return
 	} catch (e) {
-		console.log(e)
+		console.error(e)
 		res.status(400).json(e)
 	}
 }
@@ -182,8 +180,6 @@ const getTodaysWorkoutByUserId = async (req, res) => {
 		)
 		const endOfDay = new Date(currentDate)
 		endOfDay.setHours(23, 59, 59, 999)
-		console.log("beginning of day: ", currentDate)
-		console.log("end of day: ", endOfDay)
 		const workout = await Workout.findOne({
 			userId: userId,
 			createdAt: {
@@ -196,11 +192,10 @@ const getTodaysWorkoutByUserId = async (req, res) => {
 				path: "sets",
 			},
 		})
-		console.log("created at: ", workout.createdAt)
 		res.status(200).json(workout)
 		return
 	} catch (e) {
-		console.log(e)
+		console.error(e)
 		res.status(400).json({ msg: "Failed to fetch todays workout" })
 		return
 	}
