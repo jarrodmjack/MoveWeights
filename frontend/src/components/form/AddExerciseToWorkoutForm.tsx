@@ -14,6 +14,7 @@ type AddNewExerciseToWorkoutFormOwnProps = {
 		exerciseName: string
 		numOfReps: number
 		weight: number
+		tzOffset: number
 	}) => void
 	actionLoading: boolean
 }
@@ -83,6 +84,9 @@ const AddExerciseToWorkoutForm: React.FC<
 	const options = allExercises.map((exercise, i) => {
 		return { label: exercise.name, value: exercise.name }
 	})
+
+	const currentDate = new Date()
+	let currentTimeZoneOffset = currentDate.getTimezoneOffset()
 
 	return (
 		<form className="flex flex-col gap-4 items-center p-4">
@@ -169,6 +173,7 @@ const AddExerciseToWorkoutForm: React.FC<
 						exerciseName,
 						numOfReps,
 						weight,
+						tzOffset: currentTimeZoneOffset
 					})
 				}}
 				className="w-full py-4 bg-primary-focus rounded-lg text-white cursor-pointer"

@@ -13,6 +13,7 @@ const create = () => {
 	const { workout, fetchTodaysWorkout } = useContext(WorkoutContext)!
 
 	const createWorkout = async (data: {
+		tzOffset: number
 		muscleGroup: string
 		exerciseName: string
 		numOfReps: number
@@ -58,7 +59,10 @@ const create = () => {
 				<h3 className="text-xl font-semibold">
 					Add the first exercise to today's workout
 				</h3>
-				<AddExerciseToWorkoutForm handleSubmit={createWorkout} />
+				<AddExerciseToWorkoutForm
+					actionLoading={false}
+					handleSubmit={createWorkout}
+				/>
 			</div>
 		</Layout>
 	)

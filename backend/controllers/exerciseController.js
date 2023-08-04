@@ -5,10 +5,18 @@ const Set = require("../models/setModel")
 const UserExercise = require("../models/userExerciseModel")
 
 const createWorkout = async (req, res) => {
+	console.log("body: ", req.body)
+	const todayUTC = new Date()
+	const localTimeOffset = req.body.tzOffset
+	let dtOffset = new Date(
+		todayUTC.setMinutes(todayUTC.getMinutes() - localTimeOffset)
+	)
+	console.log("dt offset: ", dtOffset)
 	try {
 		const workout = await Workout.create({
 			exercises: [],
 			userId: req.user._id,
+			createdAt: dtOffset,
 		})
 		const exercise = await Exercise.create({
 			muscleGroup: req.body.muscleGroup,

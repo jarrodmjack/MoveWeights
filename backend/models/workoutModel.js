@@ -7,10 +7,14 @@ const workoutSchema = new Schema(
 		exercises: {
 			type: [mongoose.Schema.Types.ObjectId],
 			ref: "Exercise",
-			required: true
+			required: true,
 		},
 		userId: {
 			type: String,
+			required: true,
+		},
+		createdAt: {
+			type: Date,
 			required: true,
 		},
 	},
