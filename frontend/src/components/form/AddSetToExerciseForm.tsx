@@ -44,7 +44,7 @@ const AddSetToExerciseForm: React.FC<AddSetToExerciseFormOwnProps> = ({
 					type="number"
 					maxLength={4}
 					required
-					className="input input-bordered w-1/2 self-center"
+					className="input input-bordered w-1/2 self-center text-2xl text-center"
 				/>
 			</div>
 			<div className="flex flex-col w-full gap-2">
@@ -61,7 +61,7 @@ const AddSetToExerciseForm: React.FC<AddSetToExerciseFormOwnProps> = ({
 					type="number"
 					maxLength={4}
 					required
-					className="input input-bordered w-1/2 self-center"
+					className="input input-bordered w-1/2 self-center text-2xl text-center"
 				/>
 			</div>
 			{selectedSet ? (

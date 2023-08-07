@@ -49,7 +49,7 @@ const AddExercise = () => {
 		<Layout>
 			<div className="flex flex-col gap-8 p-4">
 				<AddExerciseToWorkoutForm
-          actionLoading={isLoading}
+					actionLoading={isLoading}
 					handleSubmit={handleAddExerciseToWorkout}
 				/>
 			</div>

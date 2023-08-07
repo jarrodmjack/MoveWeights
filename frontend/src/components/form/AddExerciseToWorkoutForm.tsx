@@ -94,7 +94,7 @@ const AddExerciseToWorkoutForm: React.FC<
 				<p className="font-semibold">Muscle group</p>
 				<PrimaryBorderDivider />
 				<select
-					className="select select-bordered w-full max-w-xs self-center"
+					className="select select-bordered w-full max-w-xs self-center text-xl"
 					onChange={(e) => {
 						setMuscleGroup(e.target.value)
 						setExerciseName("")
@@ -117,11 +117,13 @@ const AddExerciseToWorkoutForm: React.FC<
 			<div className="flex flex-col w-full gap-4">
 				<p className="font-semibold">Exercise</p>
 				<PrimaryBorderDivider />
+
 				<Select
-					className="self-center w-full"
+					className="self-center w-full text-xl"
 					isDisabled={muscleGroup ? false : true}
 					options={options}
-					onChange={handleSetExerciseName} //can ignore error coming from react-select
+					//@ts-ignore
+					onChange={handleSetExerciseName}
 				/>
 			</div>
 			<div className="flex flex-col w-full gap-4">
@@ -138,7 +140,7 @@ const AddExerciseToWorkoutForm: React.FC<
 					type="number"
 					maxLength={4}
 					required
-					className="input input-bordered w-full max-w-xs self-center"
+					className="input input-bordered w-full max-w-xs self-center text-xl"
 				/>
 			</div>
 			<div className="flex flex-col w-full gap-4">
@@ -155,7 +157,7 @@ const AddExerciseToWorkoutForm: React.FC<
 					type="number"
 					maxLength={4}
 					required
-					className="input input-bordered w-full max-w-xs self-center"
+					className="input input-bordered w-full max-w-xs self-center text-xl"
 				/>
 			</div>
 			<button
@@ -173,7 +175,7 @@ const AddExerciseToWorkoutForm: React.FC<
 						exerciseName,
 						numOfReps,
 						weight,
-						tzOffset: currentTimeZoneOffset
+						tzOffset: currentTimeZoneOffset,
 					})
 				}}
 				className="w-full py-4 bg-primary-focus rounded-lg text-white cursor-pointer"

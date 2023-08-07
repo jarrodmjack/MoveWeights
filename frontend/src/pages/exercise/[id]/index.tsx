@@ -123,6 +123,8 @@ const index = () => {
 				oldSetInContext!.reps = newSet.reps
 				oldSetInContext!.weight = newSet.weight
 			}
+			setSelectedSetId("")
+			setSelectedSet(null)
 			setActionLoading(false)
 		} catch (e) {
 			toast.error("There was an issue updating the set. Please try again")
