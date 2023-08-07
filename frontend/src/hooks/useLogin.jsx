@@ -11,7 +11,7 @@ export const useLogin = () => {
 	const login = async (email, password) => {
 		setIsLoading(true)
 		setError(null)
-
+		email = email.toLowerCase()
 		const response = await fetch(
 			`${process.env.NEXT_PUBLIC_API_URL}/api/user/login`,
 			{
