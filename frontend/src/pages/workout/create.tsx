@@ -9,8 +9,7 @@ import { toast } from "react-hot-toast"
 const create = () => {
 	const { user } = useAuthContext()
 	const router = useRouter()
-	// const workout = useContext(WorkoutContext)
-	const { workout, fetchTodaysWorkout } = useContext(WorkoutContext)!
+	const { workout, fetchTodaysWorkout, isLoading } = useContext(WorkoutContext)!
 
 	const createWorkout = async (data: {
 		tzOffset: number
@@ -51,6 +50,10 @@ const create = () => {
 			)
 			router.push("/")
 		}
+	}
+	
+	if (isLoading) {
+		return <></>
 	}
 
 	return (

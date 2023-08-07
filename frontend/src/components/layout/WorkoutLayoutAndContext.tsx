@@ -3,12 +3,16 @@ import { WorkoutContext } from "@/context/WorkoutContext"
 import { Workout } from "@/types/Workout"
 import { useAuthContext } from "@/hooks/useAuthContext"
 import LoadingPageWithLogo from "../loading/LoadingPageWithLogo"
+import { useRouter } from "next/router"
+import { useLogout } from "@/hooks/useLogout"
 
 const WorkoutLayoutAndContext: React.FC<PropsWithChildren> = ({ children }) => {
 	const { user } = useAuthContext()
 
 	const [workout, setWorkout] = useState<Workout | undefined>(undefined)
 	const [isLoading, setIsLoading] = useState(false)
+	const router = useRouter()
+	const { logout } = useLogout()
 
 	const fetchTodaysWorkout = async () => {
 		if (!user) {
@@ -27,8 +31,10 @@ const WorkoutLayoutAndContext: React.FC<PropsWithChildren> = ({ children }) => {
 					},
 				}
 			)
+
 			if (!response.ok) {
 				setWorkout(undefined)
+				logout()
 			} else {
 				const data = await response.json()
 				setWorkout(data)
@@ -50,7 +56,9 @@ const WorkoutLayoutAndContext: React.FC<PropsWithChildren> = ({ children }) => {
 	}
 
 	return (
-		<WorkoutContext.Provider value={{ workout, fetchTodaysWorkout }}>
+		<WorkoutContext.Provider
+			value={{ workout, fetchTodaysWorkout, isLoading }}
+		>
 			{children}
 		</WorkoutContext.Provider>
 	)

@@ -23,10 +23,14 @@ const requireAuth = async (req, res, next) => {
 	try {
 		const { _id } = jwt.verify(token, process.env.SECRET)
 		req.user = await User.findOne({ _id }).select("_id") //returns just id from user document
+		if (!req.user) {
+			res.status(401).json({ error: "User does not exist" })
+			return
+		}
 		next()
 	} catch (err) {
 		console.error(err)
-		res.redirect('/')
+		res.redirect("/")
 		res.status(401).json({ error: "Token is not valid" })
 	}
 }
