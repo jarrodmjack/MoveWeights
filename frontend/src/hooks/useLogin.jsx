@@ -7,6 +7,7 @@ export const useLogin = () => {
 	const [isLoading, setIsLoading] = useState(false)
 	const { dispatch } = useAuthContext()
 	const router = useRouter()
+	const currentTimeZoneOffset = currentDate.getTimezoneOffset()
 
 	const login = async (email, password) => {
 		setIsLoading(true)
@@ -17,7 +18,11 @@ export const useLogin = () => {
 			{
 				method: "POST",
 				headers: { "Content-type": "application/json" },
-				body: JSON.stringify({ email, password }),
+				body: JSON.stringify({
+					email,
+					password,
+					tzOffset: currentTimeZoneOffset,
+				}),
 			}
 		)
 

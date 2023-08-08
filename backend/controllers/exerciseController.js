@@ -3,6 +3,7 @@ const Workout = require("../models/workoutModel")
 const Exercise = require("../models/exerciseModel")
 const Set = require("../models/setModel")
 const UserExercise = require("../models/userExerciseModel")
+const User = require("../models/userModel")
 
 const createWorkout = async (req, res) => {
 	const todayUTC = new Date()
@@ -172,18 +173,17 @@ const getTodaysWorkoutByUserId = async (req, res) => {
 	try {
 		const userId = req.user._id
 		const currentDate = new Date()
-		let currentTimeZoneOffset = currentDate.getTimezoneOffset()
-		console.log("current time zone offset: ", currentTimeZoneOffset)
+		const user = await User.findById(userId)
+		let currentTimeZoneOffset = user.tzOffset
+		console.log('current time zone offset: ', currentTimeZoneOffset)
 		currentDate.setHours(
 			Math.floor(currentTimeZoneOffset / 60),
 			currentTimeZoneOffset % 60,
 			0,
 			0
 		)
-		console.log("current date: ", currentDate)
 		const endOfDay = new Date(currentDate)
 		endOfDay.setHours(23, 59, 59, 999)
-		console.log("end of day: ", endOfDay)
 		const workout = await Workout.findOne({
 			userId: userId,
 			createdAt: {
@@ -196,7 +196,6 @@ const getTodaysWorkoutByUserId = async (req, res) => {
 				path: "sets",
 			},
 		})
-
 		res.status(200).json(workout)
 		return
 	} catch (e) {

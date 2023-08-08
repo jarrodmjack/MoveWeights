@@ -8,11 +8,12 @@ const createToken = (_id) => {
 
 const loginUser = async (req, res) => {
 
-	const { email, password } = req.body
-
+	const { email, password, tzOffset } = req.body
+	console.log('tzoffset in user login controller: ', tzOffset)
 	try {
 	    const user = await User.login(email, password) // static method from user model
-
+		user.tzOffset = tzOffset
+		await user.save()
 	    // create a token
 	    const token = createToken(user._id)
 
