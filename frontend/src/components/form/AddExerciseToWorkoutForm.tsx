@@ -119,7 +119,7 @@ const AddExerciseToWorkoutForm: React.FC<
 				<PrimaryBorderDivider />
 
 				<Select
-					className="self-center w-full text-xl"
+					className="self-center w-full max-w-xs text-xl"
 					isDisabled={muscleGroup ? false : true}
 					options={options}
 					//@ts-ignore
