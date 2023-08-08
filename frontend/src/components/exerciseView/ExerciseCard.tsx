@@ -16,7 +16,7 @@ const ExerciseCard: React.FC<ExerciseCardOwnProps> = ({ exercise }) => {
 	}
 
 	return (
-		<Link href={`/exercise/${exercise._id}`}>
+		<Link className="flex-1" href={`/exercise/${exercise._id}`}>
 			<div className="shadow border-1 border-primary-content p-4 font-bold flex flex-col gap-2">
 				<h3>{exercise.name}</h3>
 				<div className="border border-primary w-full" />

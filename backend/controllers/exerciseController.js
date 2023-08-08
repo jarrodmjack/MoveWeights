@@ -192,6 +192,7 @@ const getTodaysWorkoutByUserId = async (req, res) => {
 				path: "sets",
 			},
 		})
+		console.log("workout: ", workout)
 		res.status(200).json(workout)
 		return
 	} catch (e) {
