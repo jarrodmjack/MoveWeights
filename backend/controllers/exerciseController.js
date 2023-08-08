@@ -174,8 +174,8 @@ const getTodaysWorkoutByUserId = async (req, res) => {
 		const userId = req.user._id
 		const startOfDay = new Date()
 		const user = await User.findById(userId)
-		
 		// const todayUTC = new Date()
+		const currentDate = new Date()
 		let currentTimeZoneOffset = user.tzOffset
 		console.log('currentzoffsetinfetch: ', currentTimeZoneOffset)
 		// let dtOffset = new Date(
