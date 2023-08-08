@@ -169,6 +169,21 @@ const createNewUserExercise = async (req, res) => {
 	}
 }
 
+const deleteExerciseFromWorkout = async (req, res) => {
+	const exerciseId = req.params.id
+	try {
+		await Exercise.findByIdAndDelete(exerciseId)
+		await Set.deleteMany({
+			exerciseId: exerciseId,
+		})
+		res.status(200).json({ msg: "success" })
+		return
+	} catch (e) {
+		const exercise = await Exercise.findById(exerciseId)
+		res.status(400).json(exercise)
+	}
+}
+
 const getTodaysWorkoutByUserId = async (req, res) => {
 	try {
 		const userId = req.user._id
@@ -255,6 +270,7 @@ module.exports = {
 	getExerciseById,
 	addSetToExercise,
 	deleteSetFromExercise,
+	deleteExerciseFromWorkout,
 	updateSet,
 	addExerciseToWorkout,
 }

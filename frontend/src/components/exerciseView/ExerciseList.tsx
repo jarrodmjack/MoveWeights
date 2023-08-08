@@ -1,20 +1,50 @@
 import { Exercise } from "@/types/Workout"
-import React, { useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import Modal from "react-modal"
 import ExerciseCard from "./ExerciseCard"
-import { FaTimes, FaTimesCircle } from "react-icons/fa"
+import { FaTimes, FaTimesCircle, FaPlus } from "react-icons/fa"
+import { WorkoutContext } from "@/context/WorkoutContext"
+import Link from "next/link"
+import { useAuthContext } from "@/hooks/useAuthContext"
+import { toast } from "react-hot-toast"
 
-type ExerciseListOwnProps = {
-	exercises: Exercise[]
-	handleDeleteExercise: (exerciseId: string) => void
-}
-
-const ExerciseList: React.FC<ExerciseListOwnProps> = ({
-	exercises,
-	handleDeleteExercise,
-}) => {
+const ExerciseList = () => {
+	const { workout } = useContext(WorkoutContext)!
 	const [modalIsOpen, setIsOpen] = React.useState(false)
 	const [selectedExerciseId, setSelectedExerciseId] = useState("")
+	const [exercises, setExercises] = useState<Exercise[]>()
+	const [deletedExercise, setDeletedExercise] = useState(null)
+	const { user } = useAuthContext()
+
+	useEffect(() => {
+		setExercises(workout?.exercises)
+	}, [workout])
+
+	const handleDeleteExercise = async (exerciseId: string) => {
+		try {
+			setExercises(
+				exercises?.filter((exercise) => exercise._id !== exerciseId)
+			)
+			const response = await fetch(
+				`${process.env.NEXT_PUBLIC_API_URL}/api/exercise/exercise/${exerciseId}/delete`,
+				{
+					method: "DELETE",
+					headers: {
+						"Content-type": "application/json",
+						Authorization: `Bearer ${user.token}`,
+					},
+					body: JSON.stringify({ exerciseId }),
+				}
+			)
+			const data = await response.json()
+		} catch (e) {
+			console.error(e)
+			toast.error(
+				"There was an issue deleting the exercise. Please try again"
+			)
+		}
+	}
+
 	function openModal() {
 		setIsOpen(true)
 	}
@@ -25,7 +55,16 @@ const ExerciseList: React.FC<ExerciseListOwnProps> = ({
 	}
 
 	if (!exercises || exercises.length === 0) {
-		return <>No exercises have been added to todays workout</>
+		return (
+			<div className="w-5/6 mx-auto flex flex-col gap-8 mb-20">
+				<div className="flex flex-col items-center gap-4 mt-10">
+					<p>Add an exercise</p>
+					<Link href={`/workout/${workout?._id}/addExercise`}>
+						<FaPlus className="text-primary hover:text-primary-focus cursor-pointer scale-150" />
+					</Link>
+				</div>
+			</div>
+		)
 	}
 
 	return (
@@ -59,7 +98,10 @@ const ExerciseList: React.FC<ExerciseListOwnProps> = ({
 					</p>
 					<div>
 						<button
-							onClick={(e) => handleDeleteExercise(selectedExerciseId)}
+							onClick={(e) => {
+								handleDeleteExercise(selectedExerciseId)
+								closeModal()
+							}}
 							className="btn bg-danger text-white"
 						>
 							Delete

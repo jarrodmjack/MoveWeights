@@ -9,16 +9,6 @@ const index = () => {
 	const { user } = useAuthContext()
 	const { workout, fetchTodaysWorkout } = useContext(WorkoutContext)!
 
-	const handleDeleteExercise = (exerciseId: string) => {
-		console.log(
-			workout?.exercises.filter(
-				(exercise) => exercise._id !== "64d17c2aca3d71520653a031"
-			)
-		)
-		// workout?.exercises = workout?.exercises.filter(exercise => exercise._id !== exerciseId)
-		// workout?.exercises = workout?.exercises.filter(exercise => exercise._id !== exerciseId)
-	}
-
 	return (
 		<Layout>
 			<div className="flex flex-col mt-10">
@@ -28,10 +18,7 @@ const index = () => {
 							<h2 className="w-5/6 mx-auto mb-4 text-2xl">
 								Today's workout
 							</h2>
-							<ExerciseList
-								handleDeleteExercise={handleDeleteExercise}
-								exercises={workout.exercises}
-							/>
+							<ExerciseList />
 						</>
 					) : (
 						<div className="flex flex-col items-center gap-20">
