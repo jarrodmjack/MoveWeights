@@ -175,7 +175,7 @@ const getTodaysWorkoutByUserId = async (req, res) => {
 		const todayUTC = new Date()
 		const user = await User.findById(userId)
 		const currentTimeZoneOffset = user.tzOffset
-		console.log(currentTimeZoneOffset)
+
 		const endOfDay = new Date(
 			new Date().setUTCHours(
 				Math.floor(currentTimeZoneOffset / 60),
@@ -184,7 +184,6 @@ const getTodaysWorkoutByUserId = async (req, res) => {
 				0
 			)
 		)
-		console.log(endOfDay)
 		if (
 			todayUTC.getUTCHours > endOfDay.getUTCHours() ||
 			(todayUTC.getUTCHours() === endOfDay.getUTCHours() &&
@@ -197,8 +196,7 @@ const getTodaysWorkoutByUserId = async (req, res) => {
 		}
 
 		const startOfDay = new Date(endOfDay.getTime() - 86399999)
-		console.log(startOfDay)
-		console.log(endOfDay)
+
 		const workout = await Workout.findOne({
 			userId: userId,
 			createdAt: {
