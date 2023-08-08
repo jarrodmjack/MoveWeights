@@ -7,6 +7,8 @@ export const useLogin = () => {
 	const [isLoading, setIsLoading] = useState(false)
 	const { dispatch } = useAuthContext()
 	const router = useRouter()
+
+	const currentDate = new Date()
 	const currentTimeZoneOffset = currentDate.getTimezoneOffset()
 
 	const login = async (email, password) => {
