@@ -10,7 +10,11 @@ const index = () => {
 	const { workout, fetchTodaysWorkout } = useContext(WorkoutContext)!
 
 	const handleDeleteExercise = (exerciseId: string) => {
-		console.log( workout?.exercises.filter(exercise => exercise._id !== '64d17c2aca3d71520653a031'))
+		console.log(
+			workout?.exercises.filter(
+				(exercise) => exercise._id !== "64d17c2aca3d71520653a031"
+			)
+		)
 		// workout?.exercises = workout?.exercises.filter(exercise => exercise._id !== exerciseId)
 		// workout?.exercises = workout?.exercises.filter(exercise => exercise._id !== exerciseId)
 	}

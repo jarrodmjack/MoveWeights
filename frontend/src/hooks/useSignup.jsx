@@ -8,6 +8,9 @@ export const useSignup = () => {
 	const { dispatch } = useAuthContext()
 	const router = useRouter()
 
+	const currentDate = new Date()
+	const currentTimeZoneOffset = currentDate.getTimezoneOffset()
+
 	const signup = async (email, password) => {
 		setIsLoading(true)
 		setError(null)
@@ -17,7 +20,11 @@ export const useSignup = () => {
 			{
 				method: "POST",
 				headers: { "Content-type": "application/json" },
-				body: JSON.stringify({ email, password }),
+				body: JSON.stringify({
+					email,
+					password,
+					tzOffset: currentTimeZoneOffset,
+				}),
 			}
 		)
 		const json = await response.json() //contains jwt and email
