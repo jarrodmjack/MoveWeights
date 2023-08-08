@@ -176,12 +176,17 @@ const getTodaysWorkoutByUserId = async (req, res) => {
 		const user = await User.findById(userId)
 		let currentTimeZoneOffset = user.tzOffset
 		startOfDay.setMinutes(startOfDay.getMinutes() - currentTimeZoneOffset)
-		const endOfDay = new Date(new Date().setHours(23, 59, 59, 999))
+		const endOfDay = new Date(
+			new Date().setHours(
+				Math.floor(currentTimeZoneOffset / 60),
+				currentTimeZoneOffset % 60,
+				0,
+				0
+			)
+		)
 		endOfDay.setMinutes(endOfDay.getMinutes() - currentTimeZoneOffset)
-
 		console.log('start of day: ', startOfDay)
 		console.log('end of day: ', endOfDay)
-
 		const workout = await Workout.findOne({
 			userId: userId,
 			createdAt: {
