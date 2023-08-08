@@ -8,8 +8,6 @@ const createToken = (_id) => {
 
 const loginUser = async (req, res) => {
 	const { email, password, tzOffset } = req.body
-	console.log("tz offset in login: ", tzOffset)
-
 	try {
 		const user = await User.login(email, password) // static method from user model
 		user.tzOffset = tzOffset
@@ -26,7 +24,6 @@ const loginUser = async (req, res) => {
 // Signup user
 const signupUser = async (req, res) => {
 	const { email, password, tzOffset } = req.body
-	console.log("tz offset in signup: ", tzOffset)
 	try {
 		const user = await User.signup(email, password) // static method from user model
 		user.tzOffset = tzOffset
