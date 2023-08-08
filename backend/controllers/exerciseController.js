@@ -173,34 +173,19 @@ const getTodaysWorkoutByUserId = async (req, res) => {
 	try {
 		const userId = req.user._id
 		const startOfDay = new Date(new Date().setHours(0, 0, 0, 0))
-		console.log("start of day: ", startOfDay)
 		const user = await User.findById(userId)
 		let currentTimeZoneOffset = user.tzOffset
 		startOfDay.setMinutes(startOfDay.getMinutes() - currentTimeZoneOffset)
-		console.log("start of day 2: ", startOfDay)
-		// let dtOffset = new Date(
-		// 	todayUTC.setMinutes(todayUTC.getMinutes() - localTimeOffset)
-		// )
-		// const todayUTC = new Date()
-		// const currentDate = new Date()
-		// console.log('currentzoffsetinfetch: ', currentTimeZoneOffset)
-		// let dtOffset = new Date(
-		// 	todayUTC.setMinutes(todayUTC.getMinutes() - localTimeOffset)
-		// )
+		const endOfDay = new Date(new Date().setHours(23, 59, 59, 999))
+		endOfDay.setMinutes(endOfDay.getMinutes() - currentTimeZoneOffset)
 
-		// currentDate.setHours(
-		// 	Math.floor(currentTimeZoneOffset / 60),
-		// 	currentTimeZoneOffset % 60,
-		// 	0,
-		// 	0
-		// )
+		console.log('start of day: ', startOfDay)
+		console.log('end of day: ', endOfDay)
 
-		const endOfDay = new Date(currentDate)
-		endOfDay.setHours(23, 59, 59, 999)
 		const workout = await Workout.findOne({
 			userId: userId,
 			createdAt: {
-				$gte: currentDate,
+				$gte: startOfDay,
 				$lt: endOfDay,
 			},
 		}).populate({
