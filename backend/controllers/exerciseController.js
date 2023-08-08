@@ -11,7 +11,7 @@ const createWorkout = async (req, res) => {
 	let dtOffset = new Date(
 		todayUTC.setMinutes(todayUTC.getMinutes() - localTimeOffset)
 	)
-	console.log("DT offset: ", dtOffset)
+
 	try {
 		const workout = await Workout.create({
 			exercises: [],
@@ -171,17 +171,26 @@ const createNewUserExercise = async (req, res) => {
 
 const getTodaysWorkoutByUserId = async (req, res) => {
 	try {
+		const todayUTC = new Date()
 		const userId = req.user._id
 		const currentDate = new Date()
 		const user = await User.findById(userId)
+
 		let currentTimeZoneOffset = user.tzOffset
-		console.log('current time zone offset: ', currentTimeZoneOffset)
+		console.log('currentzoffsetinfetch: ', currentTimeZoneOffset)
+		let dtOffset = new Date(
+			todayUTC.setMinutes(todayUTC.getMinutes() - localTimeOffset)
+		)
+
 		currentDate.setHours(
 			Math.floor(currentTimeZoneOffset / 60),
 			currentTimeZoneOffset % 60,
 			0,
 			0
 		)
+
+
+
 		const endOfDay = new Date(currentDate)
 		endOfDay.setHours(23, 59, 59, 999)
 		const workout = await Workout.findOne({
