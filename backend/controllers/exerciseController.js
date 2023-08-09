@@ -8,10 +8,11 @@ const User = require("../models/userModel")
 const createWorkout = async (req, res) => {
 	const todayUTC = new Date()
 	const localTimeOffset = req.body.tzOffset
+	console.log("local time offset in creation: ", localTimeOffset)
 	let dtOffset = new Date(
 		todayUTC.setUTCMinutes(todayUTC.getUTCMinutes() - localTimeOffset)
 	)
-
+	console.log("dt offset in workout creation: ", dtOffset)
 	try {
 		const workout = await Workout.create({
 			exercises: [],
