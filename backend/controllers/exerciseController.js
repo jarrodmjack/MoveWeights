@@ -203,7 +203,7 @@ const getTodaysWorkoutByUserId = async (req, res) => {
 		)
 		console.log("end of day 1: ", endOfDay)
 		if (
-			todayUTC.getUTCHours > endOfDay.getUTCHours() ||
+			todayUTC.getUTCHours() > endOfDay.getUTCHours() ||
 			(todayUTC.getUTCHours() === endOfDay.getUTCHours() &&
 				endOfDay.getUTCMinutes() +
 					endOfDay.getUTCSeconds() +
@@ -211,7 +211,7 @@ const getTodaysWorkoutByUserId = async (req, res) => {
 					0)
 		) {
 			endOfDay.setDate(endOfDay.getUTCDate() + 1)
-		}
+		} 
 
 		const startOfDay = new Date(endOfDay.getTime() - 86399999)
 		console.log("start of day: ", startOfDay)
