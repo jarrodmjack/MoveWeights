@@ -7,7 +7,7 @@ import { WorkoutContext } from "@/context/WorkoutContext"
 
 const index = () => {
 	const { user } = useAuthContext()
-	const { workout, fetchTodaysWorkout } = useContext(WorkoutContext)!
+	const { workout } = useContext(WorkoutContext)!
 
 	return (
 		<Layout>

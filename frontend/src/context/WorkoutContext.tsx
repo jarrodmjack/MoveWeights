@@ -1,10 +1,13 @@
-import { Workout } from "@/types/Workout";
-import { createContext } from "react";
+import { Exercise, Workout } from "@/types/Workout"
+import { createContext } from "react"
 
 type WorkoutContextType = {
-    workout: Workout | undefined;
-    fetchTodaysWorkout: () => void;
-    isLoading: boolean
-  };
+	workout: Workout | undefined
+	isLoading: boolean
+	fetchTodaysWorkout: () => void
+  updateExercises: (updatedExercises: Exercise[]) => void
+}
 
-export const WorkoutContext = createContext<WorkoutContextType | undefined>(undefined);
+export const WorkoutContext = createContext<WorkoutContextType | undefined>(
+	undefined
+)

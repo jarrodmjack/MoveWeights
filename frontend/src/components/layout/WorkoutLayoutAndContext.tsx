@@ -1,6 +1,6 @@
 import React, { PropsWithChildren, useEffect, useState } from "react"
 import { WorkoutContext } from "@/context/WorkoutContext"
-import { Workout } from "@/types/Workout"
+import { Exercise, Workout } from "@/types/Workout"
 import { useAuthContext } from "@/hooks/useAuthContext"
 import LoadingPageWithLogo from "../loading/LoadingPageWithLogo"
 import { useRouter } from "next/router"
@@ -47,6 +47,15 @@ const WorkoutLayoutAndContext: React.FC<PropsWithChildren> = ({ children }) => {
 		}
 	}
 
+	const updateExercises = (updatedExercises: Exercise[]) => {
+		setWorkout((prev) => {
+			if (prev) {
+				return { ...prev, exercises: updatedExercises }
+			}
+			return prev
+		})
+	}
+
 	useEffect(() => {
 		fetchTodaysWorkout()
 	}, [user])
@@ -57,7 +66,7 @@ const WorkoutLayoutAndContext: React.FC<PropsWithChildren> = ({ children }) => {
 
 	return (
 		<WorkoutContext.Provider
-			value={{ workout, fetchTodaysWorkout, isLoading }}
+			value={{ workout, isLoading, fetchTodaysWorkout, updateExercises }}
 		>
 			{children}
 		</WorkoutContext.Provider>

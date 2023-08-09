@@ -9,11 +9,10 @@ import { useAuthContext } from "@/hooks/useAuthContext"
 import { toast } from "react-hot-toast"
 
 const ExerciseList = () => {
-	const { workout } = useContext(WorkoutContext)!
+	const { workout, updateExercises } = useContext(WorkoutContext)!
 	const [modalIsOpen, setIsOpen] = React.useState(false)
 	const [selectedExerciseId, setSelectedExerciseId] = useState("")
 	const [exercises, setExercises] = useState<Exercise[]>()
-	const [deletedExercise, setDeletedExercise] = useState(null)
 	const { user } = useAuthContext()
 
 	useEffect(() => {
@@ -22,9 +21,11 @@ const ExerciseList = () => {
 
 	const handleDeleteExercise = async (exerciseId: string) => {
 		try {
-			setExercises(
-				exercises?.filter((exercise) => exercise._id !== exerciseId)
+			const newExerciseList = exercises?.filter(
+				(exercise) => exercise._id !== exerciseId
 			)
+			setExercises(newExerciseList)
+			updateExercises(newExerciseList || [])
 			const response = await fetch(
 				`${process.env.NEXT_PUBLIC_API_URL}/api/exercise/exercise/${exerciseId}/delete`,
 				{
@@ -36,7 +37,6 @@ const ExerciseList = () => {
 					body: JSON.stringify({ exerciseId }),
 				}
 			)
-			const data = await response.json()
 		} catch (e) {
 			console.error(e)
 			toast.error(
