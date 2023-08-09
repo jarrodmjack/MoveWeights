@@ -12,7 +12,7 @@ const createWorkout = async (req, res) => {
 	let dtOffset = new Date(
 		todayUTC.setUTCMinutes(todayUTC.getUTCMinutes() - localTimeOffset)
 	)
-	console.log("time created: ", dtOffset)
+
 	try {
 		const workout = await Workout.create({
 			exercises: [],
@@ -211,10 +211,10 @@ const getTodaysWorkoutByUserId = async (req, res) => {
 					0)
 		) {
 			endOfDay.setDate(endOfDay.getUTCDate() + 1)
-		} 
+		}
 
 		const startOfDay = new Date(endOfDay.getTime() - 86399999)
-    
+
 		const workout = await Workout.findOne({
 			userId: userId,
 			createdAt: {
