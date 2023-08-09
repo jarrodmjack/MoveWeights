@@ -187,49 +187,34 @@ const deleteExerciseFromWorkout = async (req, res) => {
 
 const getTodaysWorkoutByUserId = async (req, res) => {
 	try {
-		// const userId = req.user._id
-		// const todayUTC = new Date()
-
-		// const user = await User.findById(userId)
-		// const currentTimeZoneOffset = user.tzOffset
-
-		// const endOfDay = new Date(
-		// 	new Date().setUTCHours(
-		// 		Math.floor(currentTimeZoneOffset / 60),
-		// 		currentTimeZoneOffset % 60,
-		// 		0,
-		// 		0
-		// 	)
-		// )
-		// console.log("end of day 1: ", endOfDay)
-		// if (
-		// 	todayUTC.getUTCHours > endOfDay.getUTCHours() ||
-		// 	(todayUTC.getUTCHours() === endOfDay.getUTCHours() &&
-		// 		endOfDay.getUTCMinutes() +
-		// 			endOfDay.getUTCSeconds() +
-		// 			endOfDay.getUTCMilliseconds() >
-		// 			0)
-		// ) {
-		// 	endOfDay.setDate(endOfDay.getUTCDate() + 1)
-		// }
-
-		// const startOfDay = new Date(endOfDay.getTime() - 86399999)
 		const userId = req.user._id
 		const todayUTC = new Date()
 
 		const user = await User.findById(userId)
-		const localTimeOffset = user.tzOffset
-		const startOfDay = new Date(
-			todayUTC.setUTCMinutes(todayUTC.getUTCMinutes() - localTimeOffset)
-		)
-		startOfDay.setUTCHours(0, 0, 0, 0)
-		console.log("start of day: ", startOfDay)
+		const currentTimeZoneOffset = user.tzOffset
 
 		const endOfDay = new Date(
-			todayUTC.setUTCMinutes(todayUTC.getUTCMinutes() - localTimeOffset)
+			new Date().setUTCHours(
+				Math.floor(currentTimeZoneOffset / 60),
+				currentTimeZoneOffset % 60,
+				0,
+				0
+			)
 		)
-		endOfDay.setUTCHours(23, 59, 59, 999)
-		console.log("end of day: ", endOfDay)
+
+		if (
+			todayUTC.getUTCHours() > endOfDay.getUTCHours() ||
+			(todayUTC.getUTCHours() === endOfDay.getUTCHours() &&
+				endOfDay.getUTCMinutes() +
+					endOfDay.getUTCSeconds() +
+					endOfDay.getUTCMilliseconds() >
+					0)
+		) {
+			endOfDay.setDate(endOfDay.getUTCDate() + 1)
+		} 
+
+		const startOfDay = new Date(endOfDay.getTime() - 86399999)
+    
 		const workout = await Workout.findOne({
 			userId: userId,
 			createdAt: {
