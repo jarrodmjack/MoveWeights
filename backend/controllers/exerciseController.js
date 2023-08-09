@@ -211,7 +211,8 @@ const getTodaysWorkoutByUserId = async (req, res) => {
 		}
 
 		const startOfDay = new Date(endOfDay.getTime() - 86399999)
-
+		console.log('start of day: ', startOfDay)
+		console.log('end of day: ', endOfDay)
 		const workout = await Workout.findOne({
 			userId: userId,
 			createdAt: {
