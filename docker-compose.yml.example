@@ -1,0 +1,39 @@
+version: "3"
+
+services:
+  frontend:
+    build: ./frontend
+    container_name: mw-frontend
+    ports:
+      - "4000:4000"
+    stdin_open: true
+    tty: true
+    depends_on:
+      - backend
+    networks:
+      - moveweights-network
+
+  backend:
+    build: ./backend
+    container_name: mw-backend
+    restart: "always"
+    ports:
+      - "4001:4001"
+    depends_on:
+      - database
+    networks:
+      - moveweights-network
+
+  database:
+    image: mongo
+    container_name: mw-database
+    ports:
+      - "27017:27017"
+    volumes:
+      - /Desktop/mongo-backup:/data/db
+    networks:
+      - moveweights-network
+
+networks:
+  moveweights-network:
+    driver: bridge
