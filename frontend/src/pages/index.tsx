@@ -2,13 +2,13 @@ import NewWorkoutButton from "@/components/button/NewWorkoutButton"
 import Layout from "@/components/layout/Layout"
 import ExerciseList from "@/components/exerciseView/ExerciseList"
 import { useAuthContext } from "@/hooks/useAuthContext"
-import React, { useContext, useEffect } from "react"
+import React, { useContext } from "react"
 import { WorkoutContext } from "@/context/WorkoutContext"
 
 const index = () => {
 	const { user } = useAuthContext()
 	const { workout } = useContext(WorkoutContext)!
-	console.log("user: ", user)
+
 	return (
 		<Layout>
 			<div className="flex flex-col mt-10">

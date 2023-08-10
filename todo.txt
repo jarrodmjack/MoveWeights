@@ -1,6 +1,6 @@
-improve render times by moving state manipulation in front of requests (eg, adding exercise, etc so it looks instant)
+Update node to 18 on machine and docker files
 
-Add exercise deletion functionality (WIP)
+improve render times by moving state manipulation in front of requests (eg, adding exercise, etc so it looks instant)
 
 Re-do loading state on exercise addition (maybe remove button after add)
 Test all loading states on prod - look for any weird ones.

@@ -35,8 +35,8 @@ const AddExercise = () => {
 			)
 			const newExercise = await response.json()
 			workout?.exercises.push(newExercise)
-			router.push(`/exercise/${newExercise._id}`)
 			setIsLoading(false)
+			router.push(`/exercise/${newExercise._id}`)
 		} catch (e) {
 			setIsLoading(false)
 			toast.error(

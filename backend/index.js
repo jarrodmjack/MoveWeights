@@ -9,7 +9,7 @@ const exerciseRoutes = require('./routes/exerciseRoutes')
 require('dotenv').config()
 
 
-mongoose.connect(process.env.NODE_ENV === 'production' ? process.env.MONGO_URI : "mongodb://mw-database/moveweights-staging-db")
+mongoose.connect(process.env.MONGO_URI)
   .then(() => {
     app.listen(process.env.PORT, () => {
       console.log('connected')

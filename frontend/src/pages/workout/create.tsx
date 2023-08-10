@@ -9,7 +9,8 @@ import { toast } from "react-hot-toast"
 const create = () => {
 	const { user } = useAuthContext()
 	const router = useRouter()
-	const { workout, fetchTodaysWorkout, isLoading } = useContext(WorkoutContext)!
+	const { workout, fetchTodaysWorkout, isLoading } =
+		useContext(WorkoutContext)!
 
 	const createWorkout = async (data: {
 		tzOffset: number
@@ -51,7 +52,7 @@ const create = () => {
 			router.push("/")
 		}
 	}
-	
+
 	if (isLoading) {
 		return <></>
 	}
@@ -59,9 +60,6 @@ const create = () => {
 	return (
 		<Layout>
 			<div className="flex flex-col gap-8 p-4">
-				<h3 className="text-xl font-semibold">
-					Add the first exercise to today's workout
-				</h3>
 				<AddExerciseToWorkoutForm
 					actionLoading={false}
 					handleSubmit={createWorkout}
