@@ -13,10 +13,12 @@ const createWorkout = async (req, res) => {
 		todayUTC.setUTCMinutes(todayUTC.getUTCMinutes() - localTimeOffset)
 	)
 
+	const userId = req.user._id
+
 	try {
 		const workout = await Workout.create({
 			exercises: [],
-			userId: req.user._id,
+			userId: userId,
 			createdAt: dtOffset,
 		})
 		const exercise = await Exercise.create({
@@ -24,11 +26,13 @@ const createWorkout = async (req, res) => {
 			name: req.body.exerciseName,
 			sets: [],
 			workoutId: workout._id,
+			userId: userId,
 		})
 		const set = await Set.create({
 			weight: req.body.weight,
 			reps: req.body.numOfReps,
 			exerciseId: exercise._id,
+			userId: userId,
 		})
 
 		exercise.sets.push(set._id)
@@ -49,6 +53,7 @@ const createWorkout = async (req, res) => {
 
 const addExerciseToWorkout = async (req, res) => {
 	try {
+		const userId = req.user._id
 		const workoutId = req.params.id
 
 		const workout = await Workout.findById(workoutId)
@@ -58,12 +63,14 @@ const addExerciseToWorkout = async (req, res) => {
 			name: req.body.exerciseName,
 			sets: [],
 			workoutId: workoutId,
+			userId: userId,
 		})
 
 		const set = await Set.create({
 			weight: req.body.weight,
 			reps: req.body.numOfReps,
 			exerciseId: exercise._id,
+			userId: userId,
 		})
 
 		exercise.sets.push(set._id)
@@ -85,12 +92,14 @@ const addExerciseToWorkout = async (req, res) => {
 
 const addSetToExercise = async (req, res) => {
 	try {
+		const userId = req.user._id
 		const exerciseId = req.body.exerciseId
 
 		const newSet = await Set.create({
 			weight: req.body.weight,
 			reps: req.body.numOfReps,
 			exerciseId: exerciseId,
+			userId: userId,
 		})
 
 		const exercise = await Exercise.findByIdAndUpdate(
