@@ -13,6 +13,8 @@ type AnalyticsDoughnutChartOwnProps = {
 const AnalyticsDoughnutChart: React.FC<AnalyticsDoughnutChartOwnProps> = ({
 	setPercentages,
 }) => {
+	console.log("in doughnut: ", setPercentages)
+
 	const chartData = {
 		labels: [],
 		datasets: [
