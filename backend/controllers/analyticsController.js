@@ -9,22 +9,47 @@ const getSetAnalytics = async (req, res) => {
 
 	const allExercises = await Exercise.find({ userId: userId })
 
-	const setCountMap = {
-		chest: 0,
-		back: 0,
-		shoulders: 0,
-		biceps: 0,
-		triceps: 0,
-		legs: 0,
+	const setData = {
+		chest: {
+			sets: 0,
+			percOfLifts: 0,
+		},
+		back: {
+			sets: 0,
+			percOfLifts: 0,
+		},
+		shoulders: {
+			sets: 0,
+			percOfLifts: 0,
+		},
+		biceps: {
+			sets: 0,
+			percOfLifts: 0,
+		},
+		triceps: {
+			sets: 0,
+			percOfLifts: 0,
+		},
+		legs: {
+			sets: 0,
+			percOfLifts: 0,
+		},
 	}
+
+	let totalSets = 0
 
 	for (let i = 0; i < allExercises.length; i++) {
-		setCountMap[allExercises[i].muscleGroup] += allExercises[i].sets.length
+		setData[allExercises[i].muscleGroup].sets += allExercises[i].sets.length
+		totalSets += allExercises[i].sets.length
 	}
 
-	const setPercentages = Object.values(setCountMap)
+	for (let key in setData) {
+		setData[key].percOfLifts = Math.floor(
+			(setData[key].sets / totalSets) * 100
+		)
+	}
 
-	res.status(200).json(setPercentages)
+	res.status(200).json(setData)
 }
 
 module.exports = { getSetAnalytics }
