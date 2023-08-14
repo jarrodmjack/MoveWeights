@@ -7,20 +7,18 @@ import Chart from "chart.js/auto"
 Chart.register(CategoryScale)
 
 type AnalyticsDoughnutChartOwnProps = {
-	setPercentages: Number[]
+	setCounts: Number[]
 }
 
 const AnalyticsDoughnutChart: React.FC<AnalyticsDoughnutChartOwnProps> = ({
-	setPercentages,
+	setCounts,
 }) => {
-	console.log("in doughnut: ", setPercentages)
-
 	const chartData = {
 		labels: [],
 		datasets: [
 			{
 				label: "My First Dataset",
-				data: setPercentages,
+				data: setCounts,
 				backgroundColor: [
 					"#f51905",
 					"#31f505",
@@ -35,7 +33,7 @@ const AnalyticsDoughnutChart: React.FC<AnalyticsDoughnutChartOwnProps> = ({
 	}
 
 	return (
-		<div className="border flex justify-center">
+		<div className="flex justify-center">
 			<div className="w-1/2">
 				<Doughnut data={chartData} />
 			</div>

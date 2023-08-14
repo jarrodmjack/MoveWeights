@@ -1,6 +1,12 @@
 import React, { useState } from "react"
 
-const SetAnalyticsTable = () => {
+type SetAnalyticsTableOwnProps = {
+	setAnalyticsData: [string, { sets: number; percOfLifts: number }][]
+}
+
+const SetAnalyticsTable: React.FC<SetAnalyticsTableOwnProps> = ({
+	setAnalyticsData,
+}) => {
 
 	return (
 		<div className="overflow-x-auto">
@@ -13,36 +19,13 @@ const SetAnalyticsTable = () => {
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
-						<td>Chest</td>
-						<td>24 sets</td>
-						<td>15%</td>
-					</tr>
-					<tr>
-						<td>Back</td>
-						<td>37 sets</td>
-						<td>19%</td>
-					</tr>
-					<tr>
-						<td>Shoulders</td>
-						<td>37 sets</td>
-						<td>19%</td>
-					</tr>
-					<tr>
-						<td>Biceps</td>
-						<td>37 sets</td>
-						<td>19%</td>
-					</tr>
-					<tr>
-						<td>Triceps</td>
-						<td>37 sets</td>
-						<td>19%</td>
-					</tr>
-					<tr>
-						<td>Legs</td>
-						<td>37 sets</td>
-						<td>19%</td>
-					</tr>
+					{setAnalyticsData.map((entry, i) => (
+						<tr key={i}>
+							<td className="capitalize">{entry[0]}</td>
+							<td>{entry[1].sets}</td>
+							<td>{entry[1].percOfLifts}%</td>
+						</tr>
+					))}
 				</tbody>
 			</table>
 		</div>
