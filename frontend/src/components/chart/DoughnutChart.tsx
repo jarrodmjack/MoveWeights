@@ -3,6 +3,7 @@ import React from "react"
 import { Doughnut } from "react-chartjs-2"
 import { CategoryScale } from "chart.js"
 import Chart from "chart.js/auto"
+import { analyticsChartColors } from "@/utils/analyticsChartColours"
 
 Chart.register(CategoryScale)
 
@@ -19,14 +20,7 @@ const AnalyticsDoughnutChart: React.FC<AnalyticsDoughnutChartOwnProps> = ({
 			{
 				label: "My First Dataset",
 				data: setCounts,
-				backgroundColor: [
-					"#f51905",
-					"#31f505",
-					"#05f5e9",
-					"#f5a905",
-					"#7505f5",
-					"#c807de",
-				],
+				backgroundColor: analyticsChartColors,
 				hoverOffset: 4,
 			},
 		],

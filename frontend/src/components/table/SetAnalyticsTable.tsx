@@ -1,3 +1,4 @@
+import { analyticsChartColors } from "@/utils/analyticsChartColours";
 import React, { useState } from "react"
 
 type SetAnalyticsTableOwnProps = {
@@ -7,6 +8,7 @@ type SetAnalyticsTableOwnProps = {
 const SetAnalyticsTable: React.FC<SetAnalyticsTableOwnProps> = ({
 	setAnalyticsData,
 }) => {
+
 
 	return (
 		<div className="overflow-x-auto">
@@ -21,7 +23,7 @@ const SetAnalyticsTable: React.FC<SetAnalyticsTableOwnProps> = ({
 				<tbody>
 					{setAnalyticsData.map((entry, i) => (
 						<tr key={i}>
-							<td className="capitalize">{entry[0]}</td>
+							<td className={`capitalize`} style={{color: analyticsChartColors[i]}}>{entry[0]}</td>
 							<td>{entry[1].sets}</td>
 							<td>{entry[1].percOfLifts}%</td>
 						</tr>
