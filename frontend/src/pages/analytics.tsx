@@ -174,7 +174,9 @@ const analytics = () => {
 						/>
 					</>
 				) : (
-					<div>No workouts have been done in this time period</div>
+					<div className="flex flex-col gap-8 p-4">
+						<p className="text-xl font-semibold">No workouts have been done in this time period</p>
+					</div>
 				)}
 			</div>
 		</Layout>
