@@ -10,7 +10,7 @@ const analytics = () => {
 	const { user } = useAuthContext()
 
 	const [isLoading, setIsLoading] = useState(false)
-	const [setCounts, setSetCounts] = useState<number[]>([])
+	const [setCounts, setSetCounts] = useState<number[] | null>(null)
 	const [setAnalyticsData, setSetAnalyticsData] = useState<
 		[string, { sets: number; percOfLifts: number }][] | null
 	>(null)
@@ -38,11 +38,16 @@ const analytics = () => {
 				}
 			)
 
-			if (response.ok) {
-				const data = await response.json()
+			const data = await response.json()
+
+			if (!data.setEntries) {
+				setSetCounts(null)
+				setSetAnalyticsData(null)
+			} else {
 				setSetCounts(data.setPercentageList)
 				setSetAnalyticsData(data.setEntries)
 			}
+
 			setIsLoading(false)
 		} catch (e) {
 			toast.error(
@@ -53,7 +58,6 @@ const analytics = () => {
 	}
 
 	const fetchSetAnalyticsPastWeek = async () => {
-		console.log("HIT FETCH PAST WEEK")
 		try {
 			setIsLoading(true)
 			const response = await fetch(
@@ -69,8 +73,14 @@ const analytics = () => {
 
 			const data = await response.json()
 
-			setSetCounts(data.setPercentageList)
-			setSetAnalyticsData(data.setEntries)
+			if (!data.setEntries) {
+				setSetCounts(null)
+				setSetAnalyticsData(null)
+			} else {
+				setSetCounts(data.setPercentageList)
+				setSetAnalyticsData(data.setEntries)
+			}
+
 			setIsLoading(false)
 		} catch (e) {
 			toast.error(
@@ -95,8 +105,15 @@ const analytics = () => {
 			)
 
 			const data = await response.json()
-			setSetCounts(data.setPercentageList)
-			setSetAnalyticsData(data.setEntries)
+
+			if (!data.setEntries) {
+				setSetCounts(null)
+				setSetAnalyticsData(null)
+			} else {
+				setSetCounts(data.setPercentageList)
+				setSetAnalyticsData(data.setEntries)
+			}
+
 			setIsLoading(false)
 		} catch (e) {
 			toast.error(
@@ -149,9 +166,15 @@ const analytics = () => {
 						))}
 					</div>
 				</div>
-				<DoughnutChart setCounts={setCounts} />
-				{setAnalyticsData && (
-					<SetAnalyticsTable setAnalyticsData={setAnalyticsData} />
+				{setCounts && setAnalyticsData ? (
+					<>
+						<DoughnutChart setCounts={setCounts} />
+						<SetAnalyticsTable
+							setAnalyticsData={setAnalyticsData}
+						/>
+					</>
+				) : (
+					<div>No workouts have been done in this time period</div>
 				)}
 			</div>
 		</Layout>

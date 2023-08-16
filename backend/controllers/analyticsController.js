@@ -9,6 +9,11 @@ const getSetAnalytics = async (req, res) => {
 
 	const allExercises = await Exercise.find({ userId: userId })
 
+	if (allExercises.length === 0) {
+		res.status(200).json({ setPercentageList: [], setEntries: null })
+		return
+	}
+
 	const setData = {
 		chest: {
 			sets: 0,
@@ -68,6 +73,11 @@ const getSetAnalyticsOneWeekTimePeriod = async (req, res) => {
 				$gte: pastWeekTimePeriod,
 			},
 		})
+
+		if (pastWeekExercises.length === 0) {
+			res.status(200).json({ setPercentageList: [], setEntries: null })
+			return
+		}
 
 		const setData = {
 			chest: {
@@ -135,6 +145,11 @@ const getSetAnalyticsOneMonthTimePeriod = async (req, res) => {
 			},
 		})
 
+		if (pastMonthExercises.length === 0) {
+			res.status(200).json({ setPercentageList: [], setEntries: null })
+			return
+		}
+
 		const setData = {
 			chest: {
 				sets: 0,
@@ -183,7 +198,7 @@ const getSetAnalyticsOneMonthTimePeriod = async (req, res) => {
 		res.status(200).json({ setPercentageList, setEntries })
 		return
 	} catch (e) {
-		res.status(400).json({ msg: "No data" })
+		res.status(400)
 		return
 	}
 }
