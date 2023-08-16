@@ -1,6 +1,7 @@
 import DoughnutChart from "@/components/chart/DoughnutChart"
 import Layout from "@/components/layout/Layout"
 import LoadingPageWithLogo from "@/components/loading/LoadingPageWithLogo"
+import LoadingSpinner from "@/components/loading/LoadingSpinner"
 import SetAnalyticsTable from "@/components/table/SetAnalyticsTable"
 import { useAuthContext } from "@/hooks/useAuthContext"
 import React, { useState, useEffect } from "react"
@@ -123,10 +124,6 @@ const analytics = () => {
 		}
 	}
 
-	if (isLoading) {
-		return <LoadingPageWithLogo />
-	}
-
 	const filterTabs = [
 		{
 			text: "All time",
@@ -141,6 +138,39 @@ const analytics = () => {
 			filterFn: fetchSetAnalyticsPastMonth,
 		},
 	]
+
+	if (isLoading) {
+		return (
+			<Layout>
+				<div className="flex flex-col gap-8 p-4 justify-center">
+					<div className="flex justify-center">
+						<div className="tabs tabs-boxed w-fit">
+							{filterTabs.map(({ text, filterFn }, i) => (
+								<a
+									key={text}
+									onClick={() => {
+										setActiveFilterTab(text)
+										if (activeFilterTab !== text) {
+											filterFn()
+										}
+									}}
+									className={`tab ${
+										text === activeFilterTab &&
+										"bg-primary-focus text-white transition ease-in-out"
+									}`}
+								>
+									{text}
+								</a>
+							))}
+						</div>
+					</div>
+					<div className="flex justify-center mt-20">
+						<LoadingSpinner />
+					</div>
+				</div>
+			</Layout>
+		)
+	}
 
 	return (
 		<Layout>
@@ -175,7 +205,9 @@ const analytics = () => {
 					</>
 				) : (
 					<div className="flex flex-col gap-8 p-4">
-						<p className="text-xl font-semibold">No workouts have been done in this time period</p>
+						<p className="text-xl font-semibold">
+							No workouts have been done in this time period
+						</p>
 					</div>
 				)}
 			</div>
