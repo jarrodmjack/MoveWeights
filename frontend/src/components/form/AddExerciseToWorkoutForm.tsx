@@ -24,6 +24,7 @@ const AddExerciseToWorkoutForm: React.FC<
 > = ({ handleSubmit, actionLoading }) => {
 	const { user } = useAuthContext()
 
+	const [disabled, setDisabled] = useState(false)
 	const [isLoading, setIsLoading] = useState(false)
 	const [muscleGroup, setMuscleGroup] = useState<string>("")
 	const [exerciseName, setExerciseName] = useState<string>("")
@@ -73,7 +74,7 @@ const AddExerciseToWorkoutForm: React.FC<
 		}
 		fetchMatchingExercises()
 	}, [user, actionLoading])
-	console.log("action loading: ", actionLoading)
+
 	const filterExercisesByMuscleGroup = (muscleGrp: string) => {
 		const exercises = [...globalExercises, ...userSpecificExercises]
 		const filteredExercises = exercises.filter(
@@ -168,7 +169,7 @@ const AddExerciseToWorkoutForm: React.FC<
 				/>
 			</div>
 			<button
-				disabled={actionLoading}
+				disabled={disabled}
 				onClick={(e) => {
 					e.preventDefault()
 					if (!muscleGroup || !exerciseName) {
@@ -177,6 +178,7 @@ const AddExerciseToWorkoutForm: React.FC<
 						)
 						return
 					}
+					setDisabled(true)
 					handleSubmit({
 						muscleGroup,
 						exerciseName,
