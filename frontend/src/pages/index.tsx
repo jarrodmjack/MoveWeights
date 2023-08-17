@@ -15,7 +15,7 @@ const index = () => {
 				<div className="overflow-y-auto max-h-[700px] sm:max-h-[900px]">
 					{workout ? (
 						<>
-							<h2 className="ml-8 md:ml-16 mb-4 text-2xl">
+							<h2 className="ml-10 md:ml-16 mb-8 text-2xl font-semibold">
 								Today's workout
 							</h2>
 							<ExerciseList />
