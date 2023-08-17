@@ -14,8 +14,8 @@ const SetAnalyticsTable: React.FC<SetAnalyticsTableOwnProps> = ({
 				<thead>
 					<tr className="flex">
 						<th className="flex-1">Muscle Group</th>
-						<th className="flex-1">Sets</th>
-						<th>% of lifts</th>
+						<th className="flex-1 text-center">Sets</th>
+						<th className="flex-1 text-right">% of lifts</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -27,8 +27,8 @@ const SetAnalyticsTable: React.FC<SetAnalyticsTableOwnProps> = ({
 						>
 							{entry[0]}
 						</td>
-						<td className="flex-1">{entry[1].sets}</td>
-						<td className="table-cell text-right">{entry[1].percOfLifts}%</td>
+						<td className="flex-1 text-center">{entry[1].sets}</td>
+						<td className="flex-1 text-right">{entry[1].percOfLifts}%</td>
 					</tr>
 					))}
 				</tbody>

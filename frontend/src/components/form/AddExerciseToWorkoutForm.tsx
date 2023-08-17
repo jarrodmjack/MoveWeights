@@ -27,6 +27,10 @@ const AddExerciseToWorkoutForm: React.FC<
 	const [isLoading, setIsLoading] = useState(false)
 	const [muscleGroup, setMuscleGroup] = useState<string>("")
 	const [exerciseName, setExerciseName] = useState<string>("")
+	const [selectedOption, setSelectedOption] = useState<{
+		label: string | null
+		value: string | null
+	}>()
 	const [weight, setWeight] = useState(0)
 	const [numOfReps, setNumOfReps] = useState(0)
 	const [userSpecificExercises, setUserSpecificExercises] = useState([])
@@ -38,6 +42,7 @@ const AddExerciseToWorkoutForm: React.FC<
 		value: string
 	}) => {
 		setExerciseName(option.value)
+		setSelectedOption(option)
 	}
 
 	useEffect(() => {
@@ -98,6 +103,7 @@ const AddExerciseToWorkoutForm: React.FC<
 					onChange={(e) => {
 						setMuscleGroup(e.target.value)
 						setExerciseName("")
+						setSelectedOption({ value: null, label: null })
 						filterExercisesByMuscleGroup(e.target.value)
 					}}
 				>
@@ -122,6 +128,7 @@ const AddExerciseToWorkoutForm: React.FC<
 					className="self-center w-full max-w-xs text-xl"
 					isDisabled={muscleGroup ? false : true}
 					options={options}
+					value={selectedOption}
 					//@ts-ignore
 					onChange={handleSetExerciseName}
 				/>

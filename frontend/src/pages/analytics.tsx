@@ -205,7 +205,7 @@ const analytics = () => {
 					</>
 				) : (
 					<div className="flex flex-col gap-8 p-4">
-						<p className="text-xl font-semibold">
+						<p className="text-xl font-semibold md:text-center">
 							No workouts have been done in this time period
 						</p>
 					</div>
