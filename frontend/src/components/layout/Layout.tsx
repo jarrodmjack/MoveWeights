@@ -13,7 +13,7 @@ type LayoutOwnProps = {} & PropsWithChildren
 const Layout: React.FC<LayoutOwnProps> = ({ children }) => {
 	const { user } = useAuthContext()
 	const router = useRouter()
-	const { workout, fetchTodaysWorkout } = useContext(WorkoutContext)!
+	const { workout } = useContext(WorkoutContext)!
 
 	return (
 		<main className="flex flex-col borderh-screen">
@@ -74,10 +74,10 @@ const Layout: React.FC<LayoutOwnProps> = ({ children }) => {
 			{!user ? (
 				<LandingView />
 			) : (
-				<>
+				<div className="md:w-1/2 mx-auto">
 					{children}
 					<BottomNav />
-				</>
+				</div>
 			)}
 		</main>
 	)

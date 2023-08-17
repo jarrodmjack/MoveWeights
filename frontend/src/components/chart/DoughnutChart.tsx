@@ -28,7 +28,7 @@ const AnalyticsDoughnutChart: React.FC<AnalyticsDoughnutChartOwnProps> = ({
 
 	return (
 		<div className="flex justify-center">
-			<div className="w-1/2">
+			<div className="w-1/2 md:w-1/4">
 				<Doughnut data={chartData} />
 			</div>
 		</div>
