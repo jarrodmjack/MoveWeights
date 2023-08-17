@@ -189,7 +189,7 @@ const AddExerciseToWorkoutForm: React.FC<
 				}}
 				className="btn w-full py-4 bg-primary-focus rounded-lg text-white cursor-pointer"
 			>
-				{actionLoading ? <LoadingDots /> : <span>+ Add</span>}
+				{disabled ? <LoadingDots /> : <span>+ Add</span>}
 			</button>
 		</form>
 	)

@@ -3,7 +3,7 @@ import Layout from "@/components/layout/Layout"
 import { WorkoutContext } from "@/context/WorkoutContext"
 import { useAuthContext } from "@/hooks/useAuthContext"
 import { useRouter } from "next/router"
-import React, { useContext } from "react"
+import React, { useContext, useState } from "react"
 import { toast } from "react-hot-toast"
 
 const create = () => {
@@ -11,6 +11,7 @@ const create = () => {
 	const router = useRouter()
 	const { workout, fetchTodaysWorkout, isLoading } =
 		useContext(WorkoutContext)!
+	const [actionLoading, setActionLoading] = useState(false)
 
 	const createWorkout = async (data: {
 		tzOffset: number
@@ -28,6 +29,7 @@ const create = () => {
 			)
 			return
 		}
+		setActionLoading(true)
 
 		try {
 			const response = await fetch(
@@ -45,10 +47,12 @@ const create = () => {
 			workout?.exercises.push(newExercise)
 			fetchTodaysWorkout()
 			router.push(`/exercise/${newExercise._id}`)
+			setActionLoading(false)
 		} catch (e) {
 			toast.error(
 				"There was an error creating the workout, please try again"
 			)
+			setActionLoading(false)
 			router.push("/")
 		}
 	}
@@ -60,9 +64,11 @@ const create = () => {
 	return (
 		<Layout>
 			<div className="flex flex-col gap-8 p-4">
-				<p className="text-2xl font-semibold text-center">Add the first exercise to your workout</p>
+				<p className="text-2xl font-semibold text-center">
+					Add the first exercise to your workout
+				</p>
 				<AddExerciseToWorkoutForm
-					actionLoading={false}
+					actionLoading={actionLoading}
 					handleSubmit={createWorkout}
 				/>
 			</div>
