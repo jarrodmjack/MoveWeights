@@ -60,6 +60,7 @@ const create = () => {
 	return (
 		<Layout>
 			<div className="flex flex-col gap-8 p-4">
+				<p className="text-2xl font-semibold text-center">Add the first exercise to your workout</p>
 				<AddExerciseToWorkoutForm
 					actionLoading={false}
 					handleSubmit={createWorkout}
