@@ -189,24 +189,15 @@ const index = () => {
 				<h3 className="text-xl font-semibold">
 					Add a set to {exercise?.name}
 				</h3>
-				<AddSetToExerciseForm
-					isLoading={actionLoading}
-					selectedSet={selectedSet}
-					handleSubmit={handleAddSetToExercise}
-					handleUpdateSet={handleUpdateSet}
-					handleDeleteSet={handleDeleteSetFromExercise}
-				/>
-				{exerciseSets.length > 0 ? (
-					<SetList
-						selectedSetId={selectedSet?._id}
-						handleSelectSet={handleSelectSet}
+					<AddSetToExerciseForm
+						isLoading={actionLoading}
+						selectedSet={selectedSet}
+						handleSubmit={handleAddSetToExercise}
+						handleUpdateSet={handleUpdateSet}
+						handleDeleteSet={handleDeleteSetFromExercise}
 						sets={exerciseSets}
+						handleSelectSet={handleSelectSet}
 					/>
-				) : (
-					<div className="flex justify-center">
-						<h4>No sets have been added to this exercise</h4>
-					</div>
-				)}
 			</div>
 		</Layout>
 	)

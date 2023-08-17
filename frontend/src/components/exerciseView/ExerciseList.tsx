@@ -113,7 +113,7 @@ const ExerciseList = () => {
 				<div key={exercise._id} className="flex gap-2">
 					<ExerciseCard exercise={exercise} />
 					<FaTimesCircle
-						className="text-danger scale-125"
+						className="text-danger scale-125 cursor-pointer"
 						onClick={(e) => {
 							e.stopPropagation()
 							setSelectedExerciseId(exercise._id)

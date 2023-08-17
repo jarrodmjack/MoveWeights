@@ -15,10 +15,10 @@ const AnalyticsDoughnutChart: React.FC<AnalyticsDoughnutChartOwnProps> = ({
 	setCounts,
 }) => {
 	const chartData = {
-		labels: [],
+		// labels: ["Chest", "Back", "Shoulders", "Biceps", "Triceps", "Legs"],
 		datasets: [
 			{
-				label: "My First Dataset",
+				label: 'Sets',
 				data: setCounts,
 				backgroundColor: analyticsChartColors,
 				hoverOffset: 4,

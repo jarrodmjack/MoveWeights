@@ -74,7 +74,7 @@ const Layout: React.FC<LayoutOwnProps> = ({ children }) => {
 			{!user ? (
 				<LandingView />
 			) : (
-				<div className="md:w-1/2 mx-auto">
+				<div className="w-full md:w-1/2 mx-auto">
 					{children}
 					<BottomNav />
 				</div>
