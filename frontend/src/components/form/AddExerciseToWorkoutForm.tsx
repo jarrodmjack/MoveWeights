@@ -73,7 +73,7 @@ const AddExerciseToWorkoutForm: React.FC<
 			}
 		}
 		fetchMatchingExercises()
-	}, [user, actionLoading])
+	}, [user])
 
 	const filterExercisesByMuscleGroup = (muscleGrp: string) => {
 		const exercises = [...globalExercises, ...userSpecificExercises]
