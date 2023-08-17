@@ -43,6 +43,7 @@ const getSetAnalytics = async (req, res) => {
 
 	let totalSets = 0
 
+	console.log("setData: ", setData)
 	for (let i = 0; i < allExercises.length; i++) {
 		setData[allExercises[i].muscleGroup].sets += allExercises[i].sets.length
 		totalSets += allExercises[i].sets.length
