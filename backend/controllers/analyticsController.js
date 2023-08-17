@@ -39,17 +39,16 @@ const getSetAnalytics = async (req, res) => {
 			sets: 0,
 			percOfLifts: 0,
 		},
-		abs: {
-			sets: 0,
-			percOfLifts: 0,
-		},
 	}
 
 	let totalSets = 0
 
 	for (let i = 0; i < allExercises.length; i++) {
-		setData[allExercises[i].muscleGroup].sets += allExercises[i].sets.length
-		totalSets += allExercises[i].sets.length
+		if (setData.hasOwnProperty(allExercises[i].muscleGroup)) {
+			setData[allExercises[i].muscleGroup].sets +=
+				allExercises[i].sets.length
+			totalSets += allExercises[i].sets.length
+		}
 	}
 
 	for (let key in setData) {
@@ -113,9 +112,11 @@ const getSetAnalyticsOneWeekTimePeriod = async (req, res) => {
 		let totalSets = 0
 
 		for (let i = 0; i < pastWeekExercises.length; i++) {
-			setData[pastWeekExercises[i].muscleGroup].sets +=
-				pastWeekExercises[i].sets.length
-			totalSets += pastWeekExercises[i].sets.length
+			if (setData.hasOwnProperty(pastWeekExercises[i].muscleGroup)) {
+				setData[pastWeekExercises[i].muscleGroup].sets +=
+					pastWeekExercises[i].sets.length
+				totalSets += pastWeekExercises[i].sets.length
+			}
 		}
 
 		for (let key in setData) {
@@ -184,9 +185,11 @@ const getSetAnalyticsOneMonthTimePeriod = async (req, res) => {
 		let totalSets = 0
 
 		for (let i = 0; i < pastMonthExercises.length; i++) {
-			setData[pastMonthExercises[i].muscleGroup].sets +=
-				pastMonthExercises[i].sets.length
-			totalSets += pastMonthExercises[i].sets.length
+			if (setData.hasOwnProperty(pastWeekExercises[i].muscleGroup)) {
+				setData[pastMonthExercises[i].muscleGroup].sets +=
+					pastMonthExercises[i].sets.length
+				totalSets += pastMonthExercises[i].sets.length
+			}
 		}
 
 		for (let key in setData) {
