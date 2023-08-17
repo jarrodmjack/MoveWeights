@@ -5,7 +5,7 @@ import Link from "next/link"
 const LandingView = () => {
 
 	return (
-		<div className="flex flex-col gap-4">
+		<div className="flex flex-col">
 			<div className="p-4 flex flex-col gap-4 items-center">
 				<h2 className="text-2xl font-semibold">Track your workouts</h2>
 				<Image
