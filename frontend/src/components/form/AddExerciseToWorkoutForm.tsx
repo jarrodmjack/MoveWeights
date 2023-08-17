@@ -72,8 +72,8 @@ const AddExerciseToWorkoutForm: React.FC<
 			}
 		}
 		fetchMatchingExercises()
-	}, [user])
-
+	}, [user, actionLoading])
+	console.log("action loading: ", actionLoading)
 	const filterExercisesByMuscleGroup = (muscleGrp: string) => {
 		const exercises = [...globalExercises, ...userSpecificExercises]
 		const filteredExercises = exercises.filter(
@@ -185,7 +185,7 @@ const AddExerciseToWorkoutForm: React.FC<
 						tzOffset: currentTimeZoneOffset,
 					})
 				}}
-				className="w-full py-4 bg-primary-focus rounded-lg text-white cursor-pointer"
+				className="btn w-full py-4 bg-primary-focus rounded-lg text-white cursor-pointer"
 			>
 				{actionLoading ? <LoadingDots /> : <span>+ Add</span>}
 			</button>

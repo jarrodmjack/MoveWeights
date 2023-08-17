@@ -51,7 +51,7 @@ const signup = () => {
 									href="#"
 									className="label-text-alt link link-hover"
 								>
-									Forgot password?
+									{/* Forgot password? */}
 								</a>
 							</label>
 							{error && <p className="text-danger">{error}</p>}
