@@ -3,6 +3,7 @@ import PrimaryBorderDivider from "../divider/PrimaryBorderDivider"
 import { Set } from "@/types/Workout"
 import LoadingDots from "../loading/LoadingDots"
 import SetList from "../exerciseView/SetList"
+import { toast } from "react-hot-toast"
 
 type AddSetToExerciseFormOwnProps = {
 	selectedSet: Set | null | undefined
@@ -102,6 +103,10 @@ const AddSetToExerciseForm: React.FC<AddSetToExerciseFormOwnProps> = ({
 						disabled={isLoading}
 						onClick={(e) => {
 							e.preventDefault()
+							if (isNaN(weight) || isNaN(numOfReps)) {
+								toast.error('Reps cannot be below 0')
+								return
+							}
 							handleSubmit({
 								numOfReps: numOfReps,
 								weight: weight,

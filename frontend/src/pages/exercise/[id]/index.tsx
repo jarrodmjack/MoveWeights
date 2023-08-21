@@ -59,6 +59,7 @@ const index = () => {
 		weight: number
 		numOfReps: number
 	}) => {
+
 		try {
 			setActionLoading(true)
 			const response = await fetch(
