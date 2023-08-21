@@ -185,7 +185,7 @@ const getSetAnalyticsOneMonthTimePeriod = async (req, res) => {
 		let totalSets = 0
 
 		for (let i = 0; i < pastMonthExercises.length; i++) {
-			if (setData.hasOwnProperty(pastWeekExercises[i].muscleGroup)) {
+			if (setData.hasOwnProperty(pastMonthExercises[i].muscleGroup)) {
 				setData[pastMonthExercises[i].muscleGroup].sets +=
 					pastMonthExercises[i].sets.length
 				totalSets += pastMonthExercises[i].sets.length
@@ -201,7 +201,6 @@ const getSetAnalyticsOneMonthTimePeriod = async (req, res) => {
 		const setEntries = Object.entries(setData)
 
 		const setPercentageList = setEntries.map((entry) => entry[1].sets)
-
 		res.status(200).json({ setPercentageList, setEntries })
 		return
 	} catch (e) {

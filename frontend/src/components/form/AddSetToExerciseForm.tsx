@@ -32,11 +32,6 @@ const AddSetToExerciseForm: React.FC<AddSetToExerciseFormOwnProps> = ({
 			setNumOfReps(selectedSet.reps)
 		}
 
-		if (sets.length > 0) {
-			setWeight(sets[0].weight)
-			setNumOfReps(sets[0].reps)
-		}
-
 	}, [selectedSet, sets])
 
 	return (
