@@ -7,6 +7,7 @@ const userRoutes = require("./routes/userRoutes")
 const homeRoutes = require("./routes/homeRoutes")
 const exerciseRoutes = require("./routes/exerciseRoutes")
 const analyticsRoutes = require("./routes/analyticsRoutes")
+const historyRoutes = require("./routes/historyRoutes")
 require("dotenv").config()
 
 mongoose
@@ -35,3 +36,4 @@ app.use("/api/home", homeRoutes)
 app.use("/api/exercise", exerciseRoutes)
 app.use("/api/user", userRoutes)
 app.use("/api/analytics", analyticsRoutes)
+app.use("/api/history", historyRoutes)

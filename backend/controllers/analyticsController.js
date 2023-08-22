@@ -1,8 +1,4 @@
-const Workout = require("../models/workoutModel")
 const Exercise = require("../models/exerciseModel")
-const Set = require("../models/setModel")
-const UserExercise = require("../models/userExerciseModel")
-const User = require("../models/userModel")
 
 const getSetAnalytics = async (req, res) => {
 	const userId = req.user.id

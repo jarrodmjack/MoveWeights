@@ -2,6 +2,7 @@ export interface Workout {
     _id: string
     exercises: Exercise[]
     date: Date | undefined
+    createdAt: string
 }
 
 export interface Exercise {

@@ -1,9 +1,8 @@
 /** @type {import('next').NextConfig} */
 // import httpProxy from "http-proxy"
 
-
-
 module.exports = {
+	reactStrictMode: false,
 	images: {
 		domains: ["cdn.coinranking.com"],
 	},
@@ -17,8 +16,8 @@ module.exports = {
 	},
 	typescript: {
 		ignoreBuildErrors: true,
-	  },
-	  eslint: {
+	},
+	eslint: {
 		ignoreDuringBuilds: true,
-	  },
+	},
 }
