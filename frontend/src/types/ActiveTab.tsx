@@ -1,4 +1,4 @@
 export enum ActiveTab {
-    HOME = "home",
-    STATS = "stats",
+    EXERCISE = "Exercise",
+    HISTORY = "History"
 }
