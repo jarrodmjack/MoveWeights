@@ -27,7 +27,7 @@ const BottomNav = () => {
 			),
 		},
 		{
-			name: "History",
+			name: "Workout history",
 			link: "/history",
 			icon: (
 				<svg

@@ -7,14 +7,13 @@ type WorkoutCardOwnProps = {
 }
 
 const WorkoutCard: React.FC<WorkoutCardOwnProps> = ({ workout }) => {
-	console.log("workout: ", workout)
 	const date = new Date(workout.createdAt)
 
 	return (
 		<div>
 			<h2 className="text-xl font-semibold">{date.toDateString()}</h2>
             {workout.exercises.map((exercise) => (
-                <div></div>
+                <div key={exercise._id}></div>
             ))}
 		</div>
 	)

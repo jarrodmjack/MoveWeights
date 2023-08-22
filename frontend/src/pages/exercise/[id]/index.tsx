@@ -59,7 +59,6 @@ const index = () => {
 		weight: number
 		numOfReps: number
 	}) => {
-
 		try {
 			setActionLoading(true)
 			const response = await fetch(
@@ -190,15 +189,15 @@ const index = () => {
 				<h3 className="text-xl font-semibold">
 					Add a set to {exercise?.name}
 				</h3>
-					<AddSetToExerciseForm
-						isLoading={actionLoading}
-						selectedSet={selectedSet}
-						handleSubmit={handleAddSetToExercise}
-						handleUpdateSet={handleUpdateSet}
-						handleDeleteSet={handleDeleteSetFromExercise}
-						sets={exerciseSets}
-						handleSelectSet={handleSelectSet}
-					/>
+				<AddSetToExerciseForm
+					isLoading={actionLoading}
+					selectedSet={selectedSet}
+					handleSubmit={handleAddSetToExercise}
+					handleUpdateSet={handleUpdateSet}
+					handleDeleteSet={handleDeleteSetFromExercise}
+					sets={exerciseSets}
+					handleSelectSet={handleSelectSet}
+				/>
 			</div>
 		</Layout>
 	)

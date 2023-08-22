@@ -12,7 +12,7 @@ const index = () => {
 	return (
 		<Layout>
 			<div className="flex flex-col mt-10">
-				<div className="overflow-y-auto max-h-[700px] sm:max-h-[900px]">
+				<div className="overflow-y-auto max-h-[700px] sm:max-h-[800px]">
 					{workout ? (
 						<>
 							<h2 className="ml-10 md:ml-16 mb-8 text-2xl font-semibold">

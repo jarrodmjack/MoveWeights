@@ -3,6 +3,7 @@ import { Workout } from "@/types/Workout"
 import React, { useEffect, useState } from "react"
 import { toast } from "react-hot-toast"
 import WorkoutCard from "../exerciseView/WorkoutCard"
+import LoadingSpinner from "../loading/LoadingSpinner"
 
 const WorkoutHistoryList = () => {
 	const [workouts, setWorkouts] = useState<Workout[]>()
@@ -25,7 +26,6 @@ const WorkoutHistoryList = () => {
 					}
 				)
 				console.log("response: ", response)
-				// console.log("response: ", response)
 				const data = await response.json()
 				setWorkouts(data)
 				setIsLoading(false)
@@ -38,14 +38,20 @@ const WorkoutHistoryList = () => {
 	}, [])
 
 	if (isLoading) {
-		return <></>
+		return (
+			<div className="h-screen flex justify-center items-center">
+				<LoadingSpinner />
+			</div>
+		)
 	}
 
 	return (
 		<div>
 			{workouts &&
 				workouts.length > 0 &&
-				workouts?.map((workout) => <WorkoutCard key={workout._id} workout={workout}/>)}
+				workouts?.map((workout) => (
+					<WorkoutCard key={workout._id} workout={workout} />
+				))}
 		</div>
 	)
 }
