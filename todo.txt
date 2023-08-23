@@ -1,6 +1,8 @@
-Make app look good on desktop
+Continue adding exercise history. Tabs have been setup. Need to finish working on the controller to query exercises
 
 Update node to 18 on machine and docker files
+
+Make app look good on desktop
 
 Re-do loading state on exercise addition (maybe remove button after add)
 Test all loading states on prod - look for any weird ones.
