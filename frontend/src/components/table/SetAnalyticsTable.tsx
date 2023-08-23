@@ -10,7 +10,7 @@ const SetAnalyticsTable: React.FC<SetAnalyticsTableOwnProps> = ({
 }) => {
 	return (
 		<div className="overflow-x-auto mb-20 flex md:justify-center">
-			<table className="table md:w-1/2">
+			<table className="table md:2/3 lg:w-2/3">
 				<thead>
 					<tr className="flex">
 						<th className="flex-1">Muscle Group</th>

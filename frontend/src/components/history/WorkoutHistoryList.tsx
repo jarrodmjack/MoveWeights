@@ -25,7 +25,6 @@ const WorkoutHistoryList = () => {
 						},
 					}
 				)
-				console.log("response: ", response)
 				const data = await response.json()
 				setWorkouts(data)
 				setIsLoading(false)
