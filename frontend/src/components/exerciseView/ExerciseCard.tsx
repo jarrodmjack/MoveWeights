@@ -13,7 +13,7 @@ const ExerciseCard: React.FC<ExerciseCardOwnProps> = ({ exercise }) => {
 			<Link className="flex-1" href={`/exercise/${exercise._id}`}>
 				<div className="shadow border-1 border-primary-content p-4 font-bold flex flex-col gap-2 w-full">
 					<h3>{exercise.name}</h3>
-					<div className="border border-primary w-full" />
+					<div className="border border-primary-focus w-full" />
 					<p className="flex items-center gap-2">
 						No sets have been added{" "}
 						<FaPlus className="text-primary-focus" />

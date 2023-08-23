@@ -16,7 +16,7 @@ const Layout: React.FC<LayoutOwnProps> = ({ children }) => {
 	const { workout } = useContext(WorkoutContext)!
 
 	return (
-		<main className="flex flex-col borderh-screen">
+		<main className="flex flex-col h-screen">
 			<nav className="navbar bg-neutral text-base-100">
 				<div className="flex-1">
 					<Link

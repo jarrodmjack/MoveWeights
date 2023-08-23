@@ -33,6 +33,7 @@ export const useLogin = () => {
 		if (!response.ok) {
 			setIsLoading(false)
 			setError(json.error)
+			router.push("/login")
 		}
 
 		if (response.ok) {

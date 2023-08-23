@@ -11,6 +11,7 @@ export interface Exercise {
     name: string
     muscleGroup: string
     sets: Set[]
+    createdAt: string
 }
 
 export interface Set {
