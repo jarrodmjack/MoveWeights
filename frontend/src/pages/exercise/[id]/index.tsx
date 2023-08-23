@@ -73,7 +73,9 @@ const index = () => {
 					}
 				)
 				const data = await response.json()
-				setExerciseHistory((history) => [...history, ...data])
+				if (data.length > 0) {
+					setExerciseHistory((history) => [...history, ...data])
+				}
 			} catch (e) {
 				toast.error("There was an issue getting your exercise history")
 			}

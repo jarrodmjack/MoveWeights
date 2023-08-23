@@ -42,6 +42,7 @@ const AddSetToExerciseForm: React.FC<AddSetToExerciseFormOwnProps> = ({
 					<p className="font-semibold">Weight</p>
 					<PrimaryBorderDivider />
 					<input
+						min="0"
 						pattern="[0-9]*"
 						onChange={(e) =>
 							setWeight(
@@ -60,6 +61,7 @@ const AddSetToExerciseForm: React.FC<AddSetToExerciseFormOwnProps> = ({
 					<p className="font-semibold">Reps</p>
 					<PrimaryBorderDivider />
 					<input
+						min="0"
 						pattern="[0-9]*"
 						onChange={(e) =>
 							setNumOfReps(

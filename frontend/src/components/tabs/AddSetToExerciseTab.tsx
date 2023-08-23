@@ -23,7 +23,6 @@ const AddSetToExerciseTab: React.FC<AddSetToExerciseFormOwnProps> = ({
 	exerciseSets,
 	handleSelectSet,
 }) => {
-	console.log('render child')
 	return (
 		<div className="flex flex-col gap-8 p-4">
 			<h3 className="text-xl font-semibold">
