@@ -8,6 +8,7 @@ const homeRoutes = require("./routes/homeRoutes")
 const exerciseRoutes = require("./routes/exerciseRoutes")
 const analyticsRoutes = require("./routes/analyticsRoutes")
 const historyRoutes = require("./routes/historyRoutes")
+const paymentRoutes = require("./routes/paymentRoutes")
 require("dotenv").config()
 
 mongoose
@@ -21,14 +22,11 @@ mongoose
 		console.error(error)
 	})
 
-app.get("/", (req, res) => {
-	res.send("Hello World!")
-})
-
 app.use(express.json())
 app.use((req, res, next) => {
 	next()
 })
+
 app.use(cors())
 app.use(bodyParser.json())
 // Routes
@@ -37,3 +35,4 @@ app.use("/api/exercise", exerciseRoutes)
 app.use("/api/user", userRoutes)
 app.use("/api/analytics", analyticsRoutes)
 app.use("/api/history", historyRoutes)
+app.use("/api/payment", paymentRoutes)

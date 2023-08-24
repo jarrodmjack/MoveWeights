@@ -1,3 +1,6 @@
+Add envs to cyclic
+
+
 Continue adding exercise history. Tabs have been setup. Need to finish working on the controller to query exercises
 
 Update node to 18 on machine and docker files
