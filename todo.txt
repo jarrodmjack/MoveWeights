@@ -1,8 +1,17 @@
-Continue adding exercise history. Tabs have been setup. Need to finish working on the controller to query exercises
+Add workout templates feature:
+Create controller/routes
+
+    For creation:
+    On the frontend, can get an array of objects (modeled after Exercise Object) pass back to controller.
+    Use insertMany to insert array of objects
+    https://stackoverflow.com/questions/15400029/mongoose-create-multiple-documents
+
+    For deletion:
+    Onclick event, sends a template id to the backend. Go in an delete many (array of ids?)
+
+See if I can add the .lean method on any of my get queries to mongo (optimization)
 
 Update node to 18 on machine and docker files
 
 Make app look good on desktop
 
-Re-do loading state on exercise addition (maybe remove button after add)
-Test all loading states on prod - look for any weird ones.

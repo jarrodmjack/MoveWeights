@@ -43,8 +43,9 @@ const AddSetToExerciseForm: React.FC<AddSetToExerciseFormOwnProps> = ({
 					<PrimaryBorderDivider />
 					<input
 						min="0"
+						max="1000"
 						pattern="[0-9]*"
-						onChange={(e) =>
+						onChange={(e) => 
 							setWeight(
 								parseInt(e.target.value) &&
 									parseInt(e.target.value)
@@ -62,6 +63,7 @@ const AddSetToExerciseForm: React.FC<AddSetToExerciseFormOwnProps> = ({
 					<PrimaryBorderDivider />
 					<input
 						min="0"
+						max="100"
 						pattern="[0-9]*"
 						onChange={(e) =>
 							setNumOfReps(
@@ -106,7 +108,10 @@ const AddSetToExerciseForm: React.FC<AddSetToExerciseFormOwnProps> = ({
 						onClick={(e) => {
 							e.preventDefault()
 							if (isNaN(weight) || isNaN(numOfReps)) {
-								toast.error('Reps cannot be below 0')
+								toast.error('Value cannot be below 0')
+								return
+							} else if (weight > 1000 || numOfReps > 100) {
+								toast.error('There is no way you lifted that much weight that many times')
 								return
 							}
 							handleSubmit({
