@@ -1,13 +1,5 @@
 Add workout templates feature:
-Create controller/routes
-
-    For creation:
-    On the frontend, can get an array of objects (modeled after Exercise Object) pass back to controller.
-    Use insertMany to insert array of objects
-    https://stackoverflow.com/questions/15400029/mongoose-create-multiple-documents
-
-    For deletion:
-    Onclick event, sends a template id to the backend. Go in an delete many (array of ids?)
+Continue working on the /create frontend route. Left off getting the musclegroup/exercise name selects working. Need to add a handler to add an object to the template exercises array.
 
 See if I can add the .lean method on any of my get queries to mongo (optimization)
 

@@ -131,7 +131,7 @@ const templates = () => {
 				)}
                 <div className="flex items-center gap-2 justify-center mt-10">
                 <p>Add a template</p>
-					<Link href={`/template/addTemplate`}>
+					<Link href={`/template/create`}>
 						<FaPlus className="text-primary-focus hover:text-primary cursor-pointer scale-150" />
 					</Link>
                 </div>

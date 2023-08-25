@@ -2,7 +2,7 @@
 
 const createTemplate = async (req, res) => {
     console.log("HIT CREATE ENPOINT")
-    res.status(200).json({msg: "success"})
+    res.status(200).json({templateName: "Tester"})
 }
 
 const updateTemplate = async (req, res) => {
