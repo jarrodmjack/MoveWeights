@@ -11,7 +11,10 @@ const create = () => {
 	const { user } = useAuthContext()
 	const router = useRouter()
 
-	const [template, setTemplate] = useState({
+	const [template, setTemplate] = useState<{
+		templateName: string
+		templateExercises: { exerciseName: string; muscleGroup: string }[]
+	}>({
 		templateName: "",
 		templateExercises: [],
 	})
@@ -45,12 +48,14 @@ const create = () => {
 			)
 		}
 	}
-
+	console.log(template)
 	return (
 		<Layout>
 			<div className="flex flex-col p-4 gap-8">
 				<div className="flex flex-col gap-4">
-					<p className="text-xl font-semibold">Template name</p>
+					<p className="text-xl font-semibold ml-5 sm:text-center sm:ml-0">
+						Template name
+					</p>
 					<input
 						onChange={(e) => {
 							setTemplate({
@@ -65,6 +70,7 @@ const create = () => {
 				</div>
 				<div className="flex flex-col items-center gap-4">
 					<select
+						value={templateExercise.muscleGroup}
 						className="select select-bordered w-full max-w-xs self-center text-xl"
 						onChange={(e) => {
 							setAllExercises(
@@ -79,7 +85,7 @@ const create = () => {
 							})
 						}}
 					>
-						<option disabled selected>
+						<option disabled selected value="">
 							Select a muscle group
 						</option>
 						<option value="abs">Abs</option>
@@ -105,18 +111,94 @@ const create = () => {
 							Select an exercise
 						</option>
 						{allExercises.map((exercise) => (
-							<option value={`${exercise.name}`}>
+							<option
+								key={exercise._id}
+								value={`${exercise.name}`}
+							>
 								{exercise.name}
 							</option>
 						))}
 					</select>
+					<button
+						className={`text-primary-focus`}
+						onClick={() => {
+							if (
+								!templateExercise.exerciseName ||
+								!templateExercise.muscleGroup
+							) {
+								toast.error(
+									"The exercise must have a muscle group and name selected"
+								)
+								return
+							}
+
+							const currentTemplateExercises =
+								template.templateExercises
+
+							if (
+								currentTemplateExercises.filter(
+									(item) =>
+										item.exerciseName ===
+										templateExercise.exerciseName
+								).length > 0
+							) {
+								toast.error(
+									"You have already added this exercise to this template"
+								)
+								return
+							}
+							currentTemplateExercises.push({
+								exerciseName: templateExercise.exerciseName,
+								muscleGroup: templateExercise.muscleGroup,
+							})
+							setTemplate({
+								...template,
+								templateExercises: currentTemplateExercises,
+							})
+							setTemplateExercise({
+								exerciseName: "",
+								muscleGroup: "",
+							})
+						}}
+					>
+						Add exercise to template
+					</button>
 				</div>
-				<div></div>
+				<div className="h-72 overflow-auto flex flex-col gap-4 md:w-[325px] md:self-center">
+					{template.templateExercises.length > 0 && (
+						<div>
+							<p className="text-xl font-semibold ml-5 sm:text-center sm:ml-0">
+								Exercises
+							</p>
+							{template.templateExercises.map((exercise, i) => (
+								<div
+									key={exercise.exerciseName}
+									className="p-4 border-b border-primary-content"
+								>
+									<p className="font-semibold">
+										{exercise.exerciseName}
+									</p>
+									<div className="border border-primary w-full" />
+									<p className="capitalize">
+										{exercise.muscleGroup}
+									</p>
+								</div>
+							))}
+						</div>
+					)}
+				</div>
 				<button
 					onClick={() => {
+						if (!template.templateName) {
+							toast.error("Template must be named")
+							return
+						} else if (template.templateExercises.length == 0) {
+							toast.error("Template must have exercises")
+							return
+						}
 						return handleCreateTemplate()
 					}}
-					className="btn bg-primary-focus text-white"
+					className="btn bg-primary-focus text-white md:w-[325px] md:self-center"
 				>
 					Create template +
 				</button>
