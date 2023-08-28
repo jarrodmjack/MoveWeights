@@ -1,5 +1,7 @@
 Add workout templates feature:
-Continue working on the /create frontend route. Left off getting the musclegroup/exercise name selects working. Need to add a handler to add an object to the template exercises array.
+Set up backend controller for creating a template. I updated the template model to have exercises: [{exerciseName: String, muscleGroup: String}] so that should be okay for types.
+
+Plan for templates is -> User can apply a template to the current workout (Just does an insertMany on Exercise Model and creates a workout if no workoutId is present)
 
 See if I can add the .lean method on any of my get queries to mongo (optimization)
 

@@ -1,14 +1,14 @@
 import Layout from "@/components/layout/Layout"
 import { useAuthContext } from "@/hooks/useAuthContext"
-import { Template } from "@/types/Templates"
 import { useRouter } from "next/router"
-import React, { useState, useEffect } from "react"
+import React, { useState, useContext } from "react"
 import { toast } from "react-hot-toast"
 import { globalExercises } from "@/utils/globalExercises"
-import Select from "react-select"
+import { WorkoutContext } from "@/context/WorkoutContext"
 
 const create = () => {
 	const { user } = useAuthContext()
+	const { workout } = useContext(WorkoutContext)!
 	const router = useRouter()
 
 	const [template, setTemplate] = useState<{
@@ -35,10 +35,10 @@ const create = () => {
 						"Content-type": "application/json",
 						Authorization: `Bearer ${user.token}`,
 					},
-					body: JSON.stringify({ test: "test" }),
+					body: JSON.stringify({ template, workoutId: workout?._id || null }),
 				}
 			)
-			console.log("resposne: ", response)
+			console.log("response: ", response)
 			const data = await response.json()
 			toast.success(`Successfully created ${data.templateName} template`)
 			router.push("/template")
