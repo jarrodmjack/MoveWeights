@@ -1,7 +1,7 @@
 import Layout from "@/components/layout/Layout"
 import TemplateList from "@/components/template/TemplateList"
 import { useAuthContext } from "@/hooks/useAuthContext"
-import { Template, TemplateExercise } from "@/types/Templates"
+import { Template } from "@/types/Templates"
 import Link from "next/link"
 import React, { useEffect, useState } from "react"
 import { toast } from "react-hot-toast"

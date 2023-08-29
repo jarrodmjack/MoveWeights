@@ -2,8 +2,10 @@ import NewWorkoutButton from "@/components/button/NewWorkoutButton"
 import Layout from "@/components/layout/Layout"
 import ExerciseList from "@/components/exerciseView/ExerciseList"
 import { useAuthContext } from "@/hooks/useAuthContext"
-import React, { useContext } from "react"
+import React, { useContext, useState } from "react"
 import { WorkoutContext } from "@/context/WorkoutContext"
+import Modal from "react-modal"
+import Link from "next/link"
 
 const index = () => {
 	const { user } = useAuthContext()
@@ -18,13 +20,24 @@ const index = () => {
 							<h2 className="ml-10 md:ml-16 mb-8 text-2xl font-semibold">
 								Today's workout
 							</h2>
+							<button className="btn bg-primary-focus text-white w-full">
+								Apply a template
+							</button>
 							<ExerciseList />
 						</>
 					) : (
 						<div className="flex flex-col items-center gap-20">
-							<p className="font-semibold text-xl">
-								No workout recorded yet today.
-							</p>
+							<div className="flex flex-col gap-2">
+								<p className="font-semibold text-xl">
+									No workout recorded yet today.
+								</p>
+								<Link
+									className="btn bg-primary-focus text-white w-full"
+									href="/template"
+								>
+									Apply a template
+								</Link>
+							</div>
 							<NewWorkoutButton text="New workout" />
 						</div>
 					)}
