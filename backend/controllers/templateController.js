@@ -3,8 +3,14 @@ const Workout = require("../models/workoutModel")
 const Template = require("../models/templateModel")
 
 const getTemplateById = async (req, res) => {
-	console.log("HIT get ENPOINT")
-	res.status(200).json({ msg: "success" })
+	try {
+		const templateId = req.params.id
+		const template = await Template.findById(templateId)
+		res.status(200).json(template)
+		return
+	} catch (e) {
+		res.status(400).json({msg: "Failed to fetch template"})
+	}
 }
 
 const getUserTemplates = async (req, res) => {
@@ -19,9 +25,6 @@ const getUserTemplates = async (req, res) => {
 }
 
 const createTemplate = async (req, res) => {
-	console.log("HIT CREATE ENPOINT")
-	console.log(req.body)
-
 	try {
 		const userId = req.user.id
 		const newTemplate = await Template.create({
