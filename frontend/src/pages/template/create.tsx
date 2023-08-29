@@ -38,7 +38,6 @@ const create = () => {
 					body: JSON.stringify({ template, workoutId: workout?._id || null }),
 				}
 			)
-			console.log("response: ", response)
 			const data = await response.json()
 			toast.success(`Successfully created ${data.templateName} template`)
 			router.push("/template")

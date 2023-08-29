@@ -1,5 +1,10 @@
 export interface Template {
 	_id: string
-	templateName: string
+	name: string
 	templateExercises: { exerciseName: string; muscleGroup: string }[]
+}
+
+export type TemplateExercise = {
+	exerciseName: string
+	muscleGroup: string
 }

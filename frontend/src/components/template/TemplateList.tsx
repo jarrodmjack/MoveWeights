@@ -1,6 +1,6 @@
 import { Template } from "@/types/Templates"
 import Link from "next/link"
-import React, { useEffect } from "react"
+import React from "react"
 
 type TemplateListOwnProps = {
 	templates: Template[]
@@ -18,7 +18,7 @@ const TemplateList: React.FC<TemplateListOwnProps> = ({ templates }) => {
 						key={template._id}
 					>
 						<p className="text-xl text-center">
-							{template.templateName}
+							{template.name}
 						</p>
 					</div>
 				</Link>
