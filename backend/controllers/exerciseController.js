@@ -4,6 +4,7 @@ const Exercise = require("../models/exerciseModel")
 const Set = require("../models/setModel")
 const UserExercise = require("../models/userExerciseModel")
 const User = require("../models/userModel")
+const Template = require("../models/templateModel")
 
 const createWorkout = async (req, res) => {
 	const todayUTC = new Date()
@@ -47,6 +48,55 @@ const createWorkout = async (req, res) => {
 	} catch (e) {
 		res.status(400).json(e)
 		return
+	}
+}
+
+const applyTemplateToWorkout = async (req, res) => {
+	// req needs userId, workoutId || null, tzoffset (in case of workout creation), template ID
+	console.log("req body: ", req.body)
+	console.log("user id: ", req.user.id)
+	try {
+		const todayUTC = new Date()
+		const localTimeOffset = req.body.tzOffset
+		let dtOffset = new Date(
+			todayUTC.setUTCMinutes(todayUTC.getUTCMinutes() - localTimeOffset)
+		)
+		const userId = req.user._id
+		const templateId = req.body.templateId
+		const template = await Template.findById(templateId)
+		if (!req.body.workoutId) {
+			const workout = await Workout.create({
+				exercises: [],
+				userId: userId,
+				createdAt: dtOffset,
+			})
+			const exerciseObjectList = template.exercises.map(
+				(templateExercise) => {
+					return {
+						userId,
+						muscleGroup: templateExercise.muscleGroup,
+						name: templateExercise.exerciseName,
+						workoutId: workout._id,
+						sets: [],
+					}
+				}
+			)
+			const exercises = await Exercise.insertMany(exerciseObjectList)
+
+			await workout.populate("exercises")
+			await workout.save()
+			console.log("HIT HERE")
+		} else {
+			// apply template to current workout
+		}
+
+		res.status(200).json({ msg: "success" })
+		return
+	} catch (e) {
+		console.log('e message: ', e)
+		res.status(400).json({
+			msg: "There was an issue applying the template",
+		})
 	}
 }
 
@@ -284,4 +334,5 @@ module.exports = {
 	deleteExerciseFromWorkout,
 	updateSet,
 	addExerciseToWorkout,
+	applyTemplateToWorkout,
 }
