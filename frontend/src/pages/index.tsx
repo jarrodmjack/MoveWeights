@@ -20,9 +20,6 @@ const index = () => {
 							<h2 className="ml-10 md:ml-16 mb-8 text-2xl font-semibold">
 								Today's workout
 							</h2>
-							<button className="btn bg-primary-focus text-white w-full">
-								Apply a template
-							</button>
 							<ExerciseList />
 						</>
 					) : (

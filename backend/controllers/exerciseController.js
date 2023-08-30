@@ -52,9 +52,6 @@ const createWorkout = async (req, res) => {
 }
 
 const applyTemplateToWorkout = async (req, res) => {
-	// req needs userId, workoutId || null, tzoffset (in case of workout creation), template ID
-	console.log("req body: ", req.body)
-	console.log("user id: ", req.user.id)
 	try {
 		const todayUTC = new Date()
 		const localTimeOffset = req.body.tzOffset
@@ -70,6 +67,7 @@ const applyTemplateToWorkout = async (req, res) => {
 				userId: userId,
 				createdAt: dtOffset,
 			})
+
 			const exerciseObjectList = template.exercises.map(
 				(templateExercise) => {
 					return {
@@ -83,17 +81,35 @@ const applyTemplateToWorkout = async (req, res) => {
 			)
 			const exercises = await Exercise.insertMany(exerciseObjectList)
 
-			await workout.populate("exercises")
+			for (let i = 0; i < exercises.length; i++) {
+				workout.exercises.push(exercises[i]._id)
+			}
+
 			await workout.save()
-			console.log("HIT HERE")
 		} else {
-			// apply template to current workout
+			const workout = await Workout.findById(req.body.workoutId)
+
+			const exerciseObjectList = template.exercises.map(
+				(templateExercise) => {
+					return {
+						userId,
+						muscleGroup: templateExercise.muscleGroup,
+						name: templateExercise.exerciseName,
+						workoutId: workout._id,
+						sets: [],
+					}
+				}
+			)
+			const exercises = await Exercise.insertMany(exerciseObjectList)
+			for (let i = 0; i < exercises.length; i++) {
+				workout.exercises.push(exercises[i]._id)
+			}
+			await workout.save()
 		}
 
 		res.status(200).json({ msg: "success" })
 		return
 	} catch (e) {
-		console.log('e message: ', e)
 		res.status(400).json({
 			msg: "There was an issue applying the template",
 		})

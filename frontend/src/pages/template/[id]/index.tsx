@@ -8,7 +8,7 @@ import { toast } from "react-hot-toast"
 
 const index = () => {
 	const router = useRouter()
-	const { workout } = useContext(WorkoutContext)!
+	const { workout, fetchTodaysWorkout } = useContext(WorkoutContext)!
 	const { user } = useAuthContext()
 	const [template, setTemplate] = useState<Template>()
 	const [isLoading, setIsLoading] = useState(false)
@@ -31,7 +31,6 @@ const index = () => {
 					}
 				)
 				const data = await response.json()
-				console.log("data: ", data)
 				setTemplate(data)
 				setIsLoading(false)
 			} catch (e) {
@@ -43,6 +42,7 @@ const index = () => {
 	}, [router])
 	console.log("workout id: ", workout?._id)
 	const handleApplyTemplateToWorkout = async () => {
+		setIsLoading(true)
 		try {
 			const response = await fetch(
 				`${process.env.NEXT_PUBLIC_API_URL}/api/exercise/apply-template`,
@@ -59,14 +59,16 @@ const index = () => {
 					}),
 				}
 			)
-            const data = await response.json()
-            console.log('data: ', data)
+			const data = await response.json()
+			await fetchTodaysWorkout()
+			setIsLoading(false)
+			router.push("/")
 		} catch (e) {
 			toast.error("Error applying template to workout")
 		}
 	}
 
-	if (!template) {
+	if (!template || isLoading) {
 		return <></>
 	}
 
