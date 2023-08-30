@@ -1,8 +1,9 @@
-Continue adding exercise history. Tabs have been setup. Need to finish working on the controller to query exercises
+Add workout templates feature:
+Apply template controller is in place, figure out why stuff is being created, but no exercises are showing up on the home page. (workout and exercises are being created.)
+
+See if I can add the .lean method on any of my get queries to mongo (optimization)
 
 Update node to 18 on machine and docker files
 
 Make app look good on desktop
 
-Re-do loading state on exercise addition (maybe remove button after add)
-Test all loading states on prod - look for any weird ones.
