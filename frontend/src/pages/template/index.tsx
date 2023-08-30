@@ -51,7 +51,7 @@ const templates = () => {
 				{templates.length > 0 ? (
 					<TemplateList templates={templates} />
 				) : (
-					<div>No templates</div>
+					<div className="text-center">You currently have no templates</div>
 				)}
 				<div className="flex items-center gap-2 justify-center mt-10">
 					<p>Add a template</p>
