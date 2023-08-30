@@ -16,7 +16,7 @@ const requireAuth = async (req, res, next) => {
 
 	if (decodedToken.exp < dateNow.getTime() / 1000) {
 		console.log("token is expired")
-		res.status(400).json({msg: "token expired"})
+		res.status(400).json({ msg: "token expired" })
 		return
 	} else {
 		console.log("token is valid")
