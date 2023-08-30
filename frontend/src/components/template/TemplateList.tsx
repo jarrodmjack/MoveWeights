@@ -16,7 +16,6 @@ const TemplateList: React.FC<TemplateListOwnProps> = ({ templates }) => {
 					href={`/template/${template._id}`}
 				>
 					<div
-						onClick={(e) => console.log(e.currentTarget.id)}
 						id={`${template._id}`}
 						className="p-4"
 						key={template._id}

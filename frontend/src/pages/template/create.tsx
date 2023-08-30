@@ -35,7 +35,10 @@ const create = () => {
 						"Content-type": "application/json",
 						Authorization: `Bearer ${user.token}`,
 					},
-					body: JSON.stringify({ template, workoutId: workout?._id || null }),
+					body: JSON.stringify({
+						template,
+						workoutId: workout?._id || null,
+					}),
 				}
 			)
 			const data = await response.json()
@@ -47,7 +50,7 @@ const create = () => {
 			)
 		}
 	}
-	console.log(template)
+
 	return (
 		<Layout>
 			<div className="flex flex-col p-4 gap-8">

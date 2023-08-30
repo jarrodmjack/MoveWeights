@@ -17,7 +17,6 @@ const getUserTemplates = async (req, res) => {
 	try {
 		const userId = req.user.id
 		const templates = await Template.find({ userId: userId }).lean()
-		console.log(templates)
 		res.status(200).json(templates)
 	} catch (e) {
 		res.status(400).json(e)
