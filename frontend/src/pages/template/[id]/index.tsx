@@ -11,7 +11,7 @@ const index = () => {
 	const { workout, fetchTodaysWorkout } = useContext(WorkoutContext)!
 	const { user } = useAuthContext()
 	const [template, setTemplate] = useState<Template>()
-	const [isLoading, setIsLoading] = useState(false)
+	const [isLoading, setIsLoading] = useState(true)
 	const currentDate = new Date()
 	const currentTimeZoneOffset = currentDate.getTimezoneOffset()
 
@@ -40,7 +40,7 @@ const index = () => {
 		}
 		fetchTemplateById()
 	}, [router])
-	console.log("workout id: ", workout?._id)
+
 	const handleApplyTemplateToWorkout = async () => {
 		setIsLoading(true)
 		try {
@@ -59,7 +59,6 @@ const index = () => {
 					}),
 				}
 			)
-			const data = await response.json()
 			await fetchTodaysWorkout()
 			setIsLoading(false)
 			router.push("/")
@@ -75,19 +74,38 @@ const index = () => {
 	return (
 		<Layout>
 			<div className="flex flex-col p-4 gap-8">
-				{template.name}
-				{template.exercises.map((exercise, i) => (
-					<span key={i}>{exercise.exerciseName}</span>
-				))}
+				<div className="flex flex-col gap-10">
+					<h2 className="text-2xl font-semibold text-center">
+						{template.name}
+					</h2>
+					<div className="flex flex-col h-96 overflow-auto w-full md:w-2/3 md:self-center">
+						{template.exercises.map((exercise, i) => (
+							<div
+								key={i}
+								className="p-4 border-b border-primary-content"
+							>
+								<p className="font-semibold">
+									{exercise.exerciseName}
+								</p>
+								<div className="border border-primary w-full" />
+								<p className="capitalize">
+									{exercise.muscleGroup}
+								</p>
+							</div>
+						))}
+					</div>
+				</div>
+				<div className="flex justify-center mt-10">
+					<button
+						onClick={() => {
+							handleApplyTemplateToWorkout()
+						}}
+						className="btn bg-primary-focus text-white self-center"
+					>
+						Apply template to workout
+					</button>
+				</div>
 			</div>
-			<button
-				onClick={() => {
-					handleApplyTemplateToWorkout()
-				}}
-				className="btn bg-primary-focus text-white"
-			>
-				Apply template to workout
-			</button>
 		</Layout>
 	)
 }
