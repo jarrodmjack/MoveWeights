@@ -59,12 +59,12 @@ const login = () => {
 								className="input input-bordered"
 							/>
 							<label className="label">
-								<a
-									href="#"
-									className="label-text-alt link link-hover"
+								<Link
+									href="/forgot-password"
+									className="text-primary hover:underline"
 								>
-									{/* Forgot password? */}
-								</a>
+									Forgot password?
+								</Link>
 							</label>
 							{error && <p className="text-danger">{error}</p>}
 						</div>

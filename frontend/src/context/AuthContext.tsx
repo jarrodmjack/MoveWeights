@@ -24,17 +24,24 @@ export const AuthContextProvider = ({ children }) => {
 	})
 	const router = useRouter()
 	// check for token in local storage to see if there is already a user logged in
-
 	useEffect(() => {
 		const user = JSON.parse(localStorage.getItem("user"))
 		if (user) {
 			dispatch({ type: "LOGIN", payload: user })
 		} else {
-			if (router.pathname !== "/") {
-				router.push("/login")
+			if (
+				router.pathname === "/reset-password/[userId]/[token]" ||
+				router.pathname === "/forgot-password"
+			) {
+				console.log("hit here")
 				return
+			} else {
+				console.log("hit 2")
+				if (router.pathname !== "/") {
+					console.log("hit 3")
+					router.push("/login")
+				}
 			}
-			router.push('/')
 		}
 	}, [])
 

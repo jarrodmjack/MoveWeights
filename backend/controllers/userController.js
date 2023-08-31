@@ -1,5 +1,6 @@
 const User = require("../models/userModel")
 const jwt = require("jsonwebtoken")
+require("dotenv").config()
 
 const createToken = (_id) => {
 	//reusable token generation for login and signup
@@ -37,4 +38,53 @@ const signupUser = async (req, res) => {
 	}
 }
 
-module.exports = { signupUser, loginUser }
+const sendPasswordResetLink = async (req, res) => {
+	const { email } = req.body
+
+	const user = await User.findOne({ email: email })
+
+	if (!user) {
+		res.status(400).json({ error: "User not found" })
+		return
+	}
+
+	// create password link valid for 15m
+	const secret = process.env.SECRET + user.password
+	const payload = {
+		email: user.email,
+		id: user.id,
+	}
+
+	const token = jwt.sign(payload, secret, { expiresIn: "15m" })
+
+	// THIS LINK NEEDS TO BE SENT TO EMAIL
+	const passwordResetLink = `${process.env.NEXT_FRONTEND_URL}/reset-password/${user.id}/${token}`
+	console.log("reset link: ", passwordResetLink)
+
+	res.status(200).json({ msg: "success" })
+}
+
+const verifyPasswordResetLink = async (req, res) => {
+
+	const {id, token} = req.params
+
+	const user = await User.findById(id)
+
+	if (!user) {
+		res.status(400).json({err: "Invalid Link"})
+		return
+	}
+
+	const secret = process.env.SECRET + user.password
+	try {
+		const payload = jwt.verify(token, secret)
+		
+	} catch (e) {
+		console.log(e)
+		res.status(400).json({err: e.message})
+	}
+
+	res.status(200).json({ msg: "Success" })
+}
+
+module.exports = { signupUser, loginUser, sendPasswordResetLink, verifyPasswordResetLink }
