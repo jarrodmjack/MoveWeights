@@ -41,8 +41,8 @@ const signupUser = async (req, res) => {
 }
 
 const sendPasswordResetLink = async (req, res) => {
-	const { email } = req.body
-
+	let { email } = req.body
+	email = email.toLowerCase()
 	const user = await User.findOne({ email: email })
 
 	if (!user) {

@@ -29,11 +29,10 @@ const ForgotPassword = () => {
 				toast.success(
 					"A password reset link has been sent to your email"
 				)
+				setTimeout(() => {
+					router.push("/")
+				}, 5000)
 			}
-
-			setTimeout(() => {
-				router.push("/")
-			}, 5000)
 		} catch (e) {
 			// toast.error("No user with that email")
 		}
@@ -43,7 +42,8 @@ const ForgotPassword = () => {
 		return (
 			<div className="p-8 sm:w-1/2 md:w-1/4 mx-auto flex flex-col h-screen justify-center items-center">
 				<p>
-					An email with a link has been sent to your email. You will be redirected in 5 seconds
+					An email with a link has been sent to your email. You will
+					be redirected in 5 seconds
 				</p>
 			</div>
 		)

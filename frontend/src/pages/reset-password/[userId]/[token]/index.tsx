@@ -5,6 +5,7 @@ import { toast } from "react-hot-toast"
 const index = () => {
 	const router = useRouter()
 	const [linkIsVerified, setLinkIsVerified] = useState(false)
+	const [isLoading, setIsLoading] = useState(false)
 	const [email, setEmail] = useState("")
 	const [password, setPassword] = useState("")
 	const [password2, setPassword2] = useState("")
@@ -34,6 +35,7 @@ const index = () => {
 	}, [router.query])
 
 	const handleSubmitPasswordReset = async () => {
+		setIsLoading(true)
 		const response = await fetch(
 			`${process.env.NEXT_PUBLIC_API_URL}/api/user/reset-password/${router.query.userId}/${router.query.token}`,
 			{
@@ -46,8 +48,9 @@ const index = () => {
 		)
 
 		if (response.ok) {
-			console.log("ok")
+			router.push("/login")
 		} else {
+			setIsLoading(false)
 			const data = await response.json()
 			toast.error(data.error)
 		}
@@ -59,39 +62,46 @@ const index = () => {
 
 	if (linkIsVerified) {
 		return (
-			<div>
-				<p>Change the password for {email}</p>
-				<form>
-					<div>
-						<label htmlFor="password">New password</label>
-						<input
-							onChange={(e) => setPassword(e.target.value)}
-							className="input input-bordered"
-							type="password"
-							name="password"
-							id="password"
-						/>
-					</div>
-					<div>
-						<label htmlFor="password2">Confirm new password</label>
-						<input
-							onChange={(e) => setPassword2(e.target.value)}
-							className="input input-bordered"
-							type="password"
-							name="password2"
-							id="password2"
-						/>
-					</div>
-					<button
-						className="btn bg-primary-focus text-white"
-						onClick={(e) => {
-							e.preventDefault()
-							handleSubmitPasswordReset()
-						}}
-					>
-						Submit
-					</button>
-				</form>
+			<div className="h-screen flex flex-col justify-center items-center">
+				<div className="flex flex-col gap-4">
+					<p className="text-xl font-semibold">
+						Please enter your new password
+					</p>
+					<form className="flex flex-col gap-4">
+						<div className="flex flex-col gap-2">
+							<label htmlFor="password">New password</label>
+							<input
+								onChange={(e) => setPassword(e.target.value)}
+								className="input input-bordered"
+								type="password"
+								name="password"
+								id="password"
+							/>
+						</div>
+						<div className="flex flex-col gap-2">
+							<label htmlFor="password2">
+								Confirm new password
+							</label>
+							<input
+								onChange={(e) => setPassword2(e.target.value)}
+								className="input input-bordered"
+								type="password"
+								name="password2"
+								id="password2"
+							/>
+						</div>
+						<button
+							disabled={isLoading}
+							className="btn bg-primary-focus text-white"
+							onClick={(e) => {
+								e.preventDefault()
+								handleSubmitPasswordReset()
+							}}
+						>
+							Submit
+						</button>
+					</form>
+				</div>
 			</div>
 		)
 	}
