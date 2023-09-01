@@ -1,10 +1,11 @@
+import Link from "next/link"
 import { useRouter } from "next/router"
 import React, { useEffect, useState } from "react"
 import { toast } from "react-hot-toast"
 
 const index = () => {
 	const router = useRouter()
-	const [linkIsVerified, setLinkIsVerified] = useState(false)
+	const [linkIsVerified, setLinkIsVerified] = useState<boolean | null>(null)
 	const [isLoading, setIsLoading] = useState(false)
 	const [email, setEmail] = useState("")
 	const [password, setPassword] = useState("")
@@ -28,6 +29,7 @@ const index = () => {
 				const data = await response.json()
 				setEmail(data.email)
 			} else {
+				setLinkIsVerified(false)
 				toast.error("Invalid link. Please request another")
 			}
 		}
@@ -106,7 +108,23 @@ const index = () => {
 		)
 	}
 
-	return <div>test</div>
+	if (linkIsVerified === false) {
+		return (
+			<div className="h-screen flex flex-col items-center justify-center">
+				<div>
+					<p>
+						The link has expired or there was an issue verifying the
+						link.{" "}
+						<Link className="text-primary hover:underline" href="/forgot-password">
+							Please make another request
+						</Link>
+					</p>
+				</div>
+			</div>
+		)
+	}
+
+	return <div></div>
 }
 
 export default index

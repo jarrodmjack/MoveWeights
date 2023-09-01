@@ -40,30 +40,62 @@ const signupUser = async (req, res) => {
 	}
 }
 
+const nodemailer = require("nodemailer")
+
+const transporter = nodemailer.createTransport({
+	service: "gmail",
+	auth: {
+		user: "civicthunder24@gmail.com",
+		pass: "xkoxxjstnbwwfsyx",
+	},
+})
+
+async function sendEmail(passwordResetLink, email) {
+	const info = await transporter.sendMail({
+		from: '"MoveWeights" <civicthunder24@gmail.com>',
+		to: email,
+		subject: "Reset your password",
+		text: "Hello world?",
+		html: `
+			<p>Please click the link below to reset your password</p>
+			</br>
+			<p>${passwordResetLink}</p>
+		`,
+	})
+	console.log("Message sent: %s", info.messageId)
+}
+
 const sendPasswordResetLink = async (req, res) => {
 	let { email } = req.body
 	email = email.toLowerCase()
 	const user = await User.findOne({ email: email })
 
-	if (!user) {
-		res.status(400).json({ error: "User not found" })
+	try {
+		if (!user) {
+			res.status(400).json({ error: "User not found" })
+			return
+		}
+	
+		// create password link valid for 15m
+		const secret = process.env.SECRET + user.password
+		const payload = {
+			email: user.email,
+			id: user.id,
+		}
+	
+		const token = jwt.sign(payload, secret, { expiresIn: "15m" })
+	
+		// THIS LINK NEEDS TO BE SENT TO EMAIL
+		const passwordResetLink = `${process.env.NEXT_FRONTEND_URL}/reset-password/${user.id}/${token}`
+		await sendEmail(passwordResetLink, user.email)
+	
+		res.status(200).json({ msg: "success" })
 		return
+	} catch (e) {
+		console.log('hit email fail')
+		res.status(400).json({ msg: "failed to send email" })
 	}
 
-	// create password link valid for 15m
-	const secret = process.env.SECRET + user.password
-	const payload = {
-		email: user.email,
-		id: user.id,
-	}
-
-	const token = jwt.sign(payload, secret, { expiresIn: "15m" })
-
-	// THIS LINK NEEDS TO BE SENT TO EMAIL
-	const passwordResetLink = `${process.env.NEXT_FRONTEND_URL}/reset-password/${user.id}/${token}`
-	console.log("reset link: ", passwordResetLink)
-
-	res.status(200).json({ msg: "success" })
 }
 
 const verifyPasswordResetLink = async (req, res) => {
@@ -95,10 +127,7 @@ const resetPassword = async (req, res) => {
 		return
 	}
 
-	const secret = process.env.SECRET + user.password
 	try {
-		// const payload = jwt.verify(token, secret)
-
 		if (password !== password2) {
 			throw Error("Passwords must match")
 		}

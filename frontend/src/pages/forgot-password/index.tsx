@@ -1,3 +1,4 @@
+import LoadingDots from "@/components/loading/LoadingDots"
 import { useRouter } from "next/router"
 import React, { useState } from "react"
 import { toast } from "react-hot-toast"
@@ -5,6 +6,8 @@ import { toast } from "react-hot-toast"
 const ForgotPassword = () => {
 	const [email, setEmail] = useState("")
 	const [hasError, setHasError] = useState<boolean | null>(null)
+	const [isLoading, setIsLoading] = useState(false)
+	const [errorMessage, setErrorMessage] = useState("")
 	const router = useRouter()
 
 	const handleSendResetPasswordRequest = async () => {
@@ -21,10 +24,12 @@ const ForgotPassword = () => {
 			)
 
 			if (!response.ok) {
-				toast.error(
+				setErrorMessage(
 					"User with this email does not exist. Please ensure the information you entered is correct and try again."
 				)
+				setIsLoading(false)
 			} else {
+				setIsLoading(false)
 				setHasError(false)
 				toast.success(
 					"A password reset link has been sent to your email"
@@ -34,6 +39,8 @@ const ForgotPassword = () => {
 				}, 5000)
 			}
 		} catch (e) {
+			setIsLoading(false)
+
 			// toast.error("No user with that email")
 		}
 	}
@@ -69,14 +76,20 @@ const ForgotPassword = () => {
 						name="email"
 						id="email"
 					/>
+					{errorMessage && (
+						<p className="text-danger">{errorMessage}</p>
+					)}
 					<button
+						disabled={isLoading}
 						className="btn bg-primary-focus text-white"
 						onClick={(e) => {
+							setIsLoading(true)
 							e.preventDefault()
 							handleSendResetPasswordRequest()
 						}}
 					>
 						Submit
+						{isLoading && <LoadingDots />}
 					</button>
 				</div>
 			</form>
