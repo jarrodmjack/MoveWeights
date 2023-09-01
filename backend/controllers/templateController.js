@@ -40,12 +40,10 @@ const createTemplate = async (req, res) => {
 }
 
 const updateTemplate = async (req, res) => {
-	console.log("HIT update ENPOINT")
 	res.status(200).json({ msg: "success" })
 }
 
 const deleteTemplate = async (req, res) => {
-	console.log("HIT delete ENPOINT")
 	res.status(200).json({ msg: "success" })
 }
 
