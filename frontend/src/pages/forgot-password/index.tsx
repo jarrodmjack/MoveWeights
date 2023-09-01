@@ -50,8 +50,8 @@ const ForgotPassword = () => {
 	}
 
 	return (
-		<div className="p-8 sm:w-1/2 md:w-1/4 mx-auto">
-			<form className="flex flex-col mt-40 md:mt-0 gap-8">
+		<div className="p-8 sm:w-1/2 md:w-1/4 mx-auto h-screen flex flex-col justify-center items-center">
+			<form className="flex flex-col mt-40 md:mt-0 gap-8 shadow-xl rounded-lg p-8">
 				<img
 					src="/images/cappasswordmeme.png"
 					alt="captain america meme"

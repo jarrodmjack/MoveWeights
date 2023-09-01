@@ -63,7 +63,7 @@ const index = () => {
 	if (linkIsVerified) {
 		return (
 			<div className="h-screen flex flex-col justify-center items-center">
-				<div className="flex flex-col gap-4">
+				<div className="flex flex-col gap-4 rounded-lg shadow-xl p-8">
 					<p className="text-xl font-semibold">
 						Please enter your new password
 					</p>
