@@ -20,7 +20,7 @@ const ForgotPassword = () => {
 
 			if (!response.ok) {
 				toast.error(
-					"User with this email does not exist. Please try a different email"
+					"User with this email does not exist. Please ensure the information you entered is correct and try again."
 				)
 			} else {
 				setHasError(false)

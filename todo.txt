@@ -1,6 +1,10 @@
 Add workout templates feature:
 Apply template controller is in place, figure out why stuff is being created, but no exercises are showing up on the home page. (workout and exercises are being created.)
 
+For password reset:
+User can currently navigate to forgot-password page on frontend, submit with an email and the link is console.logging in the backend console.
+When navigating to that link, it takes the user to the /reset-password/id/token page which is being used to verify the token is legit. I left off figuring out how to make sure they are verified and next will figure out the actual reset. @ 18:30 in video
+
 See if I can add the .lean method on any of my get queries to mongo (optimization)
 
 Update node to 18 on machine and docker files

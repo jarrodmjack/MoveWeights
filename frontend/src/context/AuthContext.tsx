@@ -33,7 +33,6 @@ export const AuthContextProvider = ({ children }) => {
 				router.pathname === "/reset-password/[userId]/[token]" ||
 				router.pathname === "/forgot-password"
 			) {
-				console.log("hit here")
 				return
 			} else {
 				console.log("hit 2")

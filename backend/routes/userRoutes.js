@@ -3,7 +3,8 @@ const {
   signupUser,
   loginUser,
   sendPasswordResetLink,
-  verifyPasswordResetLink
+  verifyPasswordResetLink,
+  resetPassword
 } = require('../controllers/userController')
 
 const router = express.Router()
@@ -18,6 +19,6 @@ router.post('/signup', signupUser)
 // router.get('/forgot-password', )
 router.post('/forgot-password', sendPasswordResetLink)
 router.get('/reset-password/:id/:token', verifyPasswordResetLink)
-router.post('/reset-password', )
+router.post('/reset-password/:id/:token', resetPassword)
 
 module.exports = router
