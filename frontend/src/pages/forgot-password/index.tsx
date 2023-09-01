@@ -1,9 +1,11 @@
+import { useRouter } from "next/router"
 import React, { useState } from "react"
 import { toast } from "react-hot-toast"
 
 const ForgotPassword = () => {
 	const [email, setEmail] = useState("")
 	const [hasError, setHasError] = useState<boolean | null>(null)
+	const router = useRouter()
 
 	const handleSendResetPasswordRequest = async () => {
 		try {
@@ -28,36 +30,55 @@ const ForgotPassword = () => {
 					"A password reset link has been sent to your email"
 				)
 			}
+
+			setTimeout(() => {
+				router.push("/")
+			}, 5000)
 		} catch (e) {
 			// toast.error("No user with that email")
 		}
 	}
 
 	if (hasError === false) {
-		//if we sent a request successfully
-		return <>SUCCESSFUL</>
+		return (
+			<div className="p-8 sm:w-1/2 md:w-1/4 mx-auto flex flex-col h-screen justify-center items-center">
+				<p>
+					An email with a link has been sent to your email. You will be redirected in 5 seconds
+				</p>
+			</div>
+		)
 	}
 
 	return (
-		<div>
-			Enter email
-			<form className="flex flex-col items-start mt-40">
-				<input
-					className="input input-bordered"
-					onChange={(e) => setEmail(e.target.value)}
-					type="email"
-					name="email"
-					id="email"
+		<div className="p-8 sm:w-1/2 md:w-1/4 mx-auto">
+			<form className="flex flex-col mt-40 md:mt-0 gap-8">
+				<img
+					src="/images/cappasswordmeme.png"
+					alt="captain america meme"
 				/>
-				<button
-					className="btn bg-primary-focus text-white"
-					onClick={(e) => {
-						e.preventDefault()
-						handleSendResetPasswordRequest()
-					}}
-				>
-					Submit
-				</button>
+				<p className="text-xl font-semibold">
+					Enter the email associated with your{" "}
+					<span className="font-bold">MoveWeights</span> account
+				</p>
+				<div className="flex flex-col gap-4 w-full">
+					<input
+						placeholder="Account email"
+						className="input input-bordered"
+						onChange={(e) => setEmail(e.target.value)}
+						type="email"
+						name="email"
+						id="email"
+					/>
+					<button
+						className="btn bg-primary-focus text-white"
+						onClick={(e) => {
+							e.preventDefault()
+							handleSendResetPasswordRequest()
+						}}
+					>
+						Submit
+					</button>
+				</div>
 			</form>
 		</div>
 	)
