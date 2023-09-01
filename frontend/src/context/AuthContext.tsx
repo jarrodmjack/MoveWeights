@@ -35,9 +35,7 @@ export const AuthContextProvider = ({ children }) => {
 			) {
 				return
 			} else {
-				console.log("hit 2")
 				if (router.pathname !== "/") {
-					console.log("hit 3")
 					router.push("/login")
 				}
 			}
