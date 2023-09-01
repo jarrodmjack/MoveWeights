@@ -5,6 +5,7 @@ import React, { useState, useContext } from "react"
 import { toast } from "react-hot-toast"
 import { globalExercises } from "@/utils/globalExercises"
 import { WorkoutContext } from "@/context/WorkoutContext"
+import { FaTimesCircle } from "react-icons/fa"
 
 const create = () => {
 	const { user } = useAuthContext()
@@ -173,17 +174,34 @@ const create = () => {
 								Exercises
 							</p>
 							{template.templateExercises.map((exercise, i) => (
-								<div
-									key={exercise.exerciseName}
-									className="p-4 border-b border-primary-content"
-								>
-									<p className="font-semibold">
-										{exercise.exerciseName}
-									</p>
-									<div className="border border-primary w-full" />
-									<p className="capitalize">
-										{exercise.muscleGroup}
-									</p>
+								<div className="p-2 relative">
+									<FaTimesCircle
+										id={exercise.exerciseName}
+										onClick={(e) =>
+											setTemplate({
+												...template,
+												templateExercises:
+													template.templateExercises.filter(
+														(exercise) =>
+															exercise.exerciseName !==
+															e.currentTarget.id
+													),
+											})
+										}
+										className="scale-125 text-danger absolute top-3 right-3"
+									/>
+									<div
+										key={exercise.exerciseName}
+										className="p-4 border-b border-primary-content"
+									>
+										<p className="font-semibold">
+											{exercise.exerciseName}
+										</p>
+										<div className="border border-primary w-full" />
+										<p className="capitalize">
+											{exercise.muscleGroup}
+										</p>
+									</div>
 								</div>
 							))}
 						</div>
