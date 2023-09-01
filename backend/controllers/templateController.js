@@ -9,7 +9,7 @@ const getTemplateById = async (req, res) => {
 		res.status(200).json(template)
 		return
 	} catch (e) {
-		res.status(400).json({msg: "Failed to fetch template"})
+		res.status(400).json({ msg: "Failed to fetch template" })
 	}
 }
 
@@ -44,7 +44,15 @@ const updateTemplate = async (req, res) => {
 }
 
 const deleteTemplate = async (req, res) => {
-	res.status(200).json({ msg: "success" })
+	try {
+		const { templateId } = req.body
+		await Template.findByIdAndDelete(templateId)
+		res.status(200).json({ msg: "Successfully deleted template" })
+	} catch (e) {
+		res.status(400).json({
+			err: "There was an issue deleting the template",
+		})
+	}
 }
 
 module.exports = {

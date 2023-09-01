@@ -12,29 +12,56 @@ const templates = () => {
 	const [templates, setTemplates] = useState<Template[]>([])
 	const [isLoading, setIsLoading] = useState(true)
 
+	const fetchUserTemplates = async () => {
+		try {
+			const response = await fetch(
+				`${process.env.NEXT_PUBLIC_API_URL}/api/templates/all-user-templates`,
+				{
+					method: "GET",
+					headers: {
+						"Content-type": "application/json",
+						Authorization: `Bearer ${user.token}`,
+					},
+				}
+			)
+
+			const userTemplates = await response.json()
+			setTemplates([...userTemplates])
+			setIsLoading(false)
+		} catch (e) {
+			toast.error("There was an issue fetching your templates")
+			setIsLoading(false)
+		}
+	}
+
+	const handleDeleteTemplate = async (templateId: string) => {
+		const response = await fetch(
+			`${process.env.NEXT_PUBLIC_API_URL}/api/templates/template/${templateId}`,
+			{
+				method: "DELETE",
+				headers: {
+					"Content-type": "application/json",
+					Authorization: `Bearer ${user.token}`,
+				},
+				body: JSON.stringify({ templateId }),
+			}
+		)
+
+		const data = await response.json()
+
+		if (!response.ok) {
+			toast.error(data.err)
+		} else {
+			setTemplates(
+				templates.filter((template) => template._id !== templateId)
+			)
+			toast.success(data.msg)
+		}
+		setIsLoading(false)
+	}
+
 	useEffect(() => {
 		if (!user) return
-		const fetchUserTemplates = async () => {
-			try {
-				const response = await fetch(
-					`${process.env.NEXT_PUBLIC_API_URL}/api/templates/all-user-templates`,
-					{
-						method: "GET",
-						headers: {
-							"Content-type": "application/json",
-							Authorization: `Bearer ${user.token}`,
-						},
-					}
-				)
-
-				const userTemplates = await response.json()
-				setTemplates([...userTemplates])
-				setIsLoading(false)
-			} catch (e) {
-				toast.error("There was an issue fetching your templates")
-				setIsLoading(false)
-			}
-		}
 		fetchUserTemplates()
 	}, [])
 
@@ -49,9 +76,14 @@ const templates = () => {
 					Templates
 				</h2>
 				{templates.length > 0 ? (
-					<TemplateList templates={templates} />
+					<TemplateList
+						handleDeleteTemplate={handleDeleteTemplate}
+						templates={templates}
+					/>
 				) : (
-					<div className="text-center">You currently have no templates</div>
+					<div className="text-center">
+						You currently have no templates
+					</div>
 				)}
 				<div className="flex items-center gap-2 justify-center mt-10">
 					<p>Add a template</p>
