@@ -13,7 +13,9 @@ const loginUser = async (req, res) => {
 	const { email, password, tzOffset } = req.body
 	try {
 		const user = await User.login(email, password) // static method from user model
-		user.tzOffset = tzOffset
+		if (tzOffset) {
+			user.tzOffset = tzOffset
+		}
 		await user.save()
 		// create a token
 		const token = createToken(user._id)

@@ -260,6 +260,8 @@ const deleteExerciseFromWorkout = async (req, res) => {
 }
 
 const getTodaysWorkoutByUserId = async (req, res) => {
+	console.log("req: ", req.body)
+	console.log("user: ", req.user)
 	try {
 		const userId = req.user._id
 		const todayUTC = new Date()
