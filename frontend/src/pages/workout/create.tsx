@@ -13,6 +13,10 @@ const create = () => {
 		useContext(WorkoutContext)!
 	const [actionLoading, setActionLoading] = useState(false)
 
+	if (workout) {
+		router.push(`/workout/${workout._id}/addExercise`)
+	}
+
 	const createWorkout = async (data: {
 		tzOffset: number
 		muscleGroup: string
@@ -30,7 +34,6 @@ const create = () => {
 			return
 		}
 		setActionLoading(true)
-
 		try {
 			const response = await fetch(
 				`${process.env.NEXT_PUBLIC_API_URL}/api/exercise/create-workout`,

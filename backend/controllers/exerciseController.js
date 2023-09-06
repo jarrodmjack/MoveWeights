@@ -255,6 +255,7 @@ const deleteExerciseFromWorkout = async (req, res) => {
 		return
 	} catch (e) {
 		const exercise = await Exercise.findById(exerciseId)
+		console.error(e)
 		res.status(400).json(exercise)
 	}
 }
